@@ -1,0 +1,15 @@
+{
+  "name": "jw-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "test": "node --test --no-warnings",
+    "unpack": "node --no-warnings scripts/unpack-jwpub.mjs",
+    "extract:index": "node --no-warnings scripts/extract-index.mjs",
+    "extract:refs": "node --no-warnings scripts/extract-refs.mjs",
+    "fetch:bible": "node --no-warnings scripts/fetch-bible.mjs",
+    "verify": "node --no-warnings scripts/verify-bible.mjs"
+  }
+}
