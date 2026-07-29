@@ -1,0 +1,7739 @@
+{
+  "source": "nwtsty_KO.jwpub — 신세계역 성경 (연구용), 2024",
+  "generatedAt": "2026-07-29",
+  "totals": {
+    "books": 66,
+    "chapters": 1189,
+    "verses": 31194
+  },
+  "books": [
+    {
+      "num": 1,
+      "title": "창세기",
+      "slug": "01-창세기",
+      "firstVerseId": 0,
+      "lastVerseId": 1532,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 0,
+          "lastVerseId": 30,
+          "verses": 31
+        },
+        {
+          "num": 2,
+          "firstVerseId": 31,
+          "lastVerseId": 55,
+          "verses": 25
+        },
+        {
+          "num": 3,
+          "firstVerseId": 56,
+          "lastVerseId": 79,
+          "verses": 24
+        },
+        {
+          "num": 4,
+          "firstVerseId": 80,
+          "lastVerseId": 105,
+          "verses": 26
+        },
+        {
+          "num": 5,
+          "firstVerseId": 106,
+          "lastVerseId": 137,
+          "verses": 32
+        },
+        {
+          "num": 6,
+          "firstVerseId": 138,
+          "lastVerseId": 159,
+          "verses": 22
+        },
+        {
+          "num": 7,
+          "firstVerseId": 160,
+          "lastVerseId": 183,
+          "verses": 24
+        },
+        {
+          "num": 8,
+          "firstVerseId": 184,
+          "lastVerseId": 205,
+          "verses": 22
+        },
+        {
+          "num": 9,
+          "firstVerseId": 206,
+          "lastVerseId": 234,
+          "verses": 29
+        },
+        {
+          "num": 10,
+          "firstVerseId": 235,
+          "lastVerseId": 266,
+          "verses": 32
+        },
+        {
+          "num": 11,
+          "firstVerseId": 267,
+          "lastVerseId": 298,
+          "verses": 32
+        },
+        {
+          "num": 12,
+          "firstVerseId": 299,
+          "lastVerseId": 318,
+          "verses": 20
+        },
+        {
+          "num": 13,
+          "firstVerseId": 319,
+          "lastVerseId": 336,
+          "verses": 18
+        },
+        {
+          "num": 14,
+          "firstVerseId": 337,
+          "lastVerseId": 360,
+          "verses": 24
+        },
+        {
+          "num": 15,
+          "firstVerseId": 361,
+          "lastVerseId": 381,
+          "verses": 21
+        },
+        {
+          "num": 16,
+          "firstVerseId": 382,
+          "lastVerseId": 397,
+          "verses": 16
+        },
+        {
+          "num": 17,
+          "firstVerseId": 398,
+          "lastVerseId": 424,
+          "verses": 27
+        },
+        {
+          "num": 18,
+          "firstVerseId": 425,
+          "lastVerseId": 457,
+          "verses": 33
+        },
+        {
+          "num": 19,
+          "firstVerseId": 458,
+          "lastVerseId": 495,
+          "verses": 38
+        },
+        {
+          "num": 20,
+          "firstVerseId": 496,
+          "lastVerseId": 513,
+          "verses": 18
+        },
+        {
+          "num": 21,
+          "firstVerseId": 514,
+          "lastVerseId": 547,
+          "verses": 34
+        },
+        {
+          "num": 22,
+          "firstVerseId": 548,
+          "lastVerseId": 571,
+          "verses": 24
+        },
+        {
+          "num": 23,
+          "firstVerseId": 572,
+          "lastVerseId": 591,
+          "verses": 20
+        },
+        {
+          "num": 24,
+          "firstVerseId": 592,
+          "lastVerseId": 658,
+          "verses": 67
+        },
+        {
+          "num": 25,
+          "firstVerseId": 659,
+          "lastVerseId": 692,
+          "verses": 34
+        },
+        {
+          "num": 26,
+          "firstVerseId": 693,
+          "lastVerseId": 727,
+          "verses": 35
+        },
+        {
+          "num": 27,
+          "firstVerseId": 728,
+          "lastVerseId": 773,
+          "verses": 46
+        },
+        {
+          "num": 28,
+          "firstVerseId": 774,
+          "lastVerseId": 795,
+          "verses": 22
+        },
+        {
+          "num": 29,
+          "firstVerseId": 796,
+          "lastVerseId": 830,
+          "verses": 35
+        },
+        {
+          "num": 30,
+          "firstVerseId": 831,
+          "lastVerseId": 873,
+          "verses": 43
+        },
+        {
+          "num": 31,
+          "firstVerseId": 874,
+          "lastVerseId": 928,
+          "verses": 55
+        },
+        {
+          "num": 32,
+          "firstVerseId": 929,
+          "lastVerseId": 960,
+          "verses": 32
+        },
+        {
+          "num": 33,
+          "firstVerseId": 961,
+          "lastVerseId": 980,
+          "verses": 20
+        },
+        {
+          "num": 34,
+          "firstVerseId": 981,
+          "lastVerseId": 1011,
+          "verses": 31
+        },
+        {
+          "num": 35,
+          "firstVerseId": 1012,
+          "lastVerseId": 1040,
+          "verses": 29
+        },
+        {
+          "num": 36,
+          "firstVerseId": 1041,
+          "lastVerseId": 1083,
+          "verses": 43
+        },
+        {
+          "num": 37,
+          "firstVerseId": 1084,
+          "lastVerseId": 1119,
+          "verses": 36
+        },
+        {
+          "num": 38,
+          "firstVerseId": 1120,
+          "lastVerseId": 1149,
+          "verses": 30
+        },
+        {
+          "num": 39,
+          "firstVerseId": 1150,
+          "lastVerseId": 1172,
+          "verses": 23
+        },
+        {
+          "num": 40,
+          "firstVerseId": 1173,
+          "lastVerseId": 1195,
+          "verses": 23
+        },
+        {
+          "num": 41,
+          "firstVerseId": 1196,
+          "lastVerseId": 1252,
+          "verses": 57
+        },
+        {
+          "num": 42,
+          "firstVerseId": 1253,
+          "lastVerseId": 1290,
+          "verses": 38
+        },
+        {
+          "num": 43,
+          "firstVerseId": 1291,
+          "lastVerseId": 1324,
+          "verses": 34
+        },
+        {
+          "num": 44,
+          "firstVerseId": 1325,
+          "lastVerseId": 1358,
+          "verses": 34
+        },
+        {
+          "num": 45,
+          "firstVerseId": 1359,
+          "lastVerseId": 1386,
+          "verses": 28
+        },
+        {
+          "num": 46,
+          "firstVerseId": 1387,
+          "lastVerseId": 1420,
+          "verses": 34
+        },
+        {
+          "num": 47,
+          "firstVerseId": 1421,
+          "lastVerseId": 1451,
+          "verses": 31
+        },
+        {
+          "num": 48,
+          "firstVerseId": 1452,
+          "lastVerseId": 1473,
+          "verses": 22
+        },
+        {
+          "num": 49,
+          "firstVerseId": 1474,
+          "lastVerseId": 1506,
+          "verses": 33
+        },
+        {
+          "num": 50,
+          "firstVerseId": 1507,
+          "lastVerseId": 1532,
+          "verses": 26
+        }
+      ]
+    },
+    {
+      "num": 2,
+      "title": "출애굽기",
+      "slug": "02-출애굽기",
+      "firstVerseId": 1533,
+      "lastVerseId": 2745,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 1533,
+          "lastVerseId": 1554,
+          "verses": 22
+        },
+        {
+          "num": 2,
+          "firstVerseId": 1555,
+          "lastVerseId": 1579,
+          "verses": 25
+        },
+        {
+          "num": 3,
+          "firstVerseId": 1580,
+          "lastVerseId": 1601,
+          "verses": 22
+        },
+        {
+          "num": 4,
+          "firstVerseId": 1602,
+          "lastVerseId": 1632,
+          "verses": 31
+        },
+        {
+          "num": 5,
+          "firstVerseId": 1633,
+          "lastVerseId": 1655,
+          "verses": 23
+        },
+        {
+          "num": 6,
+          "firstVerseId": 1656,
+          "lastVerseId": 1685,
+          "verses": 30
+        },
+        {
+          "num": 7,
+          "firstVerseId": 1686,
+          "lastVerseId": 1710,
+          "verses": 25
+        },
+        {
+          "num": 8,
+          "firstVerseId": 1711,
+          "lastVerseId": 1742,
+          "verses": 32
+        },
+        {
+          "num": 9,
+          "firstVerseId": 1743,
+          "lastVerseId": 1777,
+          "verses": 35
+        },
+        {
+          "num": 10,
+          "firstVerseId": 1778,
+          "lastVerseId": 1806,
+          "verses": 29
+        },
+        {
+          "num": 11,
+          "firstVerseId": 1807,
+          "lastVerseId": 1816,
+          "verses": 10
+        },
+        {
+          "num": 12,
+          "firstVerseId": 1817,
+          "lastVerseId": 1867,
+          "verses": 51
+        },
+        {
+          "num": 13,
+          "firstVerseId": 1868,
+          "lastVerseId": 1889,
+          "verses": 22
+        },
+        {
+          "num": 14,
+          "firstVerseId": 1890,
+          "lastVerseId": 1920,
+          "verses": 31
+        },
+        {
+          "num": 15,
+          "firstVerseId": 1921,
+          "lastVerseId": 1947,
+          "verses": 27
+        },
+        {
+          "num": 16,
+          "firstVerseId": 1948,
+          "lastVerseId": 1983,
+          "verses": 36
+        },
+        {
+          "num": 17,
+          "firstVerseId": 1984,
+          "lastVerseId": 1999,
+          "verses": 16
+        },
+        {
+          "num": 18,
+          "firstVerseId": 2000,
+          "lastVerseId": 2026,
+          "verses": 27
+        },
+        {
+          "num": 19,
+          "firstVerseId": 2027,
+          "lastVerseId": 2051,
+          "verses": 25
+        },
+        {
+          "num": 20,
+          "firstVerseId": 2052,
+          "lastVerseId": 2077,
+          "verses": 26
+        },
+        {
+          "num": 21,
+          "firstVerseId": 2078,
+          "lastVerseId": 2113,
+          "verses": 36
+        },
+        {
+          "num": 22,
+          "firstVerseId": 2114,
+          "lastVerseId": 2144,
+          "verses": 31
+        },
+        {
+          "num": 23,
+          "firstVerseId": 2145,
+          "lastVerseId": 2177,
+          "verses": 33
+        },
+        {
+          "num": 24,
+          "firstVerseId": 2178,
+          "lastVerseId": 2195,
+          "verses": 18
+        },
+        {
+          "num": 25,
+          "firstVerseId": 2196,
+          "lastVerseId": 2235,
+          "verses": 40
+        },
+        {
+          "num": 26,
+          "firstVerseId": 2236,
+          "lastVerseId": 2272,
+          "verses": 37
+        },
+        {
+          "num": 27,
+          "firstVerseId": 2273,
+          "lastVerseId": 2293,
+          "verses": 21
+        },
+        {
+          "num": 28,
+          "firstVerseId": 2294,
+          "lastVerseId": 2336,
+          "verses": 43
+        },
+        {
+          "num": 29,
+          "firstVerseId": 2337,
+          "lastVerseId": 2382,
+          "verses": 46
+        },
+        {
+          "num": 30,
+          "firstVerseId": 2383,
+          "lastVerseId": 2420,
+          "verses": 38
+        },
+        {
+          "num": 31,
+          "firstVerseId": 2421,
+          "lastVerseId": 2438,
+          "verses": 18
+        },
+        {
+          "num": 32,
+          "firstVerseId": 2439,
+          "lastVerseId": 2473,
+          "verses": 35
+        },
+        {
+          "num": 33,
+          "firstVerseId": 2474,
+          "lastVerseId": 2496,
+          "verses": 23
+        },
+        {
+          "num": 34,
+          "firstVerseId": 2497,
+          "lastVerseId": 2531,
+          "verses": 35
+        },
+        {
+          "num": 35,
+          "firstVerseId": 2532,
+          "lastVerseId": 2566,
+          "verses": 35
+        },
+        {
+          "num": 36,
+          "firstVerseId": 2567,
+          "lastVerseId": 2604,
+          "verses": 38
+        },
+        {
+          "num": 37,
+          "firstVerseId": 2605,
+          "lastVerseId": 2633,
+          "verses": 29
+        },
+        {
+          "num": 38,
+          "firstVerseId": 2634,
+          "lastVerseId": 2664,
+          "verses": 31
+        },
+        {
+          "num": 39,
+          "firstVerseId": 2665,
+          "lastVerseId": 2707,
+          "verses": 43
+        },
+        {
+          "num": 40,
+          "firstVerseId": 2708,
+          "lastVerseId": 2745,
+          "verses": 38
+        }
+      ]
+    },
+    {
+      "num": 3,
+      "title": "레위기",
+      "slug": "03-레위기",
+      "firstVerseId": 2746,
+      "lastVerseId": 3604,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 2746,
+          "lastVerseId": 2762,
+          "verses": 17
+        },
+        {
+          "num": 2,
+          "firstVerseId": 2763,
+          "lastVerseId": 2778,
+          "verses": 16
+        },
+        {
+          "num": 3,
+          "firstVerseId": 2779,
+          "lastVerseId": 2795,
+          "verses": 17
+        },
+        {
+          "num": 4,
+          "firstVerseId": 2796,
+          "lastVerseId": 2830,
+          "verses": 35
+        },
+        {
+          "num": 5,
+          "firstVerseId": 2831,
+          "lastVerseId": 2849,
+          "verses": 19
+        },
+        {
+          "num": 6,
+          "firstVerseId": 2850,
+          "lastVerseId": 2879,
+          "verses": 30
+        },
+        {
+          "num": 7,
+          "firstVerseId": 2880,
+          "lastVerseId": 2917,
+          "verses": 38
+        },
+        {
+          "num": 8,
+          "firstVerseId": 2918,
+          "lastVerseId": 2953,
+          "verses": 36
+        },
+        {
+          "num": 9,
+          "firstVerseId": 2954,
+          "lastVerseId": 2977,
+          "verses": 24
+        },
+        {
+          "num": 10,
+          "firstVerseId": 2978,
+          "lastVerseId": 2997,
+          "verses": 20
+        },
+        {
+          "num": 11,
+          "firstVerseId": 2998,
+          "lastVerseId": 3044,
+          "verses": 47
+        },
+        {
+          "num": 12,
+          "firstVerseId": 3045,
+          "lastVerseId": 3052,
+          "verses": 8
+        },
+        {
+          "num": 13,
+          "firstVerseId": 3053,
+          "lastVerseId": 3111,
+          "verses": 59
+        },
+        {
+          "num": 14,
+          "firstVerseId": 3112,
+          "lastVerseId": 3168,
+          "verses": 57
+        },
+        {
+          "num": 15,
+          "firstVerseId": 3169,
+          "lastVerseId": 3201,
+          "verses": 33
+        },
+        {
+          "num": 16,
+          "firstVerseId": 3202,
+          "lastVerseId": 3235,
+          "verses": 34
+        },
+        {
+          "num": 17,
+          "firstVerseId": 3236,
+          "lastVerseId": 3251,
+          "verses": 16
+        },
+        {
+          "num": 18,
+          "firstVerseId": 3252,
+          "lastVerseId": 3281,
+          "verses": 30
+        },
+        {
+          "num": 19,
+          "firstVerseId": 3282,
+          "lastVerseId": 3318,
+          "verses": 37
+        },
+        {
+          "num": 20,
+          "firstVerseId": 3319,
+          "lastVerseId": 3345,
+          "verses": 27
+        },
+        {
+          "num": 21,
+          "firstVerseId": 3346,
+          "lastVerseId": 3369,
+          "verses": 24
+        },
+        {
+          "num": 22,
+          "firstVerseId": 3370,
+          "lastVerseId": 3402,
+          "verses": 33
+        },
+        {
+          "num": 23,
+          "firstVerseId": 3403,
+          "lastVerseId": 3446,
+          "verses": 44
+        },
+        {
+          "num": 24,
+          "firstVerseId": 3447,
+          "lastVerseId": 3469,
+          "verses": 23
+        },
+        {
+          "num": 25,
+          "firstVerseId": 3470,
+          "lastVerseId": 3524,
+          "verses": 55
+        },
+        {
+          "num": 26,
+          "firstVerseId": 3525,
+          "lastVerseId": 3570,
+          "verses": 46
+        },
+        {
+          "num": 27,
+          "firstVerseId": 3571,
+          "lastVerseId": 3604,
+          "verses": 34
+        }
+      ]
+    },
+    {
+      "num": 4,
+      "title": "민수기",
+      "slug": "04-민수기",
+      "firstVerseId": 3605,
+      "lastVerseId": 4892,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 3605,
+          "lastVerseId": 3658,
+          "verses": 54
+        },
+        {
+          "num": 2,
+          "firstVerseId": 3659,
+          "lastVerseId": 3692,
+          "verses": 34
+        },
+        {
+          "num": 3,
+          "firstVerseId": 3693,
+          "lastVerseId": 3743,
+          "verses": 51
+        },
+        {
+          "num": 4,
+          "firstVerseId": 3744,
+          "lastVerseId": 3792,
+          "verses": 49
+        },
+        {
+          "num": 5,
+          "firstVerseId": 3793,
+          "lastVerseId": 3823,
+          "verses": 31
+        },
+        {
+          "num": 6,
+          "firstVerseId": 3824,
+          "lastVerseId": 3850,
+          "verses": 27
+        },
+        {
+          "num": 7,
+          "firstVerseId": 3851,
+          "lastVerseId": 3939,
+          "verses": 89
+        },
+        {
+          "num": 8,
+          "firstVerseId": 3940,
+          "lastVerseId": 3965,
+          "verses": 26
+        },
+        {
+          "num": 9,
+          "firstVerseId": 3966,
+          "lastVerseId": 3988,
+          "verses": 23
+        },
+        {
+          "num": 10,
+          "firstVerseId": 3989,
+          "lastVerseId": 4024,
+          "verses": 36
+        },
+        {
+          "num": 11,
+          "firstVerseId": 4025,
+          "lastVerseId": 4059,
+          "verses": 35
+        },
+        {
+          "num": 12,
+          "firstVerseId": 4060,
+          "lastVerseId": 4075,
+          "verses": 16
+        },
+        {
+          "num": 13,
+          "firstVerseId": 4076,
+          "lastVerseId": 4108,
+          "verses": 33
+        },
+        {
+          "num": 14,
+          "firstVerseId": 4109,
+          "lastVerseId": 4153,
+          "verses": 45
+        },
+        {
+          "num": 15,
+          "firstVerseId": 4154,
+          "lastVerseId": 4194,
+          "verses": 41
+        },
+        {
+          "num": 16,
+          "firstVerseId": 4195,
+          "lastVerseId": 4244,
+          "verses": 50
+        },
+        {
+          "num": 17,
+          "firstVerseId": 4245,
+          "lastVerseId": 4257,
+          "verses": 13
+        },
+        {
+          "num": 18,
+          "firstVerseId": 4258,
+          "lastVerseId": 4289,
+          "verses": 32
+        },
+        {
+          "num": 19,
+          "firstVerseId": 4290,
+          "lastVerseId": 4311,
+          "verses": 22
+        },
+        {
+          "num": 20,
+          "firstVerseId": 4312,
+          "lastVerseId": 4340,
+          "verses": 29
+        },
+        {
+          "num": 21,
+          "firstVerseId": 4341,
+          "lastVerseId": 4375,
+          "verses": 35
+        },
+        {
+          "num": 22,
+          "firstVerseId": 4376,
+          "lastVerseId": 4416,
+          "verses": 41
+        },
+        {
+          "num": 23,
+          "firstVerseId": 4417,
+          "lastVerseId": 4446,
+          "verses": 30
+        },
+        {
+          "num": 24,
+          "firstVerseId": 4447,
+          "lastVerseId": 4471,
+          "verses": 25
+        },
+        {
+          "num": 25,
+          "firstVerseId": 4472,
+          "lastVerseId": 4489,
+          "verses": 18
+        },
+        {
+          "num": 26,
+          "firstVerseId": 4490,
+          "lastVerseId": 4554,
+          "verses": 65
+        },
+        {
+          "num": 27,
+          "firstVerseId": 4555,
+          "lastVerseId": 4577,
+          "verses": 23
+        },
+        {
+          "num": 28,
+          "firstVerseId": 4578,
+          "lastVerseId": 4608,
+          "verses": 31
+        },
+        {
+          "num": 29,
+          "firstVerseId": 4609,
+          "lastVerseId": 4648,
+          "verses": 40
+        },
+        {
+          "num": 30,
+          "firstVerseId": 4649,
+          "lastVerseId": 4664,
+          "verses": 16
+        },
+        {
+          "num": 31,
+          "firstVerseId": 4665,
+          "lastVerseId": 4718,
+          "verses": 54
+        },
+        {
+          "num": 32,
+          "firstVerseId": 4719,
+          "lastVerseId": 4760,
+          "verses": 42
+        },
+        {
+          "num": 33,
+          "firstVerseId": 4761,
+          "lastVerseId": 4816,
+          "verses": 56
+        },
+        {
+          "num": 34,
+          "firstVerseId": 4817,
+          "lastVerseId": 4845,
+          "verses": 29
+        },
+        {
+          "num": 35,
+          "firstVerseId": 4846,
+          "lastVerseId": 4879,
+          "verses": 34
+        },
+        {
+          "num": 36,
+          "firstVerseId": 4880,
+          "lastVerseId": 4892,
+          "verses": 13
+        }
+      ]
+    },
+    {
+      "num": 5,
+      "title": "신명기",
+      "slug": "05-신명기",
+      "firstVerseId": 4893,
+      "lastVerseId": 5851,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 4893,
+          "lastVerseId": 4938,
+          "verses": 46
+        },
+        {
+          "num": 2,
+          "firstVerseId": 4939,
+          "lastVerseId": 4975,
+          "verses": 37
+        },
+        {
+          "num": 3,
+          "firstVerseId": 4976,
+          "lastVerseId": 5004,
+          "verses": 29
+        },
+        {
+          "num": 4,
+          "firstVerseId": 5005,
+          "lastVerseId": 5053,
+          "verses": 49
+        },
+        {
+          "num": 5,
+          "firstVerseId": 5054,
+          "lastVerseId": 5086,
+          "verses": 33
+        },
+        {
+          "num": 6,
+          "firstVerseId": 5087,
+          "lastVerseId": 5111,
+          "verses": 25
+        },
+        {
+          "num": 7,
+          "firstVerseId": 5112,
+          "lastVerseId": 5137,
+          "verses": 26
+        },
+        {
+          "num": 8,
+          "firstVerseId": 5138,
+          "lastVerseId": 5157,
+          "verses": 20
+        },
+        {
+          "num": 9,
+          "firstVerseId": 5158,
+          "lastVerseId": 5186,
+          "verses": 29
+        },
+        {
+          "num": 10,
+          "firstVerseId": 5187,
+          "lastVerseId": 5208,
+          "verses": 22
+        },
+        {
+          "num": 11,
+          "firstVerseId": 5209,
+          "lastVerseId": 5240,
+          "verses": 32
+        },
+        {
+          "num": 12,
+          "firstVerseId": 5241,
+          "lastVerseId": 5272,
+          "verses": 32
+        },
+        {
+          "num": 13,
+          "firstVerseId": 5273,
+          "lastVerseId": 5290,
+          "verses": 18
+        },
+        {
+          "num": 14,
+          "firstVerseId": 5291,
+          "lastVerseId": 5319,
+          "verses": 29
+        },
+        {
+          "num": 15,
+          "firstVerseId": 5320,
+          "lastVerseId": 5342,
+          "verses": 23
+        },
+        {
+          "num": 16,
+          "firstVerseId": 5343,
+          "lastVerseId": 5364,
+          "verses": 22
+        },
+        {
+          "num": 17,
+          "firstVerseId": 5365,
+          "lastVerseId": 5384,
+          "verses": 20
+        },
+        {
+          "num": 18,
+          "firstVerseId": 5385,
+          "lastVerseId": 5406,
+          "verses": 22
+        },
+        {
+          "num": 19,
+          "firstVerseId": 5407,
+          "lastVerseId": 5427,
+          "verses": 21
+        },
+        {
+          "num": 20,
+          "firstVerseId": 5428,
+          "lastVerseId": 5447,
+          "verses": 20
+        },
+        {
+          "num": 21,
+          "firstVerseId": 5448,
+          "lastVerseId": 5470,
+          "verses": 23
+        },
+        {
+          "num": 22,
+          "firstVerseId": 5471,
+          "lastVerseId": 5500,
+          "verses": 30
+        },
+        {
+          "num": 23,
+          "firstVerseId": 5501,
+          "lastVerseId": 5525,
+          "verses": 25
+        },
+        {
+          "num": 24,
+          "firstVerseId": 5526,
+          "lastVerseId": 5547,
+          "verses": 22
+        },
+        {
+          "num": 25,
+          "firstVerseId": 5548,
+          "lastVerseId": 5566,
+          "verses": 19
+        },
+        {
+          "num": 26,
+          "firstVerseId": 5567,
+          "lastVerseId": 5585,
+          "verses": 19
+        },
+        {
+          "num": 27,
+          "firstVerseId": 5586,
+          "lastVerseId": 5611,
+          "verses": 26
+        },
+        {
+          "num": 28,
+          "firstVerseId": 5612,
+          "lastVerseId": 5679,
+          "verses": 68
+        },
+        {
+          "num": 29,
+          "firstVerseId": 5680,
+          "lastVerseId": 5708,
+          "verses": 29
+        },
+        {
+          "num": 30,
+          "firstVerseId": 5709,
+          "lastVerseId": 5728,
+          "verses": 20
+        },
+        {
+          "num": 31,
+          "firstVerseId": 5729,
+          "lastVerseId": 5758,
+          "verses": 30
+        },
+        {
+          "num": 32,
+          "firstVerseId": 5759,
+          "lastVerseId": 5810,
+          "verses": 52
+        },
+        {
+          "num": 33,
+          "firstVerseId": 5811,
+          "lastVerseId": 5839,
+          "verses": 29
+        },
+        {
+          "num": 34,
+          "firstVerseId": 5840,
+          "lastVerseId": 5851,
+          "verses": 12
+        }
+      ]
+    },
+    {
+      "num": 6,
+      "title": "여호수아",
+      "slug": "06-여호수아",
+      "firstVerseId": 5852,
+      "lastVerseId": 6509,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 5852,
+          "lastVerseId": 5869,
+          "verses": 18
+        },
+        {
+          "num": 2,
+          "firstVerseId": 5870,
+          "lastVerseId": 5893,
+          "verses": 24
+        },
+        {
+          "num": 3,
+          "firstVerseId": 5894,
+          "lastVerseId": 5910,
+          "verses": 17
+        },
+        {
+          "num": 4,
+          "firstVerseId": 5911,
+          "lastVerseId": 5934,
+          "verses": 24
+        },
+        {
+          "num": 5,
+          "firstVerseId": 5935,
+          "lastVerseId": 5949,
+          "verses": 15
+        },
+        {
+          "num": 6,
+          "firstVerseId": 5950,
+          "lastVerseId": 5976,
+          "verses": 27
+        },
+        {
+          "num": 7,
+          "firstVerseId": 5977,
+          "lastVerseId": 6002,
+          "verses": 26
+        },
+        {
+          "num": 8,
+          "firstVerseId": 6003,
+          "lastVerseId": 6037,
+          "verses": 35
+        },
+        {
+          "num": 9,
+          "firstVerseId": 6038,
+          "lastVerseId": 6064,
+          "verses": 27
+        },
+        {
+          "num": 10,
+          "firstVerseId": 6065,
+          "lastVerseId": 6107,
+          "verses": 43
+        },
+        {
+          "num": 11,
+          "firstVerseId": 6108,
+          "lastVerseId": 6130,
+          "verses": 23
+        },
+        {
+          "num": 12,
+          "firstVerseId": 6131,
+          "lastVerseId": 6154,
+          "verses": 24
+        },
+        {
+          "num": 13,
+          "firstVerseId": 6155,
+          "lastVerseId": 6187,
+          "verses": 33
+        },
+        {
+          "num": 14,
+          "firstVerseId": 6188,
+          "lastVerseId": 6202,
+          "verses": 15
+        },
+        {
+          "num": 15,
+          "firstVerseId": 6203,
+          "lastVerseId": 6265,
+          "verses": 63
+        },
+        {
+          "num": 16,
+          "firstVerseId": 6266,
+          "lastVerseId": 6275,
+          "verses": 10
+        },
+        {
+          "num": 17,
+          "firstVerseId": 6276,
+          "lastVerseId": 6293,
+          "verses": 18
+        },
+        {
+          "num": 18,
+          "firstVerseId": 6294,
+          "lastVerseId": 6321,
+          "verses": 28
+        },
+        {
+          "num": 19,
+          "firstVerseId": 6322,
+          "lastVerseId": 6372,
+          "verses": 51
+        },
+        {
+          "num": 20,
+          "firstVerseId": 6373,
+          "lastVerseId": 6381,
+          "verses": 9
+        },
+        {
+          "num": 21,
+          "firstVerseId": 6382,
+          "lastVerseId": 6426,
+          "verses": 45
+        },
+        {
+          "num": 22,
+          "firstVerseId": 6427,
+          "lastVerseId": 6460,
+          "verses": 34
+        },
+        {
+          "num": 23,
+          "firstVerseId": 6461,
+          "lastVerseId": 6476,
+          "verses": 16
+        },
+        {
+          "num": 24,
+          "firstVerseId": 6477,
+          "lastVerseId": 6509,
+          "verses": 33
+        }
+      ]
+    },
+    {
+      "num": 7,
+      "title": "사사기",
+      "slug": "07-사사기",
+      "firstVerseId": 6510,
+      "lastVerseId": 7127,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 6510,
+          "lastVerseId": 6545,
+          "verses": 36
+        },
+        {
+          "num": 2,
+          "firstVerseId": 6546,
+          "lastVerseId": 6568,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 6569,
+          "lastVerseId": 6599,
+          "verses": 31
+        },
+        {
+          "num": 4,
+          "firstVerseId": 6600,
+          "lastVerseId": 6623,
+          "verses": 24
+        },
+        {
+          "num": 5,
+          "firstVerseId": 6624,
+          "lastVerseId": 6654,
+          "verses": 31
+        },
+        {
+          "num": 6,
+          "firstVerseId": 6655,
+          "lastVerseId": 6694,
+          "verses": 40
+        },
+        {
+          "num": 7,
+          "firstVerseId": 6695,
+          "lastVerseId": 6719,
+          "verses": 25
+        },
+        {
+          "num": 8,
+          "firstVerseId": 6720,
+          "lastVerseId": 6754,
+          "verses": 35
+        },
+        {
+          "num": 9,
+          "firstVerseId": 6755,
+          "lastVerseId": 6811,
+          "verses": 57
+        },
+        {
+          "num": 10,
+          "firstVerseId": 6812,
+          "lastVerseId": 6829,
+          "verses": 18
+        },
+        {
+          "num": 11,
+          "firstVerseId": 6830,
+          "lastVerseId": 6869,
+          "verses": 40
+        },
+        {
+          "num": 12,
+          "firstVerseId": 6870,
+          "lastVerseId": 6884,
+          "verses": 15
+        },
+        {
+          "num": 13,
+          "firstVerseId": 6885,
+          "lastVerseId": 6909,
+          "verses": 25
+        },
+        {
+          "num": 14,
+          "firstVerseId": 6910,
+          "lastVerseId": 6929,
+          "verses": 20
+        },
+        {
+          "num": 15,
+          "firstVerseId": 6930,
+          "lastVerseId": 6949,
+          "verses": 20
+        },
+        {
+          "num": 16,
+          "firstVerseId": 6950,
+          "lastVerseId": 6980,
+          "verses": 31
+        },
+        {
+          "num": 17,
+          "firstVerseId": 6981,
+          "lastVerseId": 6993,
+          "verses": 13
+        },
+        {
+          "num": 18,
+          "firstVerseId": 6994,
+          "lastVerseId": 7024,
+          "verses": 31
+        },
+        {
+          "num": 19,
+          "firstVerseId": 7025,
+          "lastVerseId": 7054,
+          "verses": 30
+        },
+        {
+          "num": 20,
+          "firstVerseId": 7055,
+          "lastVerseId": 7102,
+          "verses": 48
+        },
+        {
+          "num": 21,
+          "firstVerseId": 7103,
+          "lastVerseId": 7127,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 8,
+      "title": "룻기",
+      "slug": "08-룻기",
+      "firstVerseId": 7128,
+      "lastVerseId": 7212,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 7128,
+          "lastVerseId": 7149,
+          "verses": 22
+        },
+        {
+          "num": 2,
+          "firstVerseId": 7150,
+          "lastVerseId": 7172,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 7173,
+          "lastVerseId": 7190,
+          "verses": 18
+        },
+        {
+          "num": 4,
+          "firstVerseId": 7191,
+          "lastVerseId": 7212,
+          "verses": 22
+        }
+      ]
+    },
+    {
+      "num": 9,
+      "title": "사무엘상",
+      "slug": "09-사무엘상",
+      "firstVerseId": 7213,
+      "lastVerseId": 8022,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 7213,
+          "lastVerseId": 7240,
+          "verses": 28
+        },
+        {
+          "num": 2,
+          "firstVerseId": 7241,
+          "lastVerseId": 7276,
+          "verses": 36
+        },
+        {
+          "num": 3,
+          "firstVerseId": 7277,
+          "lastVerseId": 7297,
+          "verses": 21
+        },
+        {
+          "num": 4,
+          "firstVerseId": 7298,
+          "lastVerseId": 7319,
+          "verses": 22
+        },
+        {
+          "num": 5,
+          "firstVerseId": 7320,
+          "lastVerseId": 7331,
+          "verses": 12
+        },
+        {
+          "num": 6,
+          "firstVerseId": 7332,
+          "lastVerseId": 7352,
+          "verses": 21
+        },
+        {
+          "num": 7,
+          "firstVerseId": 7353,
+          "lastVerseId": 7369,
+          "verses": 17
+        },
+        {
+          "num": 8,
+          "firstVerseId": 7370,
+          "lastVerseId": 7391,
+          "verses": 22
+        },
+        {
+          "num": 9,
+          "firstVerseId": 7392,
+          "lastVerseId": 7418,
+          "verses": 27
+        },
+        {
+          "num": 10,
+          "firstVerseId": 7419,
+          "lastVerseId": 7445,
+          "verses": 27
+        },
+        {
+          "num": 11,
+          "firstVerseId": 7446,
+          "lastVerseId": 7460,
+          "verses": 15
+        },
+        {
+          "num": 12,
+          "firstVerseId": 7461,
+          "lastVerseId": 7485,
+          "verses": 25
+        },
+        {
+          "num": 13,
+          "firstVerseId": 7486,
+          "lastVerseId": 7508,
+          "verses": 23
+        },
+        {
+          "num": 14,
+          "firstVerseId": 7509,
+          "lastVerseId": 7560,
+          "verses": 52
+        },
+        {
+          "num": 15,
+          "firstVerseId": 7561,
+          "lastVerseId": 7595,
+          "verses": 35
+        },
+        {
+          "num": 16,
+          "firstVerseId": 7596,
+          "lastVerseId": 7618,
+          "verses": 23
+        },
+        {
+          "num": 17,
+          "firstVerseId": 7619,
+          "lastVerseId": 7676,
+          "verses": 58
+        },
+        {
+          "num": 18,
+          "firstVerseId": 7677,
+          "lastVerseId": 7706,
+          "verses": 30
+        },
+        {
+          "num": 19,
+          "firstVerseId": 7707,
+          "lastVerseId": 7730,
+          "verses": 24
+        },
+        {
+          "num": 20,
+          "firstVerseId": 7731,
+          "lastVerseId": 7772,
+          "verses": 42
+        },
+        {
+          "num": 21,
+          "firstVerseId": 7773,
+          "lastVerseId": 7787,
+          "verses": 15
+        },
+        {
+          "num": 22,
+          "firstVerseId": 7788,
+          "lastVerseId": 7810,
+          "verses": 23
+        },
+        {
+          "num": 23,
+          "firstVerseId": 7811,
+          "lastVerseId": 7839,
+          "verses": 29
+        },
+        {
+          "num": 24,
+          "firstVerseId": 7840,
+          "lastVerseId": 7861,
+          "verses": 22
+        },
+        {
+          "num": 25,
+          "firstVerseId": 7862,
+          "lastVerseId": 7905,
+          "verses": 44
+        },
+        {
+          "num": 26,
+          "firstVerseId": 7906,
+          "lastVerseId": 7930,
+          "verses": 25
+        },
+        {
+          "num": 27,
+          "firstVerseId": 7931,
+          "lastVerseId": 7942,
+          "verses": 12
+        },
+        {
+          "num": 28,
+          "firstVerseId": 7943,
+          "lastVerseId": 7967,
+          "verses": 25
+        },
+        {
+          "num": 29,
+          "firstVerseId": 7968,
+          "lastVerseId": 7978,
+          "verses": 11
+        },
+        {
+          "num": 30,
+          "firstVerseId": 7979,
+          "lastVerseId": 8009,
+          "verses": 31
+        },
+        {
+          "num": 31,
+          "firstVerseId": 8010,
+          "lastVerseId": 8022,
+          "verses": 13
+        }
+      ]
+    },
+    {
+      "num": 10,
+      "title": "사무엘하",
+      "slug": "10-사무엘하",
+      "firstVerseId": 8023,
+      "lastVerseId": 8717,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 8023,
+          "lastVerseId": 8049,
+          "verses": 27
+        },
+        {
+          "num": 2,
+          "firstVerseId": 8050,
+          "lastVerseId": 8081,
+          "verses": 32
+        },
+        {
+          "num": 3,
+          "firstVerseId": 8082,
+          "lastVerseId": 8120,
+          "verses": 39
+        },
+        {
+          "num": 4,
+          "firstVerseId": 8121,
+          "lastVerseId": 8132,
+          "verses": 12
+        },
+        {
+          "num": 5,
+          "firstVerseId": 8133,
+          "lastVerseId": 8157,
+          "verses": 25
+        },
+        {
+          "num": 6,
+          "firstVerseId": 8158,
+          "lastVerseId": 8180,
+          "verses": 23
+        },
+        {
+          "num": 7,
+          "firstVerseId": 8181,
+          "lastVerseId": 8209,
+          "verses": 29
+        },
+        {
+          "num": 8,
+          "firstVerseId": 8210,
+          "lastVerseId": 8227,
+          "verses": 18
+        },
+        {
+          "num": 9,
+          "firstVerseId": 8228,
+          "lastVerseId": 8240,
+          "verses": 13
+        },
+        {
+          "num": 10,
+          "firstVerseId": 8241,
+          "lastVerseId": 8259,
+          "verses": 19
+        },
+        {
+          "num": 11,
+          "firstVerseId": 8260,
+          "lastVerseId": 8286,
+          "verses": 27
+        },
+        {
+          "num": 12,
+          "firstVerseId": 8287,
+          "lastVerseId": 8317,
+          "verses": 31
+        },
+        {
+          "num": 13,
+          "firstVerseId": 8318,
+          "lastVerseId": 8356,
+          "verses": 39
+        },
+        {
+          "num": 14,
+          "firstVerseId": 8357,
+          "lastVerseId": 8389,
+          "verses": 33
+        },
+        {
+          "num": 15,
+          "firstVerseId": 8390,
+          "lastVerseId": 8426,
+          "verses": 37
+        },
+        {
+          "num": 16,
+          "firstVerseId": 8427,
+          "lastVerseId": 8449,
+          "verses": 23
+        },
+        {
+          "num": 17,
+          "firstVerseId": 8450,
+          "lastVerseId": 8478,
+          "verses": 29
+        },
+        {
+          "num": 18,
+          "firstVerseId": 8479,
+          "lastVerseId": 8511,
+          "verses": 33
+        },
+        {
+          "num": 19,
+          "firstVerseId": 8512,
+          "lastVerseId": 8554,
+          "verses": 43
+        },
+        {
+          "num": 20,
+          "firstVerseId": 8555,
+          "lastVerseId": 8580,
+          "verses": 26
+        },
+        {
+          "num": 21,
+          "firstVerseId": 8581,
+          "lastVerseId": 8602,
+          "verses": 22
+        },
+        {
+          "num": 22,
+          "firstVerseId": 8603,
+          "lastVerseId": 8653,
+          "verses": 51
+        },
+        {
+          "num": 23,
+          "firstVerseId": 8654,
+          "lastVerseId": 8692,
+          "verses": 39
+        },
+        {
+          "num": 24,
+          "firstVerseId": 8693,
+          "lastVerseId": 8717,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 11,
+      "title": "열왕기상",
+      "slug": "11-열왕기상",
+      "firstVerseId": 8718,
+      "lastVerseId": 9533,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 8718,
+          "lastVerseId": 8770,
+          "verses": 53
+        },
+        {
+          "num": 2,
+          "firstVerseId": 8771,
+          "lastVerseId": 8816,
+          "verses": 46
+        },
+        {
+          "num": 3,
+          "firstVerseId": 8817,
+          "lastVerseId": 8844,
+          "verses": 28
+        },
+        {
+          "num": 4,
+          "firstVerseId": 8845,
+          "lastVerseId": 8878,
+          "verses": 34
+        },
+        {
+          "num": 5,
+          "firstVerseId": 8879,
+          "lastVerseId": 8896,
+          "verses": 18
+        },
+        {
+          "num": 6,
+          "firstVerseId": 8897,
+          "lastVerseId": 8934,
+          "verses": 38
+        },
+        {
+          "num": 7,
+          "firstVerseId": 8935,
+          "lastVerseId": 8985,
+          "verses": 51
+        },
+        {
+          "num": 8,
+          "firstVerseId": 8986,
+          "lastVerseId": 9051,
+          "verses": 66
+        },
+        {
+          "num": 9,
+          "firstVerseId": 9052,
+          "lastVerseId": 9079,
+          "verses": 28
+        },
+        {
+          "num": 10,
+          "firstVerseId": 9080,
+          "lastVerseId": 9108,
+          "verses": 29
+        },
+        {
+          "num": 11,
+          "firstVerseId": 9109,
+          "lastVerseId": 9151,
+          "verses": 43
+        },
+        {
+          "num": 12,
+          "firstVerseId": 9152,
+          "lastVerseId": 9184,
+          "verses": 33
+        },
+        {
+          "num": 13,
+          "firstVerseId": 9185,
+          "lastVerseId": 9218,
+          "verses": 34
+        },
+        {
+          "num": 14,
+          "firstVerseId": 9219,
+          "lastVerseId": 9249,
+          "verses": 31
+        },
+        {
+          "num": 15,
+          "firstVerseId": 9250,
+          "lastVerseId": 9283,
+          "verses": 34
+        },
+        {
+          "num": 16,
+          "firstVerseId": 9284,
+          "lastVerseId": 9317,
+          "verses": 34
+        },
+        {
+          "num": 17,
+          "firstVerseId": 9318,
+          "lastVerseId": 9341,
+          "verses": 24
+        },
+        {
+          "num": 18,
+          "firstVerseId": 9342,
+          "lastVerseId": 9387,
+          "verses": 46
+        },
+        {
+          "num": 19,
+          "firstVerseId": 9388,
+          "lastVerseId": 9408,
+          "verses": 21
+        },
+        {
+          "num": 20,
+          "firstVerseId": 9409,
+          "lastVerseId": 9451,
+          "verses": 43
+        },
+        {
+          "num": 21,
+          "firstVerseId": 9452,
+          "lastVerseId": 9480,
+          "verses": 29
+        },
+        {
+          "num": 22,
+          "firstVerseId": 9481,
+          "lastVerseId": 9533,
+          "verses": 53
+        }
+      ]
+    },
+    {
+      "num": 12,
+      "title": "열왕기하",
+      "slug": "12-열왕기하",
+      "firstVerseId": 9534,
+      "lastVerseId": 10252,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 9534,
+          "lastVerseId": 9551,
+          "verses": 18
+        },
+        {
+          "num": 2,
+          "firstVerseId": 9552,
+          "lastVerseId": 9576,
+          "verses": 25
+        },
+        {
+          "num": 3,
+          "firstVerseId": 9577,
+          "lastVerseId": 9603,
+          "verses": 27
+        },
+        {
+          "num": 4,
+          "firstVerseId": 9604,
+          "lastVerseId": 9647,
+          "verses": 44
+        },
+        {
+          "num": 5,
+          "firstVerseId": 9648,
+          "lastVerseId": 9674,
+          "verses": 27
+        },
+        {
+          "num": 6,
+          "firstVerseId": 9675,
+          "lastVerseId": 9707,
+          "verses": 33
+        },
+        {
+          "num": 7,
+          "firstVerseId": 9708,
+          "lastVerseId": 9727,
+          "verses": 20
+        },
+        {
+          "num": 8,
+          "firstVerseId": 9728,
+          "lastVerseId": 9756,
+          "verses": 29
+        },
+        {
+          "num": 9,
+          "firstVerseId": 9757,
+          "lastVerseId": 9793,
+          "verses": 37
+        },
+        {
+          "num": 10,
+          "firstVerseId": 9794,
+          "lastVerseId": 9829,
+          "verses": 36
+        },
+        {
+          "num": 11,
+          "firstVerseId": 9830,
+          "lastVerseId": 9850,
+          "verses": 21
+        },
+        {
+          "num": 12,
+          "firstVerseId": 9851,
+          "lastVerseId": 9871,
+          "verses": 21
+        },
+        {
+          "num": 13,
+          "firstVerseId": 9872,
+          "lastVerseId": 9896,
+          "verses": 25
+        },
+        {
+          "num": 14,
+          "firstVerseId": 9897,
+          "lastVerseId": 9925,
+          "verses": 29
+        },
+        {
+          "num": 15,
+          "firstVerseId": 9926,
+          "lastVerseId": 9963,
+          "verses": 38
+        },
+        {
+          "num": 16,
+          "firstVerseId": 9964,
+          "lastVerseId": 9983,
+          "verses": 20
+        },
+        {
+          "num": 17,
+          "firstVerseId": 9984,
+          "lastVerseId": 10024,
+          "verses": 41
+        },
+        {
+          "num": 18,
+          "firstVerseId": 10025,
+          "lastVerseId": 10061,
+          "verses": 37
+        },
+        {
+          "num": 19,
+          "firstVerseId": 10062,
+          "lastVerseId": 10098,
+          "verses": 37
+        },
+        {
+          "num": 20,
+          "firstVerseId": 10099,
+          "lastVerseId": 10119,
+          "verses": 21
+        },
+        {
+          "num": 21,
+          "firstVerseId": 10120,
+          "lastVerseId": 10145,
+          "verses": 26
+        },
+        {
+          "num": 22,
+          "firstVerseId": 10146,
+          "lastVerseId": 10165,
+          "verses": 20
+        },
+        {
+          "num": 23,
+          "firstVerseId": 10166,
+          "lastVerseId": 10202,
+          "verses": 37
+        },
+        {
+          "num": 24,
+          "firstVerseId": 10203,
+          "lastVerseId": 10222,
+          "verses": 20
+        },
+        {
+          "num": 25,
+          "firstVerseId": 10223,
+          "lastVerseId": 10252,
+          "verses": 30
+        }
+      ]
+    },
+    {
+      "num": 13,
+      "title": "역대기상",
+      "slug": "13-역대기상",
+      "firstVerseId": 10253,
+      "lastVerseId": 11194,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 10253,
+          "lastVerseId": 10306,
+          "verses": 54
+        },
+        {
+          "num": 2,
+          "firstVerseId": 10307,
+          "lastVerseId": 10361,
+          "verses": 55
+        },
+        {
+          "num": 3,
+          "firstVerseId": 10362,
+          "lastVerseId": 10385,
+          "verses": 24
+        },
+        {
+          "num": 4,
+          "firstVerseId": 10386,
+          "lastVerseId": 10428,
+          "verses": 43
+        },
+        {
+          "num": 5,
+          "firstVerseId": 10429,
+          "lastVerseId": 10454,
+          "verses": 26
+        },
+        {
+          "num": 6,
+          "firstVerseId": 10455,
+          "lastVerseId": 10535,
+          "verses": 81
+        },
+        {
+          "num": 7,
+          "firstVerseId": 10536,
+          "lastVerseId": 10575,
+          "verses": 40
+        },
+        {
+          "num": 8,
+          "firstVerseId": 10576,
+          "lastVerseId": 10615,
+          "verses": 40
+        },
+        {
+          "num": 9,
+          "firstVerseId": 10616,
+          "lastVerseId": 10659,
+          "verses": 44
+        },
+        {
+          "num": 10,
+          "firstVerseId": 10660,
+          "lastVerseId": 10673,
+          "verses": 14
+        },
+        {
+          "num": 11,
+          "firstVerseId": 10674,
+          "lastVerseId": 10720,
+          "verses": 47
+        },
+        {
+          "num": 12,
+          "firstVerseId": 10721,
+          "lastVerseId": 10760,
+          "verses": 40
+        },
+        {
+          "num": 13,
+          "firstVerseId": 10761,
+          "lastVerseId": 10774,
+          "verses": 14
+        },
+        {
+          "num": 14,
+          "firstVerseId": 10775,
+          "lastVerseId": 10791,
+          "verses": 17
+        },
+        {
+          "num": 15,
+          "firstVerseId": 10792,
+          "lastVerseId": 10820,
+          "verses": 29
+        },
+        {
+          "num": 16,
+          "firstVerseId": 10821,
+          "lastVerseId": 10863,
+          "verses": 43
+        },
+        {
+          "num": 17,
+          "firstVerseId": 10864,
+          "lastVerseId": 10890,
+          "verses": 27
+        },
+        {
+          "num": 18,
+          "firstVerseId": 10891,
+          "lastVerseId": 10907,
+          "verses": 17
+        },
+        {
+          "num": 19,
+          "firstVerseId": 10908,
+          "lastVerseId": 10926,
+          "verses": 19
+        },
+        {
+          "num": 20,
+          "firstVerseId": 10927,
+          "lastVerseId": 10934,
+          "verses": 8
+        },
+        {
+          "num": 21,
+          "firstVerseId": 10935,
+          "lastVerseId": 10964,
+          "verses": 30
+        },
+        {
+          "num": 22,
+          "firstVerseId": 10965,
+          "lastVerseId": 10983,
+          "verses": 19
+        },
+        {
+          "num": 23,
+          "firstVerseId": 10984,
+          "lastVerseId": 11015,
+          "verses": 32
+        },
+        {
+          "num": 24,
+          "firstVerseId": 11016,
+          "lastVerseId": 11046,
+          "verses": 31
+        },
+        {
+          "num": 25,
+          "firstVerseId": 11047,
+          "lastVerseId": 11077,
+          "verses": 31
+        },
+        {
+          "num": 26,
+          "firstVerseId": 11078,
+          "lastVerseId": 11109,
+          "verses": 32
+        },
+        {
+          "num": 27,
+          "firstVerseId": 11110,
+          "lastVerseId": 11143,
+          "verses": 34
+        },
+        {
+          "num": 28,
+          "firstVerseId": 11144,
+          "lastVerseId": 11164,
+          "verses": 21
+        },
+        {
+          "num": 29,
+          "firstVerseId": 11165,
+          "lastVerseId": 11194,
+          "verses": 30
+        }
+      ]
+    },
+    {
+      "num": 14,
+      "title": "역대기하",
+      "slug": "14-역대기하",
+      "firstVerseId": 11195,
+      "lastVerseId": 12016,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 11195,
+          "lastVerseId": 11211,
+          "verses": 17
+        },
+        {
+          "num": 2,
+          "firstVerseId": 11212,
+          "lastVerseId": 11229,
+          "verses": 18
+        },
+        {
+          "num": 3,
+          "firstVerseId": 11230,
+          "lastVerseId": 11246,
+          "verses": 17
+        },
+        {
+          "num": 4,
+          "firstVerseId": 11247,
+          "lastVerseId": 11268,
+          "verses": 22
+        },
+        {
+          "num": 5,
+          "firstVerseId": 11269,
+          "lastVerseId": 11282,
+          "verses": 14
+        },
+        {
+          "num": 6,
+          "firstVerseId": 11283,
+          "lastVerseId": 11324,
+          "verses": 42
+        },
+        {
+          "num": 7,
+          "firstVerseId": 11325,
+          "lastVerseId": 11346,
+          "verses": 22
+        },
+        {
+          "num": 8,
+          "firstVerseId": 11347,
+          "lastVerseId": 11364,
+          "verses": 18
+        },
+        {
+          "num": 9,
+          "firstVerseId": 11365,
+          "lastVerseId": 11395,
+          "verses": 31
+        },
+        {
+          "num": 10,
+          "firstVerseId": 11396,
+          "lastVerseId": 11414,
+          "verses": 19
+        },
+        {
+          "num": 11,
+          "firstVerseId": 11415,
+          "lastVerseId": 11437,
+          "verses": 23
+        },
+        {
+          "num": 12,
+          "firstVerseId": 11438,
+          "lastVerseId": 11453,
+          "verses": 16
+        },
+        {
+          "num": 13,
+          "firstVerseId": 11454,
+          "lastVerseId": 11475,
+          "verses": 22
+        },
+        {
+          "num": 14,
+          "firstVerseId": 11476,
+          "lastVerseId": 11490,
+          "verses": 15
+        },
+        {
+          "num": 15,
+          "firstVerseId": 11491,
+          "lastVerseId": 11509,
+          "verses": 19
+        },
+        {
+          "num": 16,
+          "firstVerseId": 11510,
+          "lastVerseId": 11523,
+          "verses": 14
+        },
+        {
+          "num": 17,
+          "firstVerseId": 11524,
+          "lastVerseId": 11542,
+          "verses": 19
+        },
+        {
+          "num": 18,
+          "firstVerseId": 11543,
+          "lastVerseId": 11576,
+          "verses": 34
+        },
+        {
+          "num": 19,
+          "firstVerseId": 11577,
+          "lastVerseId": 11587,
+          "verses": 11
+        },
+        {
+          "num": 20,
+          "firstVerseId": 11588,
+          "lastVerseId": 11624,
+          "verses": 37
+        },
+        {
+          "num": 21,
+          "firstVerseId": 11625,
+          "lastVerseId": 11644,
+          "verses": 20
+        },
+        {
+          "num": 22,
+          "firstVerseId": 11645,
+          "lastVerseId": 11656,
+          "verses": 12
+        },
+        {
+          "num": 23,
+          "firstVerseId": 11657,
+          "lastVerseId": 11677,
+          "verses": 21
+        },
+        {
+          "num": 24,
+          "firstVerseId": 11678,
+          "lastVerseId": 11704,
+          "verses": 27
+        },
+        {
+          "num": 25,
+          "firstVerseId": 11705,
+          "lastVerseId": 11732,
+          "verses": 28
+        },
+        {
+          "num": 26,
+          "firstVerseId": 11733,
+          "lastVerseId": 11755,
+          "verses": 23
+        },
+        {
+          "num": 27,
+          "firstVerseId": 11756,
+          "lastVerseId": 11764,
+          "verses": 9
+        },
+        {
+          "num": 28,
+          "firstVerseId": 11765,
+          "lastVerseId": 11791,
+          "verses": 27
+        },
+        {
+          "num": 29,
+          "firstVerseId": 11792,
+          "lastVerseId": 11827,
+          "verses": 36
+        },
+        {
+          "num": 30,
+          "firstVerseId": 11828,
+          "lastVerseId": 11854,
+          "verses": 27
+        },
+        {
+          "num": 31,
+          "firstVerseId": 11855,
+          "lastVerseId": 11875,
+          "verses": 21
+        },
+        {
+          "num": 32,
+          "firstVerseId": 11876,
+          "lastVerseId": 11908,
+          "verses": 33
+        },
+        {
+          "num": 33,
+          "firstVerseId": 11909,
+          "lastVerseId": 11933,
+          "verses": 25
+        },
+        {
+          "num": 34,
+          "firstVerseId": 11934,
+          "lastVerseId": 11966,
+          "verses": 33
+        },
+        {
+          "num": 35,
+          "firstVerseId": 11967,
+          "lastVerseId": 11993,
+          "verses": 27
+        },
+        {
+          "num": 36,
+          "firstVerseId": 11994,
+          "lastVerseId": 12016,
+          "verses": 23
+        }
+      ]
+    },
+    {
+      "num": 15,
+      "title": "에스라",
+      "slug": "15-에스라",
+      "firstVerseId": 12017,
+      "lastVerseId": 12296,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 12017,
+          "lastVerseId": 12027,
+          "verses": 11
+        },
+        {
+          "num": 2,
+          "firstVerseId": 12028,
+          "lastVerseId": 12097,
+          "verses": 70
+        },
+        {
+          "num": 3,
+          "firstVerseId": 12098,
+          "lastVerseId": 12110,
+          "verses": 13
+        },
+        {
+          "num": 4,
+          "firstVerseId": 12111,
+          "lastVerseId": 12134,
+          "verses": 24
+        },
+        {
+          "num": 5,
+          "firstVerseId": 12135,
+          "lastVerseId": 12151,
+          "verses": 17
+        },
+        {
+          "num": 6,
+          "firstVerseId": 12152,
+          "lastVerseId": 12173,
+          "verses": 22
+        },
+        {
+          "num": 7,
+          "firstVerseId": 12174,
+          "lastVerseId": 12201,
+          "verses": 28
+        },
+        {
+          "num": 8,
+          "firstVerseId": 12202,
+          "lastVerseId": 12237,
+          "verses": 36
+        },
+        {
+          "num": 9,
+          "firstVerseId": 12238,
+          "lastVerseId": 12252,
+          "verses": 15
+        },
+        {
+          "num": 10,
+          "firstVerseId": 12253,
+          "lastVerseId": 12296,
+          "verses": 44
+        }
+      ]
+    },
+    {
+      "num": 16,
+      "title": "느헤미야",
+      "slug": "16-느헤미야",
+      "firstVerseId": 12297,
+      "lastVerseId": 12702,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 12297,
+          "lastVerseId": 12307,
+          "verses": 11
+        },
+        {
+          "num": 2,
+          "firstVerseId": 12308,
+          "lastVerseId": 12327,
+          "verses": 20
+        },
+        {
+          "num": 3,
+          "firstVerseId": 12328,
+          "lastVerseId": 12359,
+          "verses": 32
+        },
+        {
+          "num": 4,
+          "firstVerseId": 12360,
+          "lastVerseId": 12382,
+          "verses": 23
+        },
+        {
+          "num": 5,
+          "firstVerseId": 12383,
+          "lastVerseId": 12401,
+          "verses": 19
+        },
+        {
+          "num": 6,
+          "firstVerseId": 12402,
+          "lastVerseId": 12420,
+          "verses": 19
+        },
+        {
+          "num": 7,
+          "firstVerseId": 12421,
+          "lastVerseId": 12493,
+          "verses": 73
+        },
+        {
+          "num": 8,
+          "firstVerseId": 12494,
+          "lastVerseId": 12511,
+          "verses": 18
+        },
+        {
+          "num": 9,
+          "firstVerseId": 12512,
+          "lastVerseId": 12549,
+          "verses": 38
+        },
+        {
+          "num": 10,
+          "firstVerseId": 12550,
+          "lastVerseId": 12588,
+          "verses": 39
+        },
+        {
+          "num": 11,
+          "firstVerseId": 12589,
+          "lastVerseId": 12624,
+          "verses": 36
+        },
+        {
+          "num": 12,
+          "firstVerseId": 12625,
+          "lastVerseId": 12671,
+          "verses": 47
+        },
+        {
+          "num": 13,
+          "firstVerseId": 12672,
+          "lastVerseId": 12702,
+          "verses": 31
+        }
+      ]
+    },
+    {
+      "num": 17,
+      "title": "에스더",
+      "slug": "17-에스더",
+      "firstVerseId": 12703,
+      "lastVerseId": 12869,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 12703,
+          "lastVerseId": 12724,
+          "verses": 22
+        },
+        {
+          "num": 2,
+          "firstVerseId": 12725,
+          "lastVerseId": 12747,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 12748,
+          "lastVerseId": 12762,
+          "verses": 15
+        },
+        {
+          "num": 4,
+          "firstVerseId": 12763,
+          "lastVerseId": 12779,
+          "verses": 17
+        },
+        {
+          "num": 5,
+          "firstVerseId": 12780,
+          "lastVerseId": 12793,
+          "verses": 14
+        },
+        {
+          "num": 6,
+          "firstVerseId": 12794,
+          "lastVerseId": 12807,
+          "verses": 14
+        },
+        {
+          "num": 7,
+          "firstVerseId": 12808,
+          "lastVerseId": 12817,
+          "verses": 10
+        },
+        {
+          "num": 8,
+          "firstVerseId": 12818,
+          "lastVerseId": 12834,
+          "verses": 17
+        },
+        {
+          "num": 9,
+          "firstVerseId": 12835,
+          "lastVerseId": 12866,
+          "verses": 32
+        },
+        {
+          "num": 10,
+          "firstVerseId": 12867,
+          "lastVerseId": 12869,
+          "verses": 3
+        }
+      ]
+    },
+    {
+      "num": 18,
+      "title": "욥기",
+      "slug": "18-욥기",
+      "firstVerseId": 12870,
+      "lastVerseId": 13939,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 12870,
+          "lastVerseId": 12891,
+          "verses": 22
+        },
+        {
+          "num": 2,
+          "firstVerseId": 12892,
+          "lastVerseId": 12904,
+          "verses": 13
+        },
+        {
+          "num": 3,
+          "firstVerseId": 12905,
+          "lastVerseId": 12930,
+          "verses": 26
+        },
+        {
+          "num": 4,
+          "firstVerseId": 12931,
+          "lastVerseId": 12951,
+          "verses": 21
+        },
+        {
+          "num": 5,
+          "firstVerseId": 12952,
+          "lastVerseId": 12978,
+          "verses": 27
+        },
+        {
+          "num": 6,
+          "firstVerseId": 12979,
+          "lastVerseId": 13008,
+          "verses": 30
+        },
+        {
+          "num": 7,
+          "firstVerseId": 13009,
+          "lastVerseId": 13029,
+          "verses": 21
+        },
+        {
+          "num": 8,
+          "firstVerseId": 13030,
+          "lastVerseId": 13051,
+          "verses": 22
+        },
+        {
+          "num": 9,
+          "firstVerseId": 13052,
+          "lastVerseId": 13086,
+          "verses": 35
+        },
+        {
+          "num": 10,
+          "firstVerseId": 13087,
+          "lastVerseId": 13108,
+          "verses": 22
+        },
+        {
+          "num": 11,
+          "firstVerseId": 13109,
+          "lastVerseId": 13128,
+          "verses": 20
+        },
+        {
+          "num": 12,
+          "firstVerseId": 13129,
+          "lastVerseId": 13153,
+          "verses": 25
+        },
+        {
+          "num": 13,
+          "firstVerseId": 13154,
+          "lastVerseId": 13181,
+          "verses": 28
+        },
+        {
+          "num": 14,
+          "firstVerseId": 13182,
+          "lastVerseId": 13203,
+          "verses": 22
+        },
+        {
+          "num": 15,
+          "firstVerseId": 13204,
+          "lastVerseId": 13238,
+          "verses": 35
+        },
+        {
+          "num": 16,
+          "firstVerseId": 13239,
+          "lastVerseId": 13260,
+          "verses": 22
+        },
+        {
+          "num": 17,
+          "firstVerseId": 13261,
+          "lastVerseId": 13276,
+          "verses": 16
+        },
+        {
+          "num": 18,
+          "firstVerseId": 13277,
+          "lastVerseId": 13297,
+          "verses": 21
+        },
+        {
+          "num": 19,
+          "firstVerseId": 13298,
+          "lastVerseId": 13326,
+          "verses": 29
+        },
+        {
+          "num": 20,
+          "firstVerseId": 13327,
+          "lastVerseId": 13355,
+          "verses": 29
+        },
+        {
+          "num": 21,
+          "firstVerseId": 13356,
+          "lastVerseId": 13389,
+          "verses": 34
+        },
+        {
+          "num": 22,
+          "firstVerseId": 13390,
+          "lastVerseId": 13419,
+          "verses": 30
+        },
+        {
+          "num": 23,
+          "firstVerseId": 13420,
+          "lastVerseId": 13436,
+          "verses": 17
+        },
+        {
+          "num": 24,
+          "firstVerseId": 13437,
+          "lastVerseId": 13461,
+          "verses": 25
+        },
+        {
+          "num": 25,
+          "firstVerseId": 13462,
+          "lastVerseId": 13467,
+          "verses": 6
+        },
+        {
+          "num": 26,
+          "firstVerseId": 13468,
+          "lastVerseId": 13481,
+          "verses": 14
+        },
+        {
+          "num": 27,
+          "firstVerseId": 13482,
+          "lastVerseId": 13504,
+          "verses": 23
+        },
+        {
+          "num": 28,
+          "firstVerseId": 13505,
+          "lastVerseId": 13532,
+          "verses": 28
+        },
+        {
+          "num": 29,
+          "firstVerseId": 13533,
+          "lastVerseId": 13557,
+          "verses": 25
+        },
+        {
+          "num": 30,
+          "firstVerseId": 13558,
+          "lastVerseId": 13588,
+          "verses": 31
+        },
+        {
+          "num": 31,
+          "firstVerseId": 13589,
+          "lastVerseId": 13628,
+          "verses": 40
+        },
+        {
+          "num": 32,
+          "firstVerseId": 13629,
+          "lastVerseId": 13650,
+          "verses": 22
+        },
+        {
+          "num": 33,
+          "firstVerseId": 13651,
+          "lastVerseId": 13683,
+          "verses": 33
+        },
+        {
+          "num": 34,
+          "firstVerseId": 13684,
+          "lastVerseId": 13720,
+          "verses": 37
+        },
+        {
+          "num": 35,
+          "firstVerseId": 13721,
+          "lastVerseId": 13736,
+          "verses": 16
+        },
+        {
+          "num": 36,
+          "firstVerseId": 13737,
+          "lastVerseId": 13769,
+          "verses": 33
+        },
+        {
+          "num": 37,
+          "firstVerseId": 13770,
+          "lastVerseId": 13793,
+          "verses": 24
+        },
+        {
+          "num": 38,
+          "firstVerseId": 13794,
+          "lastVerseId": 13834,
+          "verses": 41
+        },
+        {
+          "num": 39,
+          "firstVerseId": 13835,
+          "lastVerseId": 13864,
+          "verses": 30
+        },
+        {
+          "num": 40,
+          "firstVerseId": 13865,
+          "lastVerseId": 13888,
+          "verses": 24
+        },
+        {
+          "num": 41,
+          "firstVerseId": 13889,
+          "lastVerseId": 13922,
+          "verses": 34
+        },
+        {
+          "num": 42,
+          "firstVerseId": 13923,
+          "lastVerseId": 13939,
+          "verses": 17
+        }
+      ]
+    },
+    {
+      "num": 19,
+      "title": "시편",
+      "slug": "19-시편",
+      "firstVerseId": 13940,
+      "lastVerseId": 16516,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 13940,
+          "lastVerseId": 13945,
+          "verses": 6
+        },
+        {
+          "num": 2,
+          "firstVerseId": 13946,
+          "lastVerseId": 13957,
+          "verses": 12
+        },
+        {
+          "num": 3,
+          "firstVerseId": 13958,
+          "lastVerseId": 13966,
+          "verses": 9
+        },
+        {
+          "num": 4,
+          "firstVerseId": 13967,
+          "lastVerseId": 13975,
+          "verses": 9
+        },
+        {
+          "num": 5,
+          "firstVerseId": 13976,
+          "lastVerseId": 13988,
+          "verses": 13
+        },
+        {
+          "num": 6,
+          "firstVerseId": 13989,
+          "lastVerseId": 13999,
+          "verses": 11
+        },
+        {
+          "num": 7,
+          "firstVerseId": 14000,
+          "lastVerseId": 14017,
+          "verses": 18
+        },
+        {
+          "num": 8,
+          "firstVerseId": 14018,
+          "lastVerseId": 14027,
+          "verses": 10
+        },
+        {
+          "num": 9,
+          "firstVerseId": 14028,
+          "lastVerseId": 14048,
+          "verses": 21
+        },
+        {
+          "num": 10,
+          "firstVerseId": 14049,
+          "lastVerseId": 14066,
+          "verses": 18
+        },
+        {
+          "num": 11,
+          "firstVerseId": 14067,
+          "lastVerseId": 14074,
+          "verses": 8
+        },
+        {
+          "num": 12,
+          "firstVerseId": 14075,
+          "lastVerseId": 14083,
+          "verses": 9
+        },
+        {
+          "num": 13,
+          "firstVerseId": 14084,
+          "lastVerseId": 14090,
+          "verses": 7
+        },
+        {
+          "num": 14,
+          "firstVerseId": 14091,
+          "lastVerseId": 14098,
+          "verses": 8
+        },
+        {
+          "num": 15,
+          "firstVerseId": 14099,
+          "lastVerseId": 14104,
+          "verses": 6
+        },
+        {
+          "num": 16,
+          "firstVerseId": 14105,
+          "lastVerseId": 14116,
+          "verses": 12
+        },
+        {
+          "num": 17,
+          "firstVerseId": 14117,
+          "lastVerseId": 14132,
+          "verses": 16
+        },
+        {
+          "num": 18,
+          "firstVerseId": 14133,
+          "lastVerseId": 14183,
+          "verses": 51
+        },
+        {
+          "num": 19,
+          "firstVerseId": 14184,
+          "lastVerseId": 14198,
+          "verses": 15
+        },
+        {
+          "num": 20,
+          "firstVerseId": 14199,
+          "lastVerseId": 14208,
+          "verses": 10
+        },
+        {
+          "num": 21,
+          "firstVerseId": 14209,
+          "lastVerseId": 14222,
+          "verses": 14
+        },
+        {
+          "num": 22,
+          "firstVerseId": 14223,
+          "lastVerseId": 14254,
+          "verses": 32
+        },
+        {
+          "num": 23,
+          "firstVerseId": 14255,
+          "lastVerseId": 14261,
+          "verses": 7
+        },
+        {
+          "num": 24,
+          "firstVerseId": 14262,
+          "lastVerseId": 14272,
+          "verses": 11
+        },
+        {
+          "num": 25,
+          "firstVerseId": 14273,
+          "lastVerseId": 14295,
+          "verses": 23
+        },
+        {
+          "num": 26,
+          "firstVerseId": 14296,
+          "lastVerseId": 14308,
+          "verses": 13
+        },
+        {
+          "num": 27,
+          "firstVerseId": 14309,
+          "lastVerseId": 14323,
+          "verses": 15
+        },
+        {
+          "num": 28,
+          "firstVerseId": 14324,
+          "lastVerseId": 14333,
+          "verses": 10
+        },
+        {
+          "num": 29,
+          "firstVerseId": 14334,
+          "lastVerseId": 14345,
+          "verses": 12
+        },
+        {
+          "num": 30,
+          "firstVerseId": 14346,
+          "lastVerseId": 14358,
+          "verses": 13
+        },
+        {
+          "num": 31,
+          "firstVerseId": 14359,
+          "lastVerseId": 14383,
+          "verses": 25
+        },
+        {
+          "num": 32,
+          "firstVerseId": 14384,
+          "lastVerseId": 14395,
+          "verses": 12
+        },
+        {
+          "num": 33,
+          "firstVerseId": 14396,
+          "lastVerseId": 14417,
+          "verses": 22
+        },
+        {
+          "num": 34,
+          "firstVerseId": 14418,
+          "lastVerseId": 14440,
+          "verses": 23
+        },
+        {
+          "num": 35,
+          "firstVerseId": 14441,
+          "lastVerseId": 14469,
+          "verses": 29
+        },
+        {
+          "num": 36,
+          "firstVerseId": 14470,
+          "lastVerseId": 14482,
+          "verses": 13
+        },
+        {
+          "num": 37,
+          "firstVerseId": 14483,
+          "lastVerseId": 14523,
+          "verses": 41
+        },
+        {
+          "num": 38,
+          "firstVerseId": 14524,
+          "lastVerseId": 14546,
+          "verses": 23
+        },
+        {
+          "num": 39,
+          "firstVerseId": 14547,
+          "lastVerseId": 14560,
+          "verses": 14
+        },
+        {
+          "num": 40,
+          "firstVerseId": 14561,
+          "lastVerseId": 14578,
+          "verses": 18
+        },
+        {
+          "num": 41,
+          "firstVerseId": 14579,
+          "lastVerseId": 14592,
+          "verses": 14
+        },
+        {
+          "num": 42,
+          "firstVerseId": 14593,
+          "lastVerseId": 14604,
+          "verses": 12
+        },
+        {
+          "num": 43,
+          "firstVerseId": 14605,
+          "lastVerseId": 14609,
+          "verses": 5
+        },
+        {
+          "num": 44,
+          "firstVerseId": 14610,
+          "lastVerseId": 14636,
+          "verses": 27
+        },
+        {
+          "num": 45,
+          "firstVerseId": 14637,
+          "lastVerseId": 14654,
+          "verses": 18
+        },
+        {
+          "num": 46,
+          "firstVerseId": 14655,
+          "lastVerseId": 14666,
+          "verses": 12
+        },
+        {
+          "num": 47,
+          "firstVerseId": 14667,
+          "lastVerseId": 14676,
+          "verses": 10
+        },
+        {
+          "num": 48,
+          "firstVerseId": 14677,
+          "lastVerseId": 14691,
+          "verses": 15
+        },
+        {
+          "num": 49,
+          "firstVerseId": 14692,
+          "lastVerseId": 14712,
+          "verses": 21
+        },
+        {
+          "num": 50,
+          "firstVerseId": 14713,
+          "lastVerseId": 14736,
+          "verses": 24
+        },
+        {
+          "num": 51,
+          "firstVerseId": 14737,
+          "lastVerseId": 14756,
+          "verses": 20
+        },
+        {
+          "num": 52,
+          "firstVerseId": 14757,
+          "lastVerseId": 14766,
+          "verses": 10
+        },
+        {
+          "num": 53,
+          "firstVerseId": 14767,
+          "lastVerseId": 14773,
+          "verses": 7
+        },
+        {
+          "num": 54,
+          "firstVerseId": 14774,
+          "lastVerseId": 14781,
+          "verses": 8
+        },
+        {
+          "num": 55,
+          "firstVerseId": 14782,
+          "lastVerseId": 14805,
+          "verses": 24
+        },
+        {
+          "num": 56,
+          "firstVerseId": 14806,
+          "lastVerseId": 14819,
+          "verses": 14
+        },
+        {
+          "num": 57,
+          "firstVerseId": 14820,
+          "lastVerseId": 14831,
+          "verses": 12
+        },
+        {
+          "num": 58,
+          "firstVerseId": 14832,
+          "lastVerseId": 14843,
+          "verses": 12
+        },
+        {
+          "num": 59,
+          "firstVerseId": 14844,
+          "lastVerseId": 14861,
+          "verses": 18
+        },
+        {
+          "num": 60,
+          "firstVerseId": 14862,
+          "lastVerseId": 14874,
+          "verses": 13
+        },
+        {
+          "num": 61,
+          "firstVerseId": 14875,
+          "lastVerseId": 14883,
+          "verses": 9
+        },
+        {
+          "num": 62,
+          "firstVerseId": 14884,
+          "lastVerseId": 14896,
+          "verses": 13
+        },
+        {
+          "num": 63,
+          "firstVerseId": 14897,
+          "lastVerseId": 14908,
+          "verses": 12
+        },
+        {
+          "num": 64,
+          "firstVerseId": 14909,
+          "lastVerseId": 14919,
+          "verses": 11
+        },
+        {
+          "num": 65,
+          "firstVerseId": 14920,
+          "lastVerseId": 14933,
+          "verses": 14
+        },
+        {
+          "num": 66,
+          "firstVerseId": 14934,
+          "lastVerseId": 14954,
+          "verses": 21
+        },
+        {
+          "num": 67,
+          "firstVerseId": 14955,
+          "lastVerseId": 14962,
+          "verses": 8
+        },
+        {
+          "num": 68,
+          "firstVerseId": 14963,
+          "lastVerseId": 14998,
+          "verses": 36
+        },
+        {
+          "num": 69,
+          "firstVerseId": 14999,
+          "lastVerseId": 15035,
+          "verses": 37
+        },
+        {
+          "num": 70,
+          "firstVerseId": 15036,
+          "lastVerseId": 15041,
+          "verses": 6
+        },
+        {
+          "num": 71,
+          "firstVerseId": 15042,
+          "lastVerseId": 15065,
+          "verses": 24
+        },
+        {
+          "num": 72,
+          "firstVerseId": 15066,
+          "lastVerseId": 15086,
+          "verses": 21
+        },
+        {
+          "num": 73,
+          "firstVerseId": 15087,
+          "lastVerseId": 15115,
+          "verses": 29
+        },
+        {
+          "num": 74,
+          "firstVerseId": 15116,
+          "lastVerseId": 15139,
+          "verses": 24
+        },
+        {
+          "num": 75,
+          "firstVerseId": 15140,
+          "lastVerseId": 15150,
+          "verses": 11
+        },
+        {
+          "num": 76,
+          "firstVerseId": 15151,
+          "lastVerseId": 15163,
+          "verses": 13
+        },
+        {
+          "num": 77,
+          "firstVerseId": 15164,
+          "lastVerseId": 15184,
+          "verses": 21
+        },
+        {
+          "num": 78,
+          "firstVerseId": 15185,
+          "lastVerseId": 15257,
+          "verses": 73
+        },
+        {
+          "num": 79,
+          "firstVerseId": 15258,
+          "lastVerseId": 15271,
+          "verses": 14
+        },
+        {
+          "num": 80,
+          "firstVerseId": 15272,
+          "lastVerseId": 15291,
+          "verses": 20
+        },
+        {
+          "num": 81,
+          "firstVerseId": 15292,
+          "lastVerseId": 15308,
+          "verses": 17
+        },
+        {
+          "num": 82,
+          "firstVerseId": 15309,
+          "lastVerseId": 15317,
+          "verses": 9
+        },
+        {
+          "num": 83,
+          "firstVerseId": 15318,
+          "lastVerseId": 15336,
+          "verses": 19
+        },
+        {
+          "num": 84,
+          "firstVerseId": 15337,
+          "lastVerseId": 15349,
+          "verses": 13
+        },
+        {
+          "num": 85,
+          "firstVerseId": 15350,
+          "lastVerseId": 15363,
+          "verses": 14
+        },
+        {
+          "num": 86,
+          "firstVerseId": 15364,
+          "lastVerseId": 15381,
+          "verses": 18
+        },
+        {
+          "num": 87,
+          "firstVerseId": 15382,
+          "lastVerseId": 15389,
+          "verses": 8
+        },
+        {
+          "num": 88,
+          "firstVerseId": 15390,
+          "lastVerseId": 15408,
+          "verses": 19
+        },
+        {
+          "num": 89,
+          "firstVerseId": 15409,
+          "lastVerseId": 15461,
+          "verses": 53
+        },
+        {
+          "num": 90,
+          "firstVerseId": 15462,
+          "lastVerseId": 15479,
+          "verses": 18
+        },
+        {
+          "num": 91,
+          "firstVerseId": 15480,
+          "lastVerseId": 15495,
+          "verses": 16
+        },
+        {
+          "num": 92,
+          "firstVerseId": 15496,
+          "lastVerseId": 15511,
+          "verses": 16
+        },
+        {
+          "num": 93,
+          "firstVerseId": 15512,
+          "lastVerseId": 15516,
+          "verses": 5
+        },
+        {
+          "num": 94,
+          "firstVerseId": 15517,
+          "lastVerseId": 15539,
+          "verses": 23
+        },
+        {
+          "num": 95,
+          "firstVerseId": 15540,
+          "lastVerseId": 15550,
+          "verses": 11
+        },
+        {
+          "num": 96,
+          "firstVerseId": 15551,
+          "lastVerseId": 15563,
+          "verses": 13
+        },
+        {
+          "num": 97,
+          "firstVerseId": 15564,
+          "lastVerseId": 15575,
+          "verses": 12
+        },
+        {
+          "num": 98,
+          "firstVerseId": 15576,
+          "lastVerseId": 15585,
+          "verses": 10
+        },
+        {
+          "num": 99,
+          "firstVerseId": 15586,
+          "lastVerseId": 15594,
+          "verses": 9
+        },
+        {
+          "num": 100,
+          "firstVerseId": 15595,
+          "lastVerseId": 15600,
+          "verses": 6
+        },
+        {
+          "num": 101,
+          "firstVerseId": 15601,
+          "lastVerseId": 15609,
+          "verses": 9
+        },
+        {
+          "num": 102,
+          "firstVerseId": 15610,
+          "lastVerseId": 15638,
+          "verses": 29
+        },
+        {
+          "num": 103,
+          "firstVerseId": 15639,
+          "lastVerseId": 15661,
+          "verses": 23
+        },
+        {
+          "num": 104,
+          "firstVerseId": 15662,
+          "lastVerseId": 15696,
+          "verses": 35
+        },
+        {
+          "num": 105,
+          "firstVerseId": 15697,
+          "lastVerseId": 15741,
+          "verses": 45
+        },
+        {
+          "num": 106,
+          "firstVerseId": 15742,
+          "lastVerseId": 15789,
+          "verses": 48
+        },
+        {
+          "num": 107,
+          "firstVerseId": 15790,
+          "lastVerseId": 15832,
+          "verses": 43
+        },
+        {
+          "num": 108,
+          "firstVerseId": 15833,
+          "lastVerseId": 15846,
+          "verses": 14
+        },
+        {
+          "num": 109,
+          "firstVerseId": 15847,
+          "lastVerseId": 15878,
+          "verses": 32
+        },
+        {
+          "num": 110,
+          "firstVerseId": 15879,
+          "lastVerseId": 15886,
+          "verses": 8
+        },
+        {
+          "num": 111,
+          "firstVerseId": 15887,
+          "lastVerseId": 15896,
+          "verses": 10
+        },
+        {
+          "num": 112,
+          "firstVerseId": 15897,
+          "lastVerseId": 15906,
+          "verses": 10
+        },
+        {
+          "num": 113,
+          "firstVerseId": 15907,
+          "lastVerseId": 15915,
+          "verses": 9
+        },
+        {
+          "num": 114,
+          "firstVerseId": 15916,
+          "lastVerseId": 15923,
+          "verses": 8
+        },
+        {
+          "num": 115,
+          "firstVerseId": 15924,
+          "lastVerseId": 15941,
+          "verses": 18
+        },
+        {
+          "num": 116,
+          "firstVerseId": 15942,
+          "lastVerseId": 15960,
+          "verses": 19
+        },
+        {
+          "num": 117,
+          "firstVerseId": 15961,
+          "lastVerseId": 15962,
+          "verses": 2
+        },
+        {
+          "num": 118,
+          "firstVerseId": 15963,
+          "lastVerseId": 15991,
+          "verses": 29
+        },
+        {
+          "num": 119,
+          "firstVerseId": 15992,
+          "lastVerseId": 16167,
+          "verses": 176
+        },
+        {
+          "num": 120,
+          "firstVerseId": 16168,
+          "lastVerseId": 16175,
+          "verses": 8
+        },
+        {
+          "num": 121,
+          "firstVerseId": 16176,
+          "lastVerseId": 16184,
+          "verses": 9
+        },
+        {
+          "num": 122,
+          "firstVerseId": 16185,
+          "lastVerseId": 16194,
+          "verses": 10
+        },
+        {
+          "num": 123,
+          "firstVerseId": 16195,
+          "lastVerseId": 16199,
+          "verses": 5
+        },
+        {
+          "num": 124,
+          "firstVerseId": 16200,
+          "lastVerseId": 16208,
+          "verses": 9
+        },
+        {
+          "num": 125,
+          "firstVerseId": 16209,
+          "lastVerseId": 16214,
+          "verses": 6
+        },
+        {
+          "num": 126,
+          "firstVerseId": 16215,
+          "lastVerseId": 16221,
+          "verses": 7
+        },
+        {
+          "num": 127,
+          "firstVerseId": 16222,
+          "lastVerseId": 16227,
+          "verses": 6
+        },
+        {
+          "num": 128,
+          "firstVerseId": 16228,
+          "lastVerseId": 16234,
+          "verses": 7
+        },
+        {
+          "num": 129,
+          "firstVerseId": 16235,
+          "lastVerseId": 16243,
+          "verses": 9
+        },
+        {
+          "num": 130,
+          "firstVerseId": 16244,
+          "lastVerseId": 16252,
+          "verses": 9
+        },
+        {
+          "num": 131,
+          "firstVerseId": 16253,
+          "lastVerseId": 16256,
+          "verses": 4
+        },
+        {
+          "num": 132,
+          "firstVerseId": 16257,
+          "lastVerseId": 16275,
+          "verses": 19
+        },
+        {
+          "num": 133,
+          "firstVerseId": 16276,
+          "lastVerseId": 16279,
+          "verses": 4
+        },
+        {
+          "num": 134,
+          "firstVerseId": 16280,
+          "lastVerseId": 16283,
+          "verses": 4
+        },
+        {
+          "num": 135,
+          "firstVerseId": 16284,
+          "lastVerseId": 16304,
+          "verses": 21
+        },
+        {
+          "num": 136,
+          "firstVerseId": 16305,
+          "lastVerseId": 16330,
+          "verses": 26
+        },
+        {
+          "num": 137,
+          "firstVerseId": 16331,
+          "lastVerseId": 16339,
+          "verses": 9
+        },
+        {
+          "num": 138,
+          "firstVerseId": 16340,
+          "lastVerseId": 16348,
+          "verses": 9
+        },
+        {
+          "num": 139,
+          "firstVerseId": 16349,
+          "lastVerseId": 16373,
+          "verses": 25
+        },
+        {
+          "num": 140,
+          "firstVerseId": 16374,
+          "lastVerseId": 16387,
+          "verses": 14
+        },
+        {
+          "num": 141,
+          "firstVerseId": 16388,
+          "lastVerseId": 16398,
+          "verses": 11
+        },
+        {
+          "num": 142,
+          "firstVerseId": 16399,
+          "lastVerseId": 16406,
+          "verses": 8
+        },
+        {
+          "num": 143,
+          "firstVerseId": 16407,
+          "lastVerseId": 16419,
+          "verses": 13
+        },
+        {
+          "num": 144,
+          "firstVerseId": 16420,
+          "lastVerseId": 16435,
+          "verses": 16
+        },
+        {
+          "num": 145,
+          "firstVerseId": 16436,
+          "lastVerseId": 16457,
+          "verses": 22
+        },
+        {
+          "num": 146,
+          "firstVerseId": 16458,
+          "lastVerseId": 16467,
+          "verses": 10
+        },
+        {
+          "num": 147,
+          "firstVerseId": 16468,
+          "lastVerseId": 16487,
+          "verses": 20
+        },
+        {
+          "num": 148,
+          "firstVerseId": 16488,
+          "lastVerseId": 16501,
+          "verses": 14
+        },
+        {
+          "num": 149,
+          "firstVerseId": 16502,
+          "lastVerseId": 16510,
+          "verses": 9
+        },
+        {
+          "num": 150,
+          "firstVerseId": 16511,
+          "lastVerseId": 16516,
+          "verses": 6
+        }
+      ]
+    },
+    {
+      "num": 20,
+      "title": "잠언",
+      "slug": "20-잠언",
+      "firstVerseId": 16517,
+      "lastVerseId": 17431,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 16517,
+          "lastVerseId": 16549,
+          "verses": 33
+        },
+        {
+          "num": 2,
+          "firstVerseId": 16550,
+          "lastVerseId": 16571,
+          "verses": 22
+        },
+        {
+          "num": 3,
+          "firstVerseId": 16572,
+          "lastVerseId": 16606,
+          "verses": 35
+        },
+        {
+          "num": 4,
+          "firstVerseId": 16607,
+          "lastVerseId": 16633,
+          "verses": 27
+        },
+        {
+          "num": 5,
+          "firstVerseId": 16634,
+          "lastVerseId": 16656,
+          "verses": 23
+        },
+        {
+          "num": 6,
+          "firstVerseId": 16657,
+          "lastVerseId": 16691,
+          "verses": 35
+        },
+        {
+          "num": 7,
+          "firstVerseId": 16692,
+          "lastVerseId": 16718,
+          "verses": 27
+        },
+        {
+          "num": 8,
+          "firstVerseId": 16719,
+          "lastVerseId": 16754,
+          "verses": 36
+        },
+        {
+          "num": 9,
+          "firstVerseId": 16755,
+          "lastVerseId": 16772,
+          "verses": 18
+        },
+        {
+          "num": 10,
+          "firstVerseId": 16773,
+          "lastVerseId": 16804,
+          "verses": 32
+        },
+        {
+          "num": 11,
+          "firstVerseId": 16805,
+          "lastVerseId": 16835,
+          "verses": 31
+        },
+        {
+          "num": 12,
+          "firstVerseId": 16836,
+          "lastVerseId": 16863,
+          "verses": 28
+        },
+        {
+          "num": 13,
+          "firstVerseId": 16864,
+          "lastVerseId": 16888,
+          "verses": 25
+        },
+        {
+          "num": 14,
+          "firstVerseId": 16889,
+          "lastVerseId": 16923,
+          "verses": 35
+        },
+        {
+          "num": 15,
+          "firstVerseId": 16924,
+          "lastVerseId": 16956,
+          "verses": 33
+        },
+        {
+          "num": 16,
+          "firstVerseId": 16957,
+          "lastVerseId": 16989,
+          "verses": 33
+        },
+        {
+          "num": 17,
+          "firstVerseId": 16990,
+          "lastVerseId": 17017,
+          "verses": 28
+        },
+        {
+          "num": 18,
+          "firstVerseId": 17018,
+          "lastVerseId": 17041,
+          "verses": 24
+        },
+        {
+          "num": 19,
+          "firstVerseId": 17042,
+          "lastVerseId": 17070,
+          "verses": 29
+        },
+        {
+          "num": 20,
+          "firstVerseId": 17071,
+          "lastVerseId": 17100,
+          "verses": 30
+        },
+        {
+          "num": 21,
+          "firstVerseId": 17101,
+          "lastVerseId": 17131,
+          "verses": 31
+        },
+        {
+          "num": 22,
+          "firstVerseId": 17132,
+          "lastVerseId": 17160,
+          "verses": 29
+        },
+        {
+          "num": 23,
+          "firstVerseId": 17161,
+          "lastVerseId": 17195,
+          "verses": 35
+        },
+        {
+          "num": 24,
+          "firstVerseId": 17196,
+          "lastVerseId": 17229,
+          "verses": 34
+        },
+        {
+          "num": 25,
+          "firstVerseId": 17230,
+          "lastVerseId": 17257,
+          "verses": 28
+        },
+        {
+          "num": 26,
+          "firstVerseId": 17258,
+          "lastVerseId": 17285,
+          "verses": 28
+        },
+        {
+          "num": 27,
+          "firstVerseId": 17286,
+          "lastVerseId": 17312,
+          "verses": 27
+        },
+        {
+          "num": 28,
+          "firstVerseId": 17313,
+          "lastVerseId": 17340,
+          "verses": 28
+        },
+        {
+          "num": 29,
+          "firstVerseId": 17341,
+          "lastVerseId": 17367,
+          "verses": 27
+        },
+        {
+          "num": 30,
+          "firstVerseId": 17368,
+          "lastVerseId": 17400,
+          "verses": 33
+        },
+        {
+          "num": 31,
+          "firstVerseId": 17401,
+          "lastVerseId": 17431,
+          "verses": 31
+        }
+      ]
+    },
+    {
+      "num": 21,
+      "title": "전도서",
+      "slug": "21-전도서",
+      "firstVerseId": 17432,
+      "lastVerseId": 17653,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 17432,
+          "lastVerseId": 17449,
+          "verses": 18
+        },
+        {
+          "num": 2,
+          "firstVerseId": 17450,
+          "lastVerseId": 17475,
+          "verses": 26
+        },
+        {
+          "num": 3,
+          "firstVerseId": 17476,
+          "lastVerseId": 17497,
+          "verses": 22
+        },
+        {
+          "num": 4,
+          "firstVerseId": 17498,
+          "lastVerseId": 17513,
+          "verses": 16
+        },
+        {
+          "num": 5,
+          "firstVerseId": 17514,
+          "lastVerseId": 17533,
+          "verses": 20
+        },
+        {
+          "num": 6,
+          "firstVerseId": 17534,
+          "lastVerseId": 17545,
+          "verses": 12
+        },
+        {
+          "num": 7,
+          "firstVerseId": 17546,
+          "lastVerseId": 17574,
+          "verses": 29
+        },
+        {
+          "num": 8,
+          "firstVerseId": 17575,
+          "lastVerseId": 17591,
+          "verses": 17
+        },
+        {
+          "num": 9,
+          "firstVerseId": 17592,
+          "lastVerseId": 17609,
+          "verses": 18
+        },
+        {
+          "num": 10,
+          "firstVerseId": 17610,
+          "lastVerseId": 17629,
+          "verses": 20
+        },
+        {
+          "num": 11,
+          "firstVerseId": 17630,
+          "lastVerseId": 17639,
+          "verses": 10
+        },
+        {
+          "num": 12,
+          "firstVerseId": 17640,
+          "lastVerseId": 17653,
+          "verses": 14
+        }
+      ]
+    },
+    {
+      "num": 22,
+      "title": "솔로몬의 노래",
+      "slug": "22-솔로몬의노래",
+      "firstVerseId": 17654,
+      "lastVerseId": 17770,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 17654,
+          "lastVerseId": 17670,
+          "verses": 17
+        },
+        {
+          "num": 2,
+          "firstVerseId": 17671,
+          "lastVerseId": 17687,
+          "verses": 17
+        },
+        {
+          "num": 3,
+          "firstVerseId": 17688,
+          "lastVerseId": 17698,
+          "verses": 11
+        },
+        {
+          "num": 4,
+          "firstVerseId": 17699,
+          "lastVerseId": 17714,
+          "verses": 16
+        },
+        {
+          "num": 5,
+          "firstVerseId": 17715,
+          "lastVerseId": 17730,
+          "verses": 16
+        },
+        {
+          "num": 6,
+          "firstVerseId": 17731,
+          "lastVerseId": 17743,
+          "verses": 13
+        },
+        {
+          "num": 7,
+          "firstVerseId": 17744,
+          "lastVerseId": 17756,
+          "verses": 13
+        },
+        {
+          "num": 8,
+          "firstVerseId": 17757,
+          "lastVerseId": 17770,
+          "verses": 14
+        }
+      ]
+    },
+    {
+      "num": 23,
+      "title": "이사야",
+      "slug": "23-이사야",
+      "firstVerseId": 17771,
+      "lastVerseId": 19062,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 17771,
+          "lastVerseId": 17801,
+          "verses": 31
+        },
+        {
+          "num": 2,
+          "firstVerseId": 17802,
+          "lastVerseId": 17823,
+          "verses": 22
+        },
+        {
+          "num": 3,
+          "firstVerseId": 17824,
+          "lastVerseId": 17849,
+          "verses": 26
+        },
+        {
+          "num": 4,
+          "firstVerseId": 17850,
+          "lastVerseId": 17855,
+          "verses": 6
+        },
+        {
+          "num": 5,
+          "firstVerseId": 17856,
+          "lastVerseId": 17885,
+          "verses": 30
+        },
+        {
+          "num": 6,
+          "firstVerseId": 17886,
+          "lastVerseId": 17898,
+          "verses": 13
+        },
+        {
+          "num": 7,
+          "firstVerseId": 17899,
+          "lastVerseId": 17923,
+          "verses": 25
+        },
+        {
+          "num": 8,
+          "firstVerseId": 17924,
+          "lastVerseId": 17945,
+          "verses": 22
+        },
+        {
+          "num": 9,
+          "firstVerseId": 17946,
+          "lastVerseId": 17966,
+          "verses": 21
+        },
+        {
+          "num": 10,
+          "firstVerseId": 17967,
+          "lastVerseId": 18000,
+          "verses": 34
+        },
+        {
+          "num": 11,
+          "firstVerseId": 18001,
+          "lastVerseId": 18016,
+          "verses": 16
+        },
+        {
+          "num": 12,
+          "firstVerseId": 18017,
+          "lastVerseId": 18022,
+          "verses": 6
+        },
+        {
+          "num": 13,
+          "firstVerseId": 18023,
+          "lastVerseId": 18044,
+          "verses": 22
+        },
+        {
+          "num": 14,
+          "firstVerseId": 18045,
+          "lastVerseId": 18076,
+          "verses": 32
+        },
+        {
+          "num": 15,
+          "firstVerseId": 18077,
+          "lastVerseId": 18085,
+          "verses": 9
+        },
+        {
+          "num": 16,
+          "firstVerseId": 18086,
+          "lastVerseId": 18099,
+          "verses": 14
+        },
+        {
+          "num": 17,
+          "firstVerseId": 18100,
+          "lastVerseId": 18113,
+          "verses": 14
+        },
+        {
+          "num": 18,
+          "firstVerseId": 18114,
+          "lastVerseId": 18120,
+          "verses": 7
+        },
+        {
+          "num": 19,
+          "firstVerseId": 18121,
+          "lastVerseId": 18145,
+          "verses": 25
+        },
+        {
+          "num": 20,
+          "firstVerseId": 18146,
+          "lastVerseId": 18151,
+          "verses": 6
+        },
+        {
+          "num": 21,
+          "firstVerseId": 18152,
+          "lastVerseId": 18168,
+          "verses": 17
+        },
+        {
+          "num": 22,
+          "firstVerseId": 18169,
+          "lastVerseId": 18193,
+          "verses": 25
+        },
+        {
+          "num": 23,
+          "firstVerseId": 18194,
+          "lastVerseId": 18211,
+          "verses": 18
+        },
+        {
+          "num": 24,
+          "firstVerseId": 18212,
+          "lastVerseId": 18234,
+          "verses": 23
+        },
+        {
+          "num": 25,
+          "firstVerseId": 18235,
+          "lastVerseId": 18246,
+          "verses": 12
+        },
+        {
+          "num": 26,
+          "firstVerseId": 18247,
+          "lastVerseId": 18267,
+          "verses": 21
+        },
+        {
+          "num": 27,
+          "firstVerseId": 18268,
+          "lastVerseId": 18280,
+          "verses": 13
+        },
+        {
+          "num": 28,
+          "firstVerseId": 18281,
+          "lastVerseId": 18309,
+          "verses": 29
+        },
+        {
+          "num": 29,
+          "firstVerseId": 18310,
+          "lastVerseId": 18333,
+          "verses": 24
+        },
+        {
+          "num": 30,
+          "firstVerseId": 18334,
+          "lastVerseId": 18366,
+          "verses": 33
+        },
+        {
+          "num": 31,
+          "firstVerseId": 18367,
+          "lastVerseId": 18375,
+          "verses": 9
+        },
+        {
+          "num": 32,
+          "firstVerseId": 18376,
+          "lastVerseId": 18395,
+          "verses": 20
+        },
+        {
+          "num": 33,
+          "firstVerseId": 18396,
+          "lastVerseId": 18419,
+          "verses": 24
+        },
+        {
+          "num": 34,
+          "firstVerseId": 18420,
+          "lastVerseId": 18436,
+          "verses": 17
+        },
+        {
+          "num": 35,
+          "firstVerseId": 18437,
+          "lastVerseId": 18446,
+          "verses": 10
+        },
+        {
+          "num": 36,
+          "firstVerseId": 18447,
+          "lastVerseId": 18468,
+          "verses": 22
+        },
+        {
+          "num": 37,
+          "firstVerseId": 18469,
+          "lastVerseId": 18506,
+          "verses": 38
+        },
+        {
+          "num": 38,
+          "firstVerseId": 18507,
+          "lastVerseId": 18528,
+          "verses": 22
+        },
+        {
+          "num": 39,
+          "firstVerseId": 18529,
+          "lastVerseId": 18536,
+          "verses": 8
+        },
+        {
+          "num": 40,
+          "firstVerseId": 18537,
+          "lastVerseId": 18567,
+          "verses": 31
+        },
+        {
+          "num": 41,
+          "firstVerseId": 18568,
+          "lastVerseId": 18596,
+          "verses": 29
+        },
+        {
+          "num": 42,
+          "firstVerseId": 18597,
+          "lastVerseId": 18621,
+          "verses": 25
+        },
+        {
+          "num": 43,
+          "firstVerseId": 18622,
+          "lastVerseId": 18649,
+          "verses": 28
+        },
+        {
+          "num": 44,
+          "firstVerseId": 18650,
+          "lastVerseId": 18677,
+          "verses": 28
+        },
+        {
+          "num": 45,
+          "firstVerseId": 18678,
+          "lastVerseId": 18702,
+          "verses": 25
+        },
+        {
+          "num": 46,
+          "firstVerseId": 18703,
+          "lastVerseId": 18715,
+          "verses": 13
+        },
+        {
+          "num": 47,
+          "firstVerseId": 18716,
+          "lastVerseId": 18730,
+          "verses": 15
+        },
+        {
+          "num": 48,
+          "firstVerseId": 18731,
+          "lastVerseId": 18752,
+          "verses": 22
+        },
+        {
+          "num": 49,
+          "firstVerseId": 18753,
+          "lastVerseId": 18778,
+          "verses": 26
+        },
+        {
+          "num": 50,
+          "firstVerseId": 18779,
+          "lastVerseId": 18789,
+          "verses": 11
+        },
+        {
+          "num": 51,
+          "firstVerseId": 18790,
+          "lastVerseId": 18812,
+          "verses": 23
+        },
+        {
+          "num": 52,
+          "firstVerseId": 18813,
+          "lastVerseId": 18827,
+          "verses": 15
+        },
+        {
+          "num": 53,
+          "firstVerseId": 18828,
+          "lastVerseId": 18839,
+          "verses": 12
+        },
+        {
+          "num": 54,
+          "firstVerseId": 18840,
+          "lastVerseId": 18856,
+          "verses": 17
+        },
+        {
+          "num": 55,
+          "firstVerseId": 18857,
+          "lastVerseId": 18869,
+          "verses": 13
+        },
+        {
+          "num": 56,
+          "firstVerseId": 18870,
+          "lastVerseId": 18881,
+          "verses": 12
+        },
+        {
+          "num": 57,
+          "firstVerseId": 18882,
+          "lastVerseId": 18902,
+          "verses": 21
+        },
+        {
+          "num": 58,
+          "firstVerseId": 18903,
+          "lastVerseId": 18916,
+          "verses": 14
+        },
+        {
+          "num": 59,
+          "firstVerseId": 18917,
+          "lastVerseId": 18937,
+          "verses": 21
+        },
+        {
+          "num": 60,
+          "firstVerseId": 18938,
+          "lastVerseId": 18959,
+          "verses": 22
+        },
+        {
+          "num": 61,
+          "firstVerseId": 18960,
+          "lastVerseId": 18970,
+          "verses": 11
+        },
+        {
+          "num": 62,
+          "firstVerseId": 18971,
+          "lastVerseId": 18982,
+          "verses": 12
+        },
+        {
+          "num": 63,
+          "firstVerseId": 18983,
+          "lastVerseId": 19001,
+          "verses": 19
+        },
+        {
+          "num": 64,
+          "firstVerseId": 19002,
+          "lastVerseId": 19013,
+          "verses": 12
+        },
+        {
+          "num": 65,
+          "firstVerseId": 19014,
+          "lastVerseId": 19038,
+          "verses": 25
+        },
+        {
+          "num": 66,
+          "firstVerseId": 19039,
+          "lastVerseId": 19062,
+          "verses": 24
+        }
+      ]
+    },
+    {
+      "num": 24,
+      "title": "예레미야",
+      "slug": "24-예레미야",
+      "firstVerseId": 19063,
+      "lastVerseId": 20426,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 19063,
+          "lastVerseId": 19081,
+          "verses": 19
+        },
+        {
+          "num": 2,
+          "firstVerseId": 19082,
+          "lastVerseId": 19118,
+          "verses": 37
+        },
+        {
+          "num": 3,
+          "firstVerseId": 19119,
+          "lastVerseId": 19143,
+          "verses": 25
+        },
+        {
+          "num": 4,
+          "firstVerseId": 19144,
+          "lastVerseId": 19174,
+          "verses": 31
+        },
+        {
+          "num": 5,
+          "firstVerseId": 19175,
+          "lastVerseId": 19205,
+          "verses": 31
+        },
+        {
+          "num": 6,
+          "firstVerseId": 19206,
+          "lastVerseId": 19235,
+          "verses": 30
+        },
+        {
+          "num": 7,
+          "firstVerseId": 19236,
+          "lastVerseId": 19269,
+          "verses": 34
+        },
+        {
+          "num": 8,
+          "firstVerseId": 19270,
+          "lastVerseId": 19291,
+          "verses": 22
+        },
+        {
+          "num": 9,
+          "firstVerseId": 19292,
+          "lastVerseId": 19317,
+          "verses": 26
+        },
+        {
+          "num": 10,
+          "firstVerseId": 19318,
+          "lastVerseId": 19342,
+          "verses": 25
+        },
+        {
+          "num": 11,
+          "firstVerseId": 19343,
+          "lastVerseId": 19365,
+          "verses": 23
+        },
+        {
+          "num": 12,
+          "firstVerseId": 19366,
+          "lastVerseId": 19382,
+          "verses": 17
+        },
+        {
+          "num": 13,
+          "firstVerseId": 19383,
+          "lastVerseId": 19409,
+          "verses": 27
+        },
+        {
+          "num": 14,
+          "firstVerseId": 19410,
+          "lastVerseId": 19431,
+          "verses": 22
+        },
+        {
+          "num": 15,
+          "firstVerseId": 19432,
+          "lastVerseId": 19452,
+          "verses": 21
+        },
+        {
+          "num": 16,
+          "firstVerseId": 19453,
+          "lastVerseId": 19473,
+          "verses": 21
+        },
+        {
+          "num": 17,
+          "firstVerseId": 19474,
+          "lastVerseId": 19500,
+          "verses": 27
+        },
+        {
+          "num": 18,
+          "firstVerseId": 19501,
+          "lastVerseId": 19523,
+          "verses": 23
+        },
+        {
+          "num": 19,
+          "firstVerseId": 19524,
+          "lastVerseId": 19538,
+          "verses": 15
+        },
+        {
+          "num": 20,
+          "firstVerseId": 19539,
+          "lastVerseId": 19556,
+          "verses": 18
+        },
+        {
+          "num": 21,
+          "firstVerseId": 19557,
+          "lastVerseId": 19570,
+          "verses": 14
+        },
+        {
+          "num": 22,
+          "firstVerseId": 19571,
+          "lastVerseId": 19600,
+          "verses": 30
+        },
+        {
+          "num": 23,
+          "firstVerseId": 19601,
+          "lastVerseId": 19640,
+          "verses": 40
+        },
+        {
+          "num": 24,
+          "firstVerseId": 19641,
+          "lastVerseId": 19650,
+          "verses": 10
+        },
+        {
+          "num": 25,
+          "firstVerseId": 19651,
+          "lastVerseId": 19688,
+          "verses": 38
+        },
+        {
+          "num": 26,
+          "firstVerseId": 19689,
+          "lastVerseId": 19712,
+          "verses": 24
+        },
+        {
+          "num": 27,
+          "firstVerseId": 19713,
+          "lastVerseId": 19734,
+          "verses": 22
+        },
+        {
+          "num": 28,
+          "firstVerseId": 19735,
+          "lastVerseId": 19751,
+          "verses": 17
+        },
+        {
+          "num": 29,
+          "firstVerseId": 19752,
+          "lastVerseId": 19783,
+          "verses": 32
+        },
+        {
+          "num": 30,
+          "firstVerseId": 19784,
+          "lastVerseId": 19807,
+          "verses": 24
+        },
+        {
+          "num": 31,
+          "firstVerseId": 19808,
+          "lastVerseId": 19847,
+          "verses": 40
+        },
+        {
+          "num": 32,
+          "firstVerseId": 19848,
+          "lastVerseId": 19891,
+          "verses": 44
+        },
+        {
+          "num": 33,
+          "firstVerseId": 19892,
+          "lastVerseId": 19917,
+          "verses": 26
+        },
+        {
+          "num": 34,
+          "firstVerseId": 19918,
+          "lastVerseId": 19939,
+          "verses": 22
+        },
+        {
+          "num": 35,
+          "firstVerseId": 19940,
+          "lastVerseId": 19958,
+          "verses": 19
+        },
+        {
+          "num": 36,
+          "firstVerseId": 19959,
+          "lastVerseId": 19990,
+          "verses": 32
+        },
+        {
+          "num": 37,
+          "firstVerseId": 19991,
+          "lastVerseId": 20011,
+          "verses": 21
+        },
+        {
+          "num": 38,
+          "firstVerseId": 20012,
+          "lastVerseId": 20039,
+          "verses": 28
+        },
+        {
+          "num": 39,
+          "firstVerseId": 20040,
+          "lastVerseId": 20057,
+          "verses": 18
+        },
+        {
+          "num": 40,
+          "firstVerseId": 20058,
+          "lastVerseId": 20073,
+          "verses": 16
+        },
+        {
+          "num": 41,
+          "firstVerseId": 20074,
+          "lastVerseId": 20091,
+          "verses": 18
+        },
+        {
+          "num": 42,
+          "firstVerseId": 20092,
+          "lastVerseId": 20113,
+          "verses": 22
+        },
+        {
+          "num": 43,
+          "firstVerseId": 20114,
+          "lastVerseId": 20126,
+          "verses": 13
+        },
+        {
+          "num": 44,
+          "firstVerseId": 20127,
+          "lastVerseId": 20156,
+          "verses": 30
+        },
+        {
+          "num": 45,
+          "firstVerseId": 20157,
+          "lastVerseId": 20161,
+          "verses": 5
+        },
+        {
+          "num": 46,
+          "firstVerseId": 20162,
+          "lastVerseId": 20189,
+          "verses": 28
+        },
+        {
+          "num": 47,
+          "firstVerseId": 20190,
+          "lastVerseId": 20196,
+          "verses": 7
+        },
+        {
+          "num": 48,
+          "firstVerseId": 20197,
+          "lastVerseId": 20243,
+          "verses": 47
+        },
+        {
+          "num": 49,
+          "firstVerseId": 20244,
+          "lastVerseId": 20282,
+          "verses": 39
+        },
+        {
+          "num": 50,
+          "firstVerseId": 20283,
+          "lastVerseId": 20328,
+          "verses": 46
+        },
+        {
+          "num": 51,
+          "firstVerseId": 20329,
+          "lastVerseId": 20392,
+          "verses": 64
+        },
+        {
+          "num": 52,
+          "firstVerseId": 20393,
+          "lastVerseId": 20426,
+          "verses": 34
+        }
+      ]
+    },
+    {
+      "num": 25,
+      "title": "예레미야 애가",
+      "slug": "25-예레미야애가",
+      "firstVerseId": 20427,
+      "lastVerseId": 20580,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 20427,
+          "lastVerseId": 20448,
+          "verses": 22
+        },
+        {
+          "num": 2,
+          "firstVerseId": 20449,
+          "lastVerseId": 20470,
+          "verses": 22
+        },
+        {
+          "num": 3,
+          "firstVerseId": 20471,
+          "lastVerseId": 20536,
+          "verses": 66
+        },
+        {
+          "num": 4,
+          "firstVerseId": 20537,
+          "lastVerseId": 20558,
+          "verses": 22
+        },
+        {
+          "num": 5,
+          "firstVerseId": 20559,
+          "lastVerseId": 20580,
+          "verses": 22
+        }
+      ]
+    },
+    {
+      "num": 26,
+      "title": "에스겔",
+      "slug": "26-에스겔",
+      "firstVerseId": 20581,
+      "lastVerseId": 21853,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 20581,
+          "lastVerseId": 20608,
+          "verses": 28
+        },
+        {
+          "num": 2,
+          "firstVerseId": 20609,
+          "lastVerseId": 20618,
+          "verses": 10
+        },
+        {
+          "num": 3,
+          "firstVerseId": 20619,
+          "lastVerseId": 20645,
+          "verses": 27
+        },
+        {
+          "num": 4,
+          "firstVerseId": 20646,
+          "lastVerseId": 20662,
+          "verses": 17
+        },
+        {
+          "num": 5,
+          "firstVerseId": 20663,
+          "lastVerseId": 20679,
+          "verses": 17
+        },
+        {
+          "num": 6,
+          "firstVerseId": 20680,
+          "lastVerseId": 20693,
+          "verses": 14
+        },
+        {
+          "num": 7,
+          "firstVerseId": 20694,
+          "lastVerseId": 20720,
+          "verses": 27
+        },
+        {
+          "num": 8,
+          "firstVerseId": 20721,
+          "lastVerseId": 20738,
+          "verses": 18
+        },
+        {
+          "num": 9,
+          "firstVerseId": 20739,
+          "lastVerseId": 20749,
+          "verses": 11
+        },
+        {
+          "num": 10,
+          "firstVerseId": 20750,
+          "lastVerseId": 20771,
+          "verses": 22
+        },
+        {
+          "num": 11,
+          "firstVerseId": 20772,
+          "lastVerseId": 20796,
+          "verses": 25
+        },
+        {
+          "num": 12,
+          "firstVerseId": 20797,
+          "lastVerseId": 20824,
+          "verses": 28
+        },
+        {
+          "num": 13,
+          "firstVerseId": 20825,
+          "lastVerseId": 20847,
+          "verses": 23
+        },
+        {
+          "num": 14,
+          "firstVerseId": 20848,
+          "lastVerseId": 20870,
+          "verses": 23
+        },
+        {
+          "num": 15,
+          "firstVerseId": 20871,
+          "lastVerseId": 20878,
+          "verses": 8
+        },
+        {
+          "num": 16,
+          "firstVerseId": 20879,
+          "lastVerseId": 20941,
+          "verses": 63
+        },
+        {
+          "num": 17,
+          "firstVerseId": 20942,
+          "lastVerseId": 20965,
+          "verses": 24
+        },
+        {
+          "num": 18,
+          "firstVerseId": 20966,
+          "lastVerseId": 20997,
+          "verses": 32
+        },
+        {
+          "num": 19,
+          "firstVerseId": 20998,
+          "lastVerseId": 21011,
+          "verses": 14
+        },
+        {
+          "num": 20,
+          "firstVerseId": 21012,
+          "lastVerseId": 21060,
+          "verses": 49
+        },
+        {
+          "num": 21,
+          "firstVerseId": 21061,
+          "lastVerseId": 21092,
+          "verses": 32
+        },
+        {
+          "num": 22,
+          "firstVerseId": 21093,
+          "lastVerseId": 21123,
+          "verses": 31
+        },
+        {
+          "num": 23,
+          "firstVerseId": 21124,
+          "lastVerseId": 21172,
+          "verses": 49
+        },
+        {
+          "num": 24,
+          "firstVerseId": 21173,
+          "lastVerseId": 21199,
+          "verses": 27
+        },
+        {
+          "num": 25,
+          "firstVerseId": 21200,
+          "lastVerseId": 21216,
+          "verses": 17
+        },
+        {
+          "num": 26,
+          "firstVerseId": 21217,
+          "lastVerseId": 21237,
+          "verses": 21
+        },
+        {
+          "num": 27,
+          "firstVerseId": 21238,
+          "lastVerseId": 21273,
+          "verses": 36
+        },
+        {
+          "num": 28,
+          "firstVerseId": 21274,
+          "lastVerseId": 21299,
+          "verses": 26
+        },
+        {
+          "num": 29,
+          "firstVerseId": 21300,
+          "lastVerseId": 21320,
+          "verses": 21
+        },
+        {
+          "num": 30,
+          "firstVerseId": 21321,
+          "lastVerseId": 21346,
+          "verses": 26
+        },
+        {
+          "num": 31,
+          "firstVerseId": 21347,
+          "lastVerseId": 21364,
+          "verses": 18
+        },
+        {
+          "num": 32,
+          "firstVerseId": 21365,
+          "lastVerseId": 21396,
+          "verses": 32
+        },
+        {
+          "num": 33,
+          "firstVerseId": 21397,
+          "lastVerseId": 21429,
+          "verses": 33
+        },
+        {
+          "num": 34,
+          "firstVerseId": 21430,
+          "lastVerseId": 21460,
+          "verses": 31
+        },
+        {
+          "num": 35,
+          "firstVerseId": 21461,
+          "lastVerseId": 21475,
+          "verses": 15
+        },
+        {
+          "num": 36,
+          "firstVerseId": 21476,
+          "lastVerseId": 21513,
+          "verses": 38
+        },
+        {
+          "num": 37,
+          "firstVerseId": 21514,
+          "lastVerseId": 21541,
+          "verses": 28
+        },
+        {
+          "num": 38,
+          "firstVerseId": 21542,
+          "lastVerseId": 21564,
+          "verses": 23
+        },
+        {
+          "num": 39,
+          "firstVerseId": 21565,
+          "lastVerseId": 21593,
+          "verses": 29
+        },
+        {
+          "num": 40,
+          "firstVerseId": 21594,
+          "lastVerseId": 21642,
+          "verses": 49
+        },
+        {
+          "num": 41,
+          "firstVerseId": 21643,
+          "lastVerseId": 21668,
+          "verses": 26
+        },
+        {
+          "num": 42,
+          "firstVerseId": 21669,
+          "lastVerseId": 21688,
+          "verses": 20
+        },
+        {
+          "num": 43,
+          "firstVerseId": 21689,
+          "lastVerseId": 21715,
+          "verses": 27
+        },
+        {
+          "num": 44,
+          "firstVerseId": 21716,
+          "lastVerseId": 21746,
+          "verses": 31
+        },
+        {
+          "num": 45,
+          "firstVerseId": 21747,
+          "lastVerseId": 21771,
+          "verses": 25
+        },
+        {
+          "num": 46,
+          "firstVerseId": 21772,
+          "lastVerseId": 21795,
+          "verses": 24
+        },
+        {
+          "num": 47,
+          "firstVerseId": 21796,
+          "lastVerseId": 21818,
+          "verses": 23
+        },
+        {
+          "num": 48,
+          "firstVerseId": 21819,
+          "lastVerseId": 21853,
+          "verses": 35
+        }
+      ]
+    },
+    {
+      "num": 27,
+      "title": "다니엘",
+      "slug": "27-다니엘",
+      "firstVerseId": 21854,
+      "lastVerseId": 22210,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 21854,
+          "lastVerseId": 21874,
+          "verses": 21
+        },
+        {
+          "num": 2,
+          "firstVerseId": 21875,
+          "lastVerseId": 21923,
+          "verses": 49
+        },
+        {
+          "num": 3,
+          "firstVerseId": 21924,
+          "lastVerseId": 21953,
+          "verses": 30
+        },
+        {
+          "num": 4,
+          "firstVerseId": 21954,
+          "lastVerseId": 21990,
+          "verses": 37
+        },
+        {
+          "num": 5,
+          "firstVerseId": 21991,
+          "lastVerseId": 22021,
+          "verses": 31
+        },
+        {
+          "num": 6,
+          "firstVerseId": 22022,
+          "lastVerseId": 22049,
+          "verses": 28
+        },
+        {
+          "num": 7,
+          "firstVerseId": 22050,
+          "lastVerseId": 22077,
+          "verses": 28
+        },
+        {
+          "num": 8,
+          "firstVerseId": 22078,
+          "lastVerseId": 22104,
+          "verses": 27
+        },
+        {
+          "num": 9,
+          "firstVerseId": 22105,
+          "lastVerseId": 22131,
+          "verses": 27
+        },
+        {
+          "num": 10,
+          "firstVerseId": 22132,
+          "lastVerseId": 22152,
+          "verses": 21
+        },
+        {
+          "num": 11,
+          "firstVerseId": 22153,
+          "lastVerseId": 22197,
+          "verses": 45
+        },
+        {
+          "num": 12,
+          "firstVerseId": 22198,
+          "lastVerseId": 22210,
+          "verses": 13
+        }
+      ]
+    },
+    {
+      "num": 28,
+      "title": "호세아",
+      "slug": "28-호세아",
+      "firstVerseId": 22211,
+      "lastVerseId": 22407,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22211,
+          "lastVerseId": 22221,
+          "verses": 11
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22222,
+          "lastVerseId": 22244,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22245,
+          "lastVerseId": 22249,
+          "verses": 5
+        },
+        {
+          "num": 4,
+          "firstVerseId": 22250,
+          "lastVerseId": 22268,
+          "verses": 19
+        },
+        {
+          "num": 5,
+          "firstVerseId": 22269,
+          "lastVerseId": 22283,
+          "verses": 15
+        },
+        {
+          "num": 6,
+          "firstVerseId": 22284,
+          "lastVerseId": 22294,
+          "verses": 11
+        },
+        {
+          "num": 7,
+          "firstVerseId": 22295,
+          "lastVerseId": 22310,
+          "verses": 16
+        },
+        {
+          "num": 8,
+          "firstVerseId": 22311,
+          "lastVerseId": 22324,
+          "verses": 14
+        },
+        {
+          "num": 9,
+          "firstVerseId": 22325,
+          "lastVerseId": 22341,
+          "verses": 17
+        },
+        {
+          "num": 10,
+          "firstVerseId": 22342,
+          "lastVerseId": 22356,
+          "verses": 15
+        },
+        {
+          "num": 11,
+          "firstVerseId": 22357,
+          "lastVerseId": 22368,
+          "verses": 12
+        },
+        {
+          "num": 12,
+          "firstVerseId": 22369,
+          "lastVerseId": 22382,
+          "verses": 14
+        },
+        {
+          "num": 13,
+          "firstVerseId": 22383,
+          "lastVerseId": 22398,
+          "verses": 16
+        },
+        {
+          "num": 14,
+          "firstVerseId": 22399,
+          "lastVerseId": 22407,
+          "verses": 9
+        }
+      ]
+    },
+    {
+      "num": 29,
+      "title": "요엘",
+      "slug": "29-요엘",
+      "firstVerseId": 22408,
+      "lastVerseId": 22480,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22408,
+          "lastVerseId": 22427,
+          "verses": 20
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22428,
+          "lastVerseId": 22459,
+          "verses": 32
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22460,
+          "lastVerseId": 22480,
+          "verses": 21
+        }
+      ]
+    },
+    {
+      "num": 30,
+      "title": "아모스",
+      "slug": "30-아모스",
+      "firstVerseId": 22481,
+      "lastVerseId": 22626,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22481,
+          "lastVerseId": 22495,
+          "verses": 15
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22496,
+          "lastVerseId": 22511,
+          "verses": 16
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22512,
+          "lastVerseId": 22526,
+          "verses": 15
+        },
+        {
+          "num": 4,
+          "firstVerseId": 22527,
+          "lastVerseId": 22539,
+          "verses": 13
+        },
+        {
+          "num": 5,
+          "firstVerseId": 22540,
+          "lastVerseId": 22566,
+          "verses": 27
+        },
+        {
+          "num": 6,
+          "firstVerseId": 22567,
+          "lastVerseId": 22580,
+          "verses": 14
+        },
+        {
+          "num": 7,
+          "firstVerseId": 22581,
+          "lastVerseId": 22597,
+          "verses": 17
+        },
+        {
+          "num": 8,
+          "firstVerseId": 22598,
+          "lastVerseId": 22611,
+          "verses": 14
+        },
+        {
+          "num": 9,
+          "firstVerseId": 22612,
+          "lastVerseId": 22626,
+          "verses": 15
+        }
+      ]
+    },
+    {
+      "num": 31,
+      "title": "오바댜",
+      "slug": "31-오바댜",
+      "firstVerseId": 22627,
+      "lastVerseId": 22647,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22627,
+          "lastVerseId": 22647,
+          "verses": 21
+        }
+      ]
+    },
+    {
+      "num": 32,
+      "title": "요나",
+      "slug": "32-요나",
+      "firstVerseId": 22648,
+      "lastVerseId": 22695,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22648,
+          "lastVerseId": 22664,
+          "verses": 17
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22665,
+          "lastVerseId": 22674,
+          "verses": 10
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22675,
+          "lastVerseId": 22684,
+          "verses": 10
+        },
+        {
+          "num": 4,
+          "firstVerseId": 22685,
+          "lastVerseId": 22695,
+          "verses": 11
+        }
+      ]
+    },
+    {
+      "num": 33,
+      "title": "미가",
+      "slug": "33-미가",
+      "firstVerseId": 22696,
+      "lastVerseId": 22800,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22696,
+          "lastVerseId": 22711,
+          "verses": 16
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22712,
+          "lastVerseId": 22724,
+          "verses": 13
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22725,
+          "lastVerseId": 22736,
+          "verses": 12
+        },
+        {
+          "num": 4,
+          "firstVerseId": 22737,
+          "lastVerseId": 22749,
+          "verses": 13
+        },
+        {
+          "num": 5,
+          "firstVerseId": 22750,
+          "lastVerseId": 22764,
+          "verses": 15
+        },
+        {
+          "num": 6,
+          "firstVerseId": 22765,
+          "lastVerseId": 22780,
+          "verses": 16
+        },
+        {
+          "num": 7,
+          "firstVerseId": 22781,
+          "lastVerseId": 22800,
+          "verses": 20
+        }
+      ]
+    },
+    {
+      "num": 34,
+      "title": "나훔",
+      "slug": "34-나훔",
+      "firstVerseId": 22801,
+      "lastVerseId": 22847,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22801,
+          "lastVerseId": 22815,
+          "verses": 15
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22816,
+          "lastVerseId": 22828,
+          "verses": 13
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22829,
+          "lastVerseId": 22847,
+          "verses": 19
+        }
+      ]
+    },
+    {
+      "num": 35,
+      "title": "하박국",
+      "slug": "35-하박국",
+      "firstVerseId": 22848,
+      "lastVerseId": 22903,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22848,
+          "lastVerseId": 22864,
+          "verses": 17
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22865,
+          "lastVerseId": 22884,
+          "verses": 20
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22885,
+          "lastVerseId": 22903,
+          "verses": 19
+        }
+      ]
+    },
+    {
+      "num": 36,
+      "title": "스바냐",
+      "slug": "36-스바냐",
+      "firstVerseId": 22904,
+      "lastVerseId": 22956,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22904,
+          "lastVerseId": 22921,
+          "verses": 18
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22922,
+          "lastVerseId": 22936,
+          "verses": 15
+        },
+        {
+          "num": 3,
+          "firstVerseId": 22937,
+          "lastVerseId": 22956,
+          "verses": 20
+        }
+      ]
+    },
+    {
+      "num": 37,
+      "title": "학개",
+      "slug": "37-학개",
+      "firstVerseId": 22957,
+      "lastVerseId": 22994,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22957,
+          "lastVerseId": 22971,
+          "verses": 15
+        },
+        {
+          "num": 2,
+          "firstVerseId": 22972,
+          "lastVerseId": 22994,
+          "verses": 23
+        }
+      ]
+    },
+    {
+      "num": 38,
+      "title": "스가랴",
+      "slug": "38-스가랴",
+      "firstVerseId": 22995,
+      "lastVerseId": 23205,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 22995,
+          "lastVerseId": 23015,
+          "verses": 21
+        },
+        {
+          "num": 2,
+          "firstVerseId": 23016,
+          "lastVerseId": 23028,
+          "verses": 13
+        },
+        {
+          "num": 3,
+          "firstVerseId": 23029,
+          "lastVerseId": 23038,
+          "verses": 10
+        },
+        {
+          "num": 4,
+          "firstVerseId": 23039,
+          "lastVerseId": 23052,
+          "verses": 14
+        },
+        {
+          "num": 5,
+          "firstVerseId": 23053,
+          "lastVerseId": 23063,
+          "verses": 11
+        },
+        {
+          "num": 6,
+          "firstVerseId": 23064,
+          "lastVerseId": 23078,
+          "verses": 15
+        },
+        {
+          "num": 7,
+          "firstVerseId": 23079,
+          "lastVerseId": 23092,
+          "verses": 14
+        },
+        {
+          "num": 8,
+          "firstVerseId": 23093,
+          "lastVerseId": 23115,
+          "verses": 23
+        },
+        {
+          "num": 9,
+          "firstVerseId": 23116,
+          "lastVerseId": 23132,
+          "verses": 17
+        },
+        {
+          "num": 10,
+          "firstVerseId": 23133,
+          "lastVerseId": 23144,
+          "verses": 12
+        },
+        {
+          "num": 11,
+          "firstVerseId": 23145,
+          "lastVerseId": 23161,
+          "verses": 17
+        },
+        {
+          "num": 12,
+          "firstVerseId": 23162,
+          "lastVerseId": 23175,
+          "verses": 14
+        },
+        {
+          "num": 13,
+          "firstVerseId": 23176,
+          "lastVerseId": 23184,
+          "verses": 9
+        },
+        {
+          "num": 14,
+          "firstVerseId": 23185,
+          "lastVerseId": 23205,
+          "verses": 21
+        }
+      ]
+    },
+    {
+      "num": 39,
+      "title": "말라기",
+      "slug": "39-말라기",
+      "firstVerseId": 23206,
+      "lastVerseId": 23260,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 23206,
+          "lastVerseId": 23219,
+          "verses": 14
+        },
+        {
+          "num": 2,
+          "firstVerseId": 23220,
+          "lastVerseId": 23236,
+          "verses": 17
+        },
+        {
+          "num": 3,
+          "firstVerseId": 23237,
+          "lastVerseId": 23254,
+          "verses": 18
+        },
+        {
+          "num": 4,
+          "firstVerseId": 23255,
+          "lastVerseId": 23260,
+          "verses": 6
+        }
+      ]
+    },
+    {
+      "num": 40,
+      "title": "마태복음",
+      "slug": "40-마태복음",
+      "firstVerseId": 23261,
+      "lastVerseId": 24331,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 23261,
+          "lastVerseId": 23285,
+          "verses": 25
+        },
+        {
+          "num": 2,
+          "firstVerseId": 23286,
+          "lastVerseId": 23308,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 23309,
+          "lastVerseId": 23325,
+          "verses": 17
+        },
+        {
+          "num": 4,
+          "firstVerseId": 23326,
+          "lastVerseId": 23350,
+          "verses": 25
+        },
+        {
+          "num": 5,
+          "firstVerseId": 23351,
+          "lastVerseId": 23398,
+          "verses": 48
+        },
+        {
+          "num": 6,
+          "firstVerseId": 23399,
+          "lastVerseId": 23432,
+          "verses": 34
+        },
+        {
+          "num": 7,
+          "firstVerseId": 23433,
+          "lastVerseId": 23461,
+          "verses": 29
+        },
+        {
+          "num": 8,
+          "firstVerseId": 23462,
+          "lastVerseId": 23495,
+          "verses": 34
+        },
+        {
+          "num": 9,
+          "firstVerseId": 23496,
+          "lastVerseId": 23533,
+          "verses": 38
+        },
+        {
+          "num": 10,
+          "firstVerseId": 23534,
+          "lastVerseId": 23575,
+          "verses": 42
+        },
+        {
+          "num": 11,
+          "firstVerseId": 23576,
+          "lastVerseId": 23605,
+          "verses": 30
+        },
+        {
+          "num": 12,
+          "firstVerseId": 23606,
+          "lastVerseId": 23655,
+          "verses": 50
+        },
+        {
+          "num": 13,
+          "firstVerseId": 23656,
+          "lastVerseId": 23713,
+          "verses": 58
+        },
+        {
+          "num": 14,
+          "firstVerseId": 23714,
+          "lastVerseId": 23749,
+          "verses": 36
+        },
+        {
+          "num": 15,
+          "firstVerseId": 23750,
+          "lastVerseId": 23788,
+          "verses": 39
+        },
+        {
+          "num": 16,
+          "firstVerseId": 23789,
+          "lastVerseId": 23816,
+          "verses": 28
+        },
+        {
+          "num": 17,
+          "firstVerseId": 23817,
+          "lastVerseId": 23843,
+          "verses": 27
+        },
+        {
+          "num": 18,
+          "firstVerseId": 23844,
+          "lastVerseId": 23878,
+          "verses": 35
+        },
+        {
+          "num": 19,
+          "firstVerseId": 23879,
+          "lastVerseId": 23908,
+          "verses": 30
+        },
+        {
+          "num": 20,
+          "firstVerseId": 23909,
+          "lastVerseId": 23942,
+          "verses": 34
+        },
+        {
+          "num": 21,
+          "firstVerseId": 23943,
+          "lastVerseId": 23988,
+          "verses": 46
+        },
+        {
+          "num": 22,
+          "firstVerseId": 23989,
+          "lastVerseId": 24034,
+          "verses": 46
+        },
+        {
+          "num": 23,
+          "firstVerseId": 24035,
+          "lastVerseId": 24073,
+          "verses": 39
+        },
+        {
+          "num": 24,
+          "firstVerseId": 24074,
+          "lastVerseId": 24124,
+          "verses": 51
+        },
+        {
+          "num": 25,
+          "firstVerseId": 24125,
+          "lastVerseId": 24170,
+          "verses": 46
+        },
+        {
+          "num": 26,
+          "firstVerseId": 24171,
+          "lastVerseId": 24245,
+          "verses": 75
+        },
+        {
+          "num": 27,
+          "firstVerseId": 24246,
+          "lastVerseId": 24311,
+          "verses": 66
+        },
+        {
+          "num": 28,
+          "firstVerseId": 24312,
+          "lastVerseId": 24331,
+          "verses": 20
+        }
+      ]
+    },
+    {
+      "num": 41,
+      "title": "마가복음",
+      "slug": "41-마가복음",
+      "firstVerseId": 24332,
+      "lastVerseId": 24997,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 24332,
+          "lastVerseId": 24376,
+          "verses": 45
+        },
+        {
+          "num": 2,
+          "firstVerseId": 24377,
+          "lastVerseId": 24404,
+          "verses": 28
+        },
+        {
+          "num": 3,
+          "firstVerseId": 24405,
+          "lastVerseId": 24439,
+          "verses": 35
+        },
+        {
+          "num": 4,
+          "firstVerseId": 24440,
+          "lastVerseId": 24480,
+          "verses": 41
+        },
+        {
+          "num": 5,
+          "firstVerseId": 24481,
+          "lastVerseId": 24523,
+          "verses": 43
+        },
+        {
+          "num": 6,
+          "firstVerseId": 24524,
+          "lastVerseId": 24579,
+          "verses": 56
+        },
+        {
+          "num": 7,
+          "firstVerseId": 24580,
+          "lastVerseId": 24616,
+          "verses": 37
+        },
+        {
+          "num": 8,
+          "firstVerseId": 24617,
+          "lastVerseId": 24654,
+          "verses": 38
+        },
+        {
+          "num": 9,
+          "firstVerseId": 24655,
+          "lastVerseId": 24704,
+          "verses": 50
+        },
+        {
+          "num": 10,
+          "firstVerseId": 24705,
+          "lastVerseId": 24756,
+          "verses": 52
+        },
+        {
+          "num": 11,
+          "firstVerseId": 24757,
+          "lastVerseId": 24789,
+          "verses": 33
+        },
+        {
+          "num": 12,
+          "firstVerseId": 24790,
+          "lastVerseId": 24833,
+          "verses": 44
+        },
+        {
+          "num": 13,
+          "firstVerseId": 24834,
+          "lastVerseId": 24870,
+          "verses": 37
+        },
+        {
+          "num": 14,
+          "firstVerseId": 24871,
+          "lastVerseId": 24942,
+          "verses": 72
+        },
+        {
+          "num": 15,
+          "firstVerseId": 24943,
+          "lastVerseId": 24989,
+          "verses": 47
+        },
+        {
+          "num": 16,
+          "firstVerseId": 24990,
+          "lastVerseId": 24997,
+          "verses": 8
+        }
+      ]
+    },
+    {
+      "num": 42,
+      "title": "누가복음",
+      "slug": "42-누가복음",
+      "firstVerseId": 24998,
+      "lastVerseId": 26148,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 24998,
+          "lastVerseId": 25077,
+          "verses": 80
+        },
+        {
+          "num": 2,
+          "firstVerseId": 25078,
+          "lastVerseId": 25129,
+          "verses": 52
+        },
+        {
+          "num": 3,
+          "firstVerseId": 25130,
+          "lastVerseId": 25167,
+          "verses": 38
+        },
+        {
+          "num": 4,
+          "firstVerseId": 25168,
+          "lastVerseId": 25211,
+          "verses": 44
+        },
+        {
+          "num": 5,
+          "firstVerseId": 25212,
+          "lastVerseId": 25250,
+          "verses": 39
+        },
+        {
+          "num": 6,
+          "firstVerseId": 25251,
+          "lastVerseId": 25299,
+          "verses": 49
+        },
+        {
+          "num": 7,
+          "firstVerseId": 25300,
+          "lastVerseId": 25349,
+          "verses": 50
+        },
+        {
+          "num": 8,
+          "firstVerseId": 25350,
+          "lastVerseId": 25405,
+          "verses": 56
+        },
+        {
+          "num": 9,
+          "firstVerseId": 25406,
+          "lastVerseId": 25467,
+          "verses": 62
+        },
+        {
+          "num": 10,
+          "firstVerseId": 25468,
+          "lastVerseId": 25509,
+          "verses": 42
+        },
+        {
+          "num": 11,
+          "firstVerseId": 25510,
+          "lastVerseId": 25563,
+          "verses": 54
+        },
+        {
+          "num": 12,
+          "firstVerseId": 25564,
+          "lastVerseId": 25622,
+          "verses": 59
+        },
+        {
+          "num": 13,
+          "firstVerseId": 25623,
+          "lastVerseId": 25657,
+          "verses": 35
+        },
+        {
+          "num": 14,
+          "firstVerseId": 25658,
+          "lastVerseId": 25692,
+          "verses": 35
+        },
+        {
+          "num": 15,
+          "firstVerseId": 25693,
+          "lastVerseId": 25724,
+          "verses": 32
+        },
+        {
+          "num": 16,
+          "firstVerseId": 25725,
+          "lastVerseId": 25755,
+          "verses": 31
+        },
+        {
+          "num": 17,
+          "firstVerseId": 25756,
+          "lastVerseId": 25792,
+          "verses": 37
+        },
+        {
+          "num": 18,
+          "firstVerseId": 25793,
+          "lastVerseId": 25835,
+          "verses": 43
+        },
+        {
+          "num": 19,
+          "firstVerseId": 25836,
+          "lastVerseId": 25883,
+          "verses": 48
+        },
+        {
+          "num": 20,
+          "firstVerseId": 25884,
+          "lastVerseId": 25930,
+          "verses": 47
+        },
+        {
+          "num": 21,
+          "firstVerseId": 25931,
+          "lastVerseId": 25968,
+          "verses": 38
+        },
+        {
+          "num": 22,
+          "firstVerseId": 25969,
+          "lastVerseId": 26039,
+          "verses": 71
+        },
+        {
+          "num": 23,
+          "firstVerseId": 26040,
+          "lastVerseId": 26095,
+          "verses": 56
+        },
+        {
+          "num": 24,
+          "firstVerseId": 26096,
+          "lastVerseId": 26148,
+          "verses": 53
+        }
+      ]
+    },
+    {
+      "num": 43,
+      "title": "요한복음",
+      "slug": "43-요한복음",
+      "firstVerseId": 26149,
+      "lastVerseId": 27015,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 26149,
+          "lastVerseId": 26199,
+          "verses": 51
+        },
+        {
+          "num": 2,
+          "firstVerseId": 26200,
+          "lastVerseId": 26224,
+          "verses": 25
+        },
+        {
+          "num": 3,
+          "firstVerseId": 26225,
+          "lastVerseId": 26260,
+          "verses": 36
+        },
+        {
+          "num": 4,
+          "firstVerseId": 26261,
+          "lastVerseId": 26314,
+          "verses": 54
+        },
+        {
+          "num": 5,
+          "firstVerseId": 26315,
+          "lastVerseId": 26361,
+          "verses": 47
+        },
+        {
+          "num": 6,
+          "firstVerseId": 26362,
+          "lastVerseId": 26432,
+          "verses": 71
+        },
+        {
+          "num": 7,
+          "firstVerseId": 26433,
+          "lastVerseId": 26484,
+          "verses": 52
+        },
+        {
+          "num": 8,
+          "firstVerseId": 26485,
+          "lastVerseId": 26532,
+          "verses": 48
+        },
+        {
+          "num": 9,
+          "firstVerseId": 26533,
+          "lastVerseId": 26573,
+          "verses": 41
+        },
+        {
+          "num": 10,
+          "firstVerseId": 26574,
+          "lastVerseId": 26615,
+          "verses": 42
+        },
+        {
+          "num": 11,
+          "firstVerseId": 26616,
+          "lastVerseId": 26672,
+          "verses": 57
+        },
+        {
+          "num": 12,
+          "firstVerseId": 26673,
+          "lastVerseId": 26722,
+          "verses": 50
+        },
+        {
+          "num": 13,
+          "firstVerseId": 26723,
+          "lastVerseId": 26760,
+          "verses": 38
+        },
+        {
+          "num": 14,
+          "firstVerseId": 26761,
+          "lastVerseId": 26791,
+          "verses": 31
+        },
+        {
+          "num": 15,
+          "firstVerseId": 26792,
+          "lastVerseId": 26818,
+          "verses": 27
+        },
+        {
+          "num": 16,
+          "firstVerseId": 26819,
+          "lastVerseId": 26851,
+          "verses": 33
+        },
+        {
+          "num": 17,
+          "firstVerseId": 26852,
+          "lastVerseId": 26877,
+          "verses": 26
+        },
+        {
+          "num": 18,
+          "firstVerseId": 26878,
+          "lastVerseId": 26917,
+          "verses": 40
+        },
+        {
+          "num": 19,
+          "firstVerseId": 26918,
+          "lastVerseId": 26959,
+          "verses": 42
+        },
+        {
+          "num": 20,
+          "firstVerseId": 26960,
+          "lastVerseId": 26990,
+          "verses": 31
+        },
+        {
+          "num": 21,
+          "firstVerseId": 26991,
+          "lastVerseId": 27015,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 44,
+      "title": "사도행전",
+      "slug": "44-사도행전",
+      "firstVerseId": 27016,
+      "lastVerseId": 28022,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 27016,
+          "lastVerseId": 27041,
+          "verses": 26
+        },
+        {
+          "num": 2,
+          "firstVerseId": 27042,
+          "lastVerseId": 27088,
+          "verses": 47
+        },
+        {
+          "num": 3,
+          "firstVerseId": 27089,
+          "lastVerseId": 27114,
+          "verses": 26
+        },
+        {
+          "num": 4,
+          "firstVerseId": 27115,
+          "lastVerseId": 27151,
+          "verses": 37
+        },
+        {
+          "num": 5,
+          "firstVerseId": 27152,
+          "lastVerseId": 27193,
+          "verses": 42
+        },
+        {
+          "num": 6,
+          "firstVerseId": 27194,
+          "lastVerseId": 27208,
+          "verses": 15
+        },
+        {
+          "num": 7,
+          "firstVerseId": 27209,
+          "lastVerseId": 27268,
+          "verses": 60
+        },
+        {
+          "num": 8,
+          "firstVerseId": 27269,
+          "lastVerseId": 27308,
+          "verses": 40
+        },
+        {
+          "num": 9,
+          "firstVerseId": 27309,
+          "lastVerseId": 27351,
+          "verses": 43
+        },
+        {
+          "num": 10,
+          "firstVerseId": 27352,
+          "lastVerseId": 27399,
+          "verses": 48
+        },
+        {
+          "num": 11,
+          "firstVerseId": 27400,
+          "lastVerseId": 27429,
+          "verses": 30
+        },
+        {
+          "num": 12,
+          "firstVerseId": 27430,
+          "lastVerseId": 27454,
+          "verses": 25
+        },
+        {
+          "num": 13,
+          "firstVerseId": 27455,
+          "lastVerseId": 27506,
+          "verses": 52
+        },
+        {
+          "num": 14,
+          "firstVerseId": 27507,
+          "lastVerseId": 27534,
+          "verses": 28
+        },
+        {
+          "num": 15,
+          "firstVerseId": 27535,
+          "lastVerseId": 27575,
+          "verses": 41
+        },
+        {
+          "num": 16,
+          "firstVerseId": 27576,
+          "lastVerseId": 27615,
+          "verses": 40
+        },
+        {
+          "num": 17,
+          "firstVerseId": 27616,
+          "lastVerseId": 27649,
+          "verses": 34
+        },
+        {
+          "num": 18,
+          "firstVerseId": 27650,
+          "lastVerseId": 27677,
+          "verses": 28
+        },
+        {
+          "num": 19,
+          "firstVerseId": 27678,
+          "lastVerseId": 27718,
+          "verses": 41
+        },
+        {
+          "num": 20,
+          "firstVerseId": 27719,
+          "lastVerseId": 27756,
+          "verses": 38
+        },
+        {
+          "num": 21,
+          "firstVerseId": 27757,
+          "lastVerseId": 27796,
+          "verses": 40
+        },
+        {
+          "num": 22,
+          "firstVerseId": 27797,
+          "lastVerseId": 27826,
+          "verses": 30
+        },
+        {
+          "num": 23,
+          "firstVerseId": 27827,
+          "lastVerseId": 27861,
+          "verses": 35
+        },
+        {
+          "num": 24,
+          "firstVerseId": 27862,
+          "lastVerseId": 27888,
+          "verses": 27
+        },
+        {
+          "num": 25,
+          "firstVerseId": 27889,
+          "lastVerseId": 27915,
+          "verses": 27
+        },
+        {
+          "num": 26,
+          "firstVerseId": 27916,
+          "lastVerseId": 27947,
+          "verses": 32
+        },
+        {
+          "num": 27,
+          "firstVerseId": 27948,
+          "lastVerseId": 27991,
+          "verses": 44
+        },
+        {
+          "num": 28,
+          "firstVerseId": 27992,
+          "lastVerseId": 28022,
+          "verses": 31
+        }
+      ]
+    },
+    {
+      "num": 45,
+      "title": "로마서",
+      "slug": "45-로마서",
+      "firstVerseId": 28023,
+      "lastVerseId": 28455,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 28023,
+          "lastVerseId": 28054,
+          "verses": 32
+        },
+        {
+          "num": 2,
+          "firstVerseId": 28055,
+          "lastVerseId": 28083,
+          "verses": 29
+        },
+        {
+          "num": 3,
+          "firstVerseId": 28084,
+          "lastVerseId": 28114,
+          "verses": 31
+        },
+        {
+          "num": 4,
+          "firstVerseId": 28115,
+          "lastVerseId": 28139,
+          "verses": 25
+        },
+        {
+          "num": 5,
+          "firstVerseId": 28140,
+          "lastVerseId": 28160,
+          "verses": 21
+        },
+        {
+          "num": 6,
+          "firstVerseId": 28161,
+          "lastVerseId": 28183,
+          "verses": 23
+        },
+        {
+          "num": 7,
+          "firstVerseId": 28184,
+          "lastVerseId": 28208,
+          "verses": 25
+        },
+        {
+          "num": 8,
+          "firstVerseId": 28209,
+          "lastVerseId": 28247,
+          "verses": 39
+        },
+        {
+          "num": 9,
+          "firstVerseId": 28248,
+          "lastVerseId": 28280,
+          "verses": 33
+        },
+        {
+          "num": 10,
+          "firstVerseId": 28281,
+          "lastVerseId": 28301,
+          "verses": 21
+        },
+        {
+          "num": 11,
+          "firstVerseId": 28302,
+          "lastVerseId": 28337,
+          "verses": 36
+        },
+        {
+          "num": 12,
+          "firstVerseId": 28338,
+          "lastVerseId": 28358,
+          "verses": 21
+        },
+        {
+          "num": 13,
+          "firstVerseId": 28359,
+          "lastVerseId": 28372,
+          "verses": 14
+        },
+        {
+          "num": 14,
+          "firstVerseId": 28373,
+          "lastVerseId": 28395,
+          "verses": 23
+        },
+        {
+          "num": 15,
+          "firstVerseId": 28396,
+          "lastVerseId": 28428,
+          "verses": 33
+        },
+        {
+          "num": 16,
+          "firstVerseId": 28429,
+          "lastVerseId": 28455,
+          "verses": 27
+        }
+      ]
+    },
+    {
+      "num": 46,
+      "title": "고린도 전서",
+      "slug": "46-고린도전서",
+      "firstVerseId": 28456,
+      "lastVerseId": 28892,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 28456,
+          "lastVerseId": 28486,
+          "verses": 31
+        },
+        {
+          "num": 2,
+          "firstVerseId": 28487,
+          "lastVerseId": 28502,
+          "verses": 16
+        },
+        {
+          "num": 3,
+          "firstVerseId": 28503,
+          "lastVerseId": 28525,
+          "verses": 23
+        },
+        {
+          "num": 4,
+          "firstVerseId": 28526,
+          "lastVerseId": 28546,
+          "verses": 21
+        },
+        {
+          "num": 5,
+          "firstVerseId": 28547,
+          "lastVerseId": 28559,
+          "verses": 13
+        },
+        {
+          "num": 6,
+          "firstVerseId": 28560,
+          "lastVerseId": 28579,
+          "verses": 20
+        },
+        {
+          "num": 7,
+          "firstVerseId": 28580,
+          "lastVerseId": 28619,
+          "verses": 40
+        },
+        {
+          "num": 8,
+          "firstVerseId": 28620,
+          "lastVerseId": 28632,
+          "verses": 13
+        },
+        {
+          "num": 9,
+          "firstVerseId": 28633,
+          "lastVerseId": 28659,
+          "verses": 27
+        },
+        {
+          "num": 10,
+          "firstVerseId": 28660,
+          "lastVerseId": 28692,
+          "verses": 33
+        },
+        {
+          "num": 11,
+          "firstVerseId": 28693,
+          "lastVerseId": 28726,
+          "verses": 34
+        },
+        {
+          "num": 12,
+          "firstVerseId": 28727,
+          "lastVerseId": 28757,
+          "verses": 31
+        },
+        {
+          "num": 13,
+          "firstVerseId": 28758,
+          "lastVerseId": 28770,
+          "verses": 13
+        },
+        {
+          "num": 14,
+          "firstVerseId": 28771,
+          "lastVerseId": 28810,
+          "verses": 40
+        },
+        {
+          "num": 15,
+          "firstVerseId": 28811,
+          "lastVerseId": 28868,
+          "verses": 58
+        },
+        {
+          "num": 16,
+          "firstVerseId": 28869,
+          "lastVerseId": 28892,
+          "verses": 24
+        }
+      ]
+    },
+    {
+      "num": 47,
+      "title": "고린도 후서",
+      "slug": "47-고린도후서",
+      "firstVerseId": 28893,
+      "lastVerseId": 29149,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 28893,
+          "lastVerseId": 28916,
+          "verses": 24
+        },
+        {
+          "num": 2,
+          "firstVerseId": 28917,
+          "lastVerseId": 28933,
+          "verses": 17
+        },
+        {
+          "num": 3,
+          "firstVerseId": 28934,
+          "lastVerseId": 28951,
+          "verses": 18
+        },
+        {
+          "num": 4,
+          "firstVerseId": 28952,
+          "lastVerseId": 28969,
+          "verses": 18
+        },
+        {
+          "num": 5,
+          "firstVerseId": 28970,
+          "lastVerseId": 28990,
+          "verses": 21
+        },
+        {
+          "num": 6,
+          "firstVerseId": 28991,
+          "lastVerseId": 29008,
+          "verses": 18
+        },
+        {
+          "num": 7,
+          "firstVerseId": 29009,
+          "lastVerseId": 29024,
+          "verses": 16
+        },
+        {
+          "num": 8,
+          "firstVerseId": 29025,
+          "lastVerseId": 29048,
+          "verses": 24
+        },
+        {
+          "num": 9,
+          "firstVerseId": 29049,
+          "lastVerseId": 29063,
+          "verses": 15
+        },
+        {
+          "num": 10,
+          "firstVerseId": 29064,
+          "lastVerseId": 29081,
+          "verses": 18
+        },
+        {
+          "num": 11,
+          "firstVerseId": 29082,
+          "lastVerseId": 29114,
+          "verses": 33
+        },
+        {
+          "num": 12,
+          "firstVerseId": 29115,
+          "lastVerseId": 29135,
+          "verses": 21
+        },
+        {
+          "num": 13,
+          "firstVerseId": 29136,
+          "lastVerseId": 29149,
+          "verses": 14
+        }
+      ]
+    },
+    {
+      "num": 48,
+      "title": "갈라디아서",
+      "slug": "48-갈라디아서",
+      "firstVerseId": 29150,
+      "lastVerseId": 29298,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29150,
+          "lastVerseId": 29173,
+          "verses": 24
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29174,
+          "lastVerseId": 29194,
+          "verses": 21
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29195,
+          "lastVerseId": 29223,
+          "verses": 29
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29224,
+          "lastVerseId": 29254,
+          "verses": 31
+        },
+        {
+          "num": 5,
+          "firstVerseId": 29255,
+          "lastVerseId": 29280,
+          "verses": 26
+        },
+        {
+          "num": 6,
+          "firstVerseId": 29281,
+          "lastVerseId": 29298,
+          "verses": 18
+        }
+      ]
+    },
+    {
+      "num": 49,
+      "title": "에베소서",
+      "slug": "49-에베소서",
+      "firstVerseId": 29299,
+      "lastVerseId": 29453,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29299,
+          "lastVerseId": 29321,
+          "verses": 23
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29322,
+          "lastVerseId": 29343,
+          "verses": 22
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29344,
+          "lastVerseId": 29364,
+          "verses": 21
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29365,
+          "lastVerseId": 29396,
+          "verses": 32
+        },
+        {
+          "num": 5,
+          "firstVerseId": 29397,
+          "lastVerseId": 29429,
+          "verses": 33
+        },
+        {
+          "num": 6,
+          "firstVerseId": 29430,
+          "lastVerseId": 29453,
+          "verses": 24
+        }
+      ]
+    },
+    {
+      "num": 50,
+      "title": "빌립보서",
+      "slug": "50-빌립보서",
+      "firstVerseId": 29454,
+      "lastVerseId": 29557,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29454,
+          "lastVerseId": 29483,
+          "verses": 30
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29484,
+          "lastVerseId": 29513,
+          "verses": 30
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29514,
+          "lastVerseId": 29534,
+          "verses": 21
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29535,
+          "lastVerseId": 29557,
+          "verses": 23
+        }
+      ]
+    },
+    {
+      "num": 51,
+      "title": "골로새서",
+      "slug": "51-골로새서",
+      "firstVerseId": 29558,
+      "lastVerseId": 29652,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29558,
+          "lastVerseId": 29586,
+          "verses": 29
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29587,
+          "lastVerseId": 29609,
+          "verses": 23
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29610,
+          "lastVerseId": 29634,
+          "verses": 25
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29635,
+          "lastVerseId": 29652,
+          "verses": 18
+        }
+      ]
+    },
+    {
+      "num": 52,
+      "title": "데살로니가 전서",
+      "slug": "52-데살로니가전서",
+      "firstVerseId": 29653,
+      "lastVerseId": 29741,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29653,
+          "lastVerseId": 29662,
+          "verses": 10
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29663,
+          "lastVerseId": 29682,
+          "verses": 20
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29683,
+          "lastVerseId": 29695,
+          "verses": 13
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29696,
+          "lastVerseId": 29713,
+          "verses": 18
+        },
+        {
+          "num": 5,
+          "firstVerseId": 29714,
+          "lastVerseId": 29741,
+          "verses": 28
+        }
+      ]
+    },
+    {
+      "num": 53,
+      "title": "데살로니가 후서",
+      "slug": "53-데살로니가후서",
+      "firstVerseId": 29742,
+      "lastVerseId": 29788,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29742,
+          "lastVerseId": 29753,
+          "verses": 12
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29754,
+          "lastVerseId": 29770,
+          "verses": 17
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29771,
+          "lastVerseId": 29788,
+          "verses": 18
+        }
+      ]
+    },
+    {
+      "num": 54,
+      "title": "디모데 전서",
+      "slug": "54-디모데전서",
+      "firstVerseId": 29789,
+      "lastVerseId": 29901,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29789,
+          "lastVerseId": 29808,
+          "verses": 20
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29809,
+          "lastVerseId": 29823,
+          "verses": 15
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29824,
+          "lastVerseId": 29839,
+          "verses": 16
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29840,
+          "lastVerseId": 29855,
+          "verses": 16
+        },
+        {
+          "num": 5,
+          "firstVerseId": 29856,
+          "lastVerseId": 29880,
+          "verses": 25
+        },
+        {
+          "num": 6,
+          "firstVerseId": 29881,
+          "lastVerseId": 29901,
+          "verses": 21
+        }
+      ]
+    },
+    {
+      "num": 55,
+      "title": "디모데 후서",
+      "slug": "55-디모데후서",
+      "firstVerseId": 29902,
+      "lastVerseId": 29984,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29902,
+          "lastVerseId": 29919,
+          "verses": 18
+        },
+        {
+          "num": 2,
+          "firstVerseId": 29920,
+          "lastVerseId": 29945,
+          "verses": 26
+        },
+        {
+          "num": 3,
+          "firstVerseId": 29946,
+          "lastVerseId": 29962,
+          "verses": 17
+        },
+        {
+          "num": 4,
+          "firstVerseId": 29963,
+          "lastVerseId": 29984,
+          "verses": 22
+        }
+      ]
+    },
+    {
+      "num": 56,
+      "title": "디도서",
+      "slug": "56-디도서",
+      "firstVerseId": 29985,
+      "lastVerseId": 30030,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 29985,
+          "lastVerseId": 30000,
+          "verses": 16
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30001,
+          "lastVerseId": 30015,
+          "verses": 15
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30016,
+          "lastVerseId": 30030,
+          "verses": 15
+        }
+      ]
+    },
+    {
+      "num": 57,
+      "title": "빌레몬서",
+      "slug": "57-빌레몬서",
+      "firstVerseId": 30031,
+      "lastVerseId": 30055,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30031,
+          "lastVerseId": 30055,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 58,
+      "title": "히브리서",
+      "slug": "58-히브리서",
+      "firstVerseId": 30056,
+      "lastVerseId": 30358,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30056,
+          "lastVerseId": 30069,
+          "verses": 14
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30070,
+          "lastVerseId": 30087,
+          "verses": 18
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30088,
+          "lastVerseId": 30106,
+          "verses": 19
+        },
+        {
+          "num": 4,
+          "firstVerseId": 30107,
+          "lastVerseId": 30122,
+          "verses": 16
+        },
+        {
+          "num": 5,
+          "firstVerseId": 30123,
+          "lastVerseId": 30136,
+          "verses": 14
+        },
+        {
+          "num": 6,
+          "firstVerseId": 30137,
+          "lastVerseId": 30156,
+          "verses": 20
+        },
+        {
+          "num": 7,
+          "firstVerseId": 30157,
+          "lastVerseId": 30184,
+          "verses": 28
+        },
+        {
+          "num": 8,
+          "firstVerseId": 30185,
+          "lastVerseId": 30197,
+          "verses": 13
+        },
+        {
+          "num": 9,
+          "firstVerseId": 30198,
+          "lastVerseId": 30225,
+          "verses": 28
+        },
+        {
+          "num": 10,
+          "firstVerseId": 30226,
+          "lastVerseId": 30264,
+          "verses": 39
+        },
+        {
+          "num": 11,
+          "firstVerseId": 30265,
+          "lastVerseId": 30304,
+          "verses": 40
+        },
+        {
+          "num": 12,
+          "firstVerseId": 30305,
+          "lastVerseId": 30333,
+          "verses": 29
+        },
+        {
+          "num": 13,
+          "firstVerseId": 30334,
+          "lastVerseId": 30358,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 59,
+      "title": "야고보서",
+      "slug": "59-야고보서",
+      "firstVerseId": 30359,
+      "lastVerseId": 30466,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30359,
+          "lastVerseId": 30385,
+          "verses": 27
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30386,
+          "lastVerseId": 30411,
+          "verses": 26
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30412,
+          "lastVerseId": 30429,
+          "verses": 18
+        },
+        {
+          "num": 4,
+          "firstVerseId": 30430,
+          "lastVerseId": 30446,
+          "verses": 17
+        },
+        {
+          "num": 5,
+          "firstVerseId": 30447,
+          "lastVerseId": 30466,
+          "verses": 20
+        }
+      ]
+    },
+    {
+      "num": 60,
+      "title": "베드로 전서",
+      "slug": "60-베드로전서",
+      "firstVerseId": 30467,
+      "lastVerseId": 30571,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30467,
+          "lastVerseId": 30491,
+          "verses": 25
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30492,
+          "lastVerseId": 30516,
+          "verses": 25
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30517,
+          "lastVerseId": 30538,
+          "verses": 22
+        },
+        {
+          "num": 4,
+          "firstVerseId": 30539,
+          "lastVerseId": 30557,
+          "verses": 19
+        },
+        {
+          "num": 5,
+          "firstVerseId": 30558,
+          "lastVerseId": 30571,
+          "verses": 14
+        }
+      ]
+    },
+    {
+      "num": 61,
+      "title": "베드로 후서",
+      "slug": "61-베드로후서",
+      "firstVerseId": 30572,
+      "lastVerseId": 30632,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30572,
+          "lastVerseId": 30592,
+          "verses": 21
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30593,
+          "lastVerseId": 30614,
+          "verses": 22
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30615,
+          "lastVerseId": 30632,
+          "verses": 18
+        }
+      ]
+    },
+    {
+      "num": 62,
+      "title": "요한 1서",
+      "slug": "62-요한1서",
+      "firstVerseId": 30633,
+      "lastVerseId": 30737,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30633,
+          "lastVerseId": 30642,
+          "verses": 10
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30643,
+          "lastVerseId": 30671,
+          "verses": 29
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30672,
+          "lastVerseId": 30695,
+          "verses": 24
+        },
+        {
+          "num": 4,
+          "firstVerseId": 30696,
+          "lastVerseId": 30716,
+          "verses": 21
+        },
+        {
+          "num": 5,
+          "firstVerseId": 30717,
+          "lastVerseId": 30737,
+          "verses": 21
+        }
+      ]
+    },
+    {
+      "num": 63,
+      "title": "요한 2서",
+      "slug": "63-요한2서",
+      "firstVerseId": 30738,
+      "lastVerseId": 30750,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30738,
+          "lastVerseId": 30750,
+          "verses": 13
+        }
+      ]
+    },
+    {
+      "num": 64,
+      "title": "요한 3서",
+      "slug": "64-요한3서",
+      "firstVerseId": 30751,
+      "lastVerseId": 30764,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30751,
+          "lastVerseId": 30764,
+          "verses": 14
+        }
+      ]
+    },
+    {
+      "num": 65,
+      "title": "유다서",
+      "slug": "65-유다서",
+      "firstVerseId": 30765,
+      "lastVerseId": 30789,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30765,
+          "lastVerseId": 30789,
+          "verses": 25
+        }
+      ]
+    },
+    {
+      "num": 66,
+      "title": "요한 계시록",
+      "slug": "66-요한계시록",
+      "firstVerseId": 30790,
+      "lastVerseId": 31193,
+      "chapters": [
+        {
+          "num": 1,
+          "firstVerseId": 30790,
+          "lastVerseId": 30809,
+          "verses": 20
+        },
+        {
+          "num": 2,
+          "firstVerseId": 30810,
+          "lastVerseId": 30838,
+          "verses": 29
+        },
+        {
+          "num": 3,
+          "firstVerseId": 30839,
+          "lastVerseId": 30860,
+          "verses": 22
+        },
+        {
+          "num": 4,
+          "firstVerseId": 30861,
+          "lastVerseId": 30871,
+          "verses": 11
+        },
+        {
+          "num": 5,
+          "firstVerseId": 30872,
+          "lastVerseId": 30885,
+          "verses": 14
+        },
+        {
+          "num": 6,
+          "firstVerseId": 30886,
+          "lastVerseId": 30902,
+          "verses": 17
+        },
+        {
+          "num": 7,
+          "firstVerseId": 30903,
+          "lastVerseId": 30919,
+          "verses": 17
+        },
+        {
+          "num": 8,
+          "firstVerseId": 30920,
+          "lastVerseId": 30932,
+          "verses": 13
+        },
+        {
+          "num": 9,
+          "firstVerseId": 30933,
+          "lastVerseId": 30953,
+          "verses": 21
+        },
+        {
+          "num": 10,
+          "firstVerseId": 30954,
+          "lastVerseId": 30964,
+          "verses": 11
+        },
+        {
+          "num": 11,
+          "firstVerseId": 30965,
+          "lastVerseId": 30983,
+          "verses": 19
+        },
+        {
+          "num": 12,
+          "firstVerseId": 30984,
+          "lastVerseId": 31000,
+          "verses": 17
+        },
+        {
+          "num": 13,
+          "firstVerseId": 31001,
+          "lastVerseId": 31018,
+          "verses": 18
+        },
+        {
+          "num": 14,
+          "firstVerseId": 31019,
+          "lastVerseId": 31038,
+          "verses": 20
+        },
+        {
+          "num": 15,
+          "firstVerseId": 31039,
+          "lastVerseId": 31046,
+          "verses": 8
+        },
+        {
+          "num": 16,
+          "firstVerseId": 31047,
+          "lastVerseId": 31067,
+          "verses": 21
+        },
+        {
+          "num": 17,
+          "firstVerseId": 31068,
+          "lastVerseId": 31085,
+          "verses": 18
+        },
+        {
+          "num": 18,
+          "firstVerseId": 31086,
+          "lastVerseId": 31109,
+          "verses": 24
+        },
+        {
+          "num": 19,
+          "firstVerseId": 31110,
+          "lastVerseId": 31130,
+          "verses": 21
+        },
+        {
+          "num": 20,
+          "firstVerseId": 31131,
+          "lastVerseId": 31145,
+          "verses": 15
+        },
+        {
+          "num": 21,
+          "firstVerseId": 31146,
+          "lastVerseId": 31172,
+          "verses": 27
+        },
+        {
+          "num": 22,
+          "firstVerseId": 31173,
+          "lastVerseId": 31193,
+          "verses": 21
+        }
+      ]
+    }
+  ]
+}
