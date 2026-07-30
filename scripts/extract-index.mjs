@@ -12,7 +12,27 @@ const bookRows = db.prepare(
 const chapterRows = db.prepare(
   'SELECT BookNumber, ChapterNumber, FirstVerseId, LastVerseId FROM BibleChapter ORDER BY BookNumber, ChapterNumber'
 ).all();
+// BibleVerse.Label 은 HTML 이 섞여 있으므로 태그를 걷어내고 숫자만 본다
+const labelRows = db.prepare(
+  'SELECT BibleVerseId id, Label FROM BibleVerse ORDER BY BibleVerseId'
+).all();
 db.close();
+
+const labelOf = new Map(
+  labelRows.map(r => [r.id, String(r.Label ?? '').replace(/<[^>]*>/g, '').trim()])
+);
+
+// 장의 첫 절 번호는 첫 행의 Label 로 알 수 없다 — 시편 표제는 라벨이 비어 있고,
+// 그 밖의 장은 첫 행에 장 번호가 표시 관례상 찍히기 때문이다. 대신 마지막 행의
+// Label 은 언제나 진짜 절 번호이므로 거기서 역산한다.
+function firstVerseNumberOf(chapter) {
+  const rows = chapter.lastVerseId - chapter.firstVerseId + 1;
+  const last = labelOf.get(chapter.lastVerseId);
+  if (!/^\d+$/.test(last)) {
+    throw new Error(`마지막 절의 라벨이 숫자가 아니다: id ${chapter.lastVerseId} = ${JSON.stringify(last)}`);
+  }
+  return Number(last) - (rows - 1);
+}
 
 const books = bookRows.map(b => ({
   num: b.num,
@@ -22,12 +42,17 @@ const books = bookRows.map(b => ({
   lastVerseId: b.LastVerseId,
   chapters: chapterRows
     .filter(c => c.BookNumber === b.num)
-    .map(c => ({
-      num: c.ChapterNumber,
-      firstVerseId: c.FirstVerseId,
-      lastVerseId: c.LastVerseId,
-      verses: c.LastVerseId - c.FirstVerseId + 1,
-    })),
+    .map(c => {
+      const chapter = {
+        num: c.ChapterNumber,
+        firstVerseId: c.FirstVerseId,
+        lastVerseId: c.LastVerseId,
+        verses: c.LastVerseId - c.FirstVerseId + 1,
+      };
+      chapter.firstVerseNumber = firstVerseNumberOf(chapter);
+      chapter.lastVerseNumber = chapter.firstVerseNumber + chapter.verses - 1;
+      return chapter;
+    }),
 }));
 
 const index = {

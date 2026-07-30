@@ -45,3 +45,26 @@ test('범위를 벗어나면 오류를 던진다', { skip }, () => {
   assert.throws(() => toVerseId(idx, 40, 24, 52), /범위/);
   assert.throws(() => parseReference(idx, '없는책 1:1'), /권을 찾을 수 없다/);
 });
+
+test('시편 표제는 0절이고 마지막 절이 밀리지 않는다', { skip }, () => {
+  assert.equal(toVerseId(idx, 19, 3, 0), 13958);   // 표제
+  assert.equal(toVerseId(idx, 19, 3, 1), 13959);
+  assert.equal(toVerseId(idx, 19, 3, 8), 13966);   // 정정 전에는 13965 를 내놓았다
+  assert.deepEqual(toAddress(idx, 13958), { book: 19, title: '시편', chapter: 3, verse: 0 });
+  assert.deepEqual(toAddress(idx, 13966), { book: 19, title: '시편', chapter: 3, verse: 8 });
+  assert.throws(() => toVerseId(idx, 19, 3, 9), /범위/);
+});
+
+test('요한복음 8장은 12절에서 시작한다', { skip }, () => {
+  assert.equal(toVerseId(idx, 43, 8, 12), 26485);
+  assert.equal(toVerseId(idx, 43, 8, 59), 26532);
+  assert.deepEqual(toAddress(idx, 26485), { book: 43, title: '요한복음', chapter: 8, verse: 12 });
+  assert.throws(() => toVerseId(idx, 43, 8, 11), /범위/);
+  assert.throws(() => toVerseId(idx, 43, 8, 1), /범위/);
+});
+
+test('표제도 예외도 없는 장은 1절에서 시작한다', { skip }, () => {
+  assert.equal(toVerseId(idx, 1, 1, 1), 0);
+  assert.equal(toVerseId(idx, 40, 24, 14), 24087);
+  assert.equal(toVerseId(idx, 66, 22, 21), 31193);
+});

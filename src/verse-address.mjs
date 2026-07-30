@@ -13,7 +13,7 @@ export function toAddress(index, verseId) {
     if (verseId < b.firstVerseId || verseId > b.lastVerseId) continue;
     for (const c of b.chapters) {
       if (verseId < c.firstVerseId || verseId > c.lastVerseId) continue;
-      return { book: b.num, title: b.title, chapter: c.num, verse: verseId - c.firstVerseId + 1 };
+      return { book: b.num, title: b.title, chapter: c.num, verse: c.firstVerseNumber + (verseId - c.firstVerseId) };
     }
   }
   throw new Error(`절 ID 에 해당하는 장을 찾을 수 없다: ${verseId}`);
@@ -24,10 +24,10 @@ export function toVerseId(index, book, chapter, verse) {
   if (!b) throw new Error(`권을 찾을 수 없다: ${book}`);
   const c = b.chapters.find(x => x.num === chapter);
   if (!c) throw new Error(`장이 범위를 벗어났다: ${b.title} ${chapter}장`);
-  if (!Number.isInteger(verse) || verse < 1 || verse > c.verses) {
+  if (!Number.isInteger(verse) || verse < c.firstVerseNumber || verse > c.lastVerseNumber) {
     throw new Error(`절이 범위를 벗어났다: ${b.title} ${chapter}:${verse}`);
   }
-  return c.firstVerseId + verse - 1;
+  return c.firstVerseId + (verse - c.firstVerseNumber);
 }
 
 export function formatAddress(index, verseId) {

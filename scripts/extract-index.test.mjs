@@ -46,3 +46,31 @@ test('절 ID 구간이 빈틈없이 이어진다', { skip }, () => {
   }
   assert.equal(expected, 31194);
 });
+
+test('장마다 절 번호 범위가 기록된다', { skip }, () => {
+  const ps3 = idx.books.find(b => b.num === 19).chapters.find(c => c.num === 3);
+  assert.equal(ps3.firstVerseNumber, 0);
+  assert.equal(ps3.lastVerseNumber, 8);
+  const jn8 = idx.books.find(b => b.num === 43).chapters.find(c => c.num === 8);
+  assert.equal(jn8.firstVerseNumber, 12);
+  assert.equal(jn8.lastVerseNumber, 59);
+  const gn1 = idx.books.find(b => b.num === 1).chapters.find(c => c.num === 1);
+  assert.equal(gn1.firstVerseNumber, 1);
+  assert.equal(gn1.lastVerseNumber, 31);
+});
+
+test('시작 번호가 0 또는 1이 아닌 장은 요한복음 8장 하나뿐이다', { skip }, () => {
+  const odd = [];
+  for (const b of idx.books) {
+    for (const c of b.chapters) {
+      if (c.firstVerseNumber !== 1 && c.firstVerseNumber !== 0) odd.push(`${b.title} ${c.num}`);
+    }
+  }
+  assert.deepEqual(odd, ['요한복음 8']);
+});
+
+test('표제가 있는 장은 정확히 116개다', { skip }, () => {
+  let n = 0;
+  for (const b of idx.books) for (const c of b.chapters) if (c.firstVerseNumber === 0) n++;
+  assert.equal(n, 116);
+});

@@ -37,7 +37,7 @@ export function verifyBible(index) {
     }
 
     for (const ch of book.chapters) {
-      for (let v = 1; v <= ch.verses; v++) {
+      for (let v = ch.firstVerseNumber; v <= ch.lastVerseNumber; v++) {
         if (!seen.has(`${ch.num}:${v}`)) problems.push(`${book.title} ${ch.num}:${v} 이 빠졌다`);
       }
     }
