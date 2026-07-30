@@ -1,7 +1,7 @@
 // 성구 조회 도구를 실제로 실행해 출력과 종료 코드를 검증하는 테스트
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const skip = !existsSync('core/bible/refs/40-마태복음.tsv');
@@ -80,4 +80,18 @@ test('인자가 없으면 사용법을 보여주고 1 로 끝난다', { skip }, 
   const none = runExpectingFailure('');
   assert.equal(none.status, 1);
   assert.match(none.stderr, /사용법/);
+});
+
+// cmd.exe 는 배치 파일을 UTF-8 이 아니라 OEM 코드 페이지로 읽는다. 본문에 한국어를 넣으면
+// 그 바이트가 명령으로 실행되어 "'저장소' is not recognized" 같은 오류가 섞여 나온다.
+// 실제로 겪은 회귀라서 본문이 ASCII 로 남아 있는지를 못 박아 둔다.
+test('성구.cmd 본문은 ASCII 로만 이루어져 있다', { skip: !existsSync('성구.cmd') }, () => {
+  const body = readFileSync('성구.cmd', 'utf8');
+  const offenders = [...body]
+    .map((ch, i) => ({ ch, i }))
+    .filter(({ ch }) => ch.codePointAt(0) > 0x7f);
+  assert.deepEqual(
+    offenders, [],
+    `배치 파일 본문에 ASCII 가 아닌 문자가 있다: ${offenders.map(o => JSON.stringify(o.ch)).join(', ')}`
+  );
 });
