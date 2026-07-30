@@ -50,6 +50,36 @@ test('역방향 항목은 모두 실재하는 정방향 항목에서 나온다',
   }
 });
 
+test('역방향 목록에는 중복이 없고 오름차순으로 정렬돼 있다', { skip }, () => {
+  for (const [target, sources] of refs.reverse) {
+    assert.equal(
+      new Set(sources).size, sources.length,
+      `${formatAddress(idx, target)} 의 역방향에 중복이 있다`
+    );
+    for (let i = 1; i < sources.length; i++) {
+      assert.ok(
+        sources[i] > sources[i - 1],
+        `${formatAddress(idx, target)} 의 역방향이 정렬돼 있지 않다`
+      );
+    }
+  }
+});
+
+test('원본이 같은 참조를 두 번 적어도 역방향에는 한 번만 들어간다', { skip }, () => {
+  // 창세기 14:2 의 참조 목록은 창세기 13:12 를 실제로 두 번 담고 있다
+  const source = toVerseId(idx, 1, 14, 2);
+  const target = toVerseId(idx, 1, 13, 12);
+  const labels = refs.forward.get(source).map(e => e.label);
+  assert.equal(
+    labels.filter(l => l === '창세기 13:12').length, 2,
+    '정방향은 원본 그대로 두 번이어야 한다'
+  );
+  assert.equal(
+    refs.reverse.get(target).filter(s => s === source).length, 1,
+    '역방향은 한 번이어야 한다'
+  );
+});
+
 test('모든 참조의 절 ID 가 성경 범위 안에 있다', { skip }, () => {
   for (const entries of refs.forward.values()) {
     for (const e of entries) {
