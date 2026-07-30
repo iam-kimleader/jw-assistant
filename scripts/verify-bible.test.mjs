@@ -42,3 +42,22 @@ test('잔류 HTML 태그와 엔티티(대문자 16진수 포함)를 문제로 �
     unlinkSync(file);
   }
 });
+
+// Windows 에서 core.autocrlf=true 로 체크아웃하면 파일이 CRLF 로 바뀔 수 있다.
+// 그런 파일을 줘도 모든 줄을 형식 오류로 오보하지 않고 정상 검증해야 한다 — 실제 회귀 사례.
+test('CRLF 로 끝나는 줄도 형식 오류로 오보하지 않고 정상 검증한다', () => {
+  const file = 'core/bible/text/__verify-bible-test-fixture-crlf.md';
+  writeFileSync(
+    file,
+    ['1:1\t창세기 1장 1절 본문이다.', '1:2\t창세기 1장 2절 본문이다.'].join('\r\n') + '\r\n',
+    'utf8'
+  );
+  try {
+    const fakeIndex = { books: [{ title: '테스트책', slug: '__verify-bible-test-fixture-crlf', chapters: [{ num: 1, verses: 2, firstVerseNumber: 1, lastVerseNumber: 2 }] }] };
+    const result = verifyBible(fakeIndex);
+    assert.deepEqual(result.problems, []);
+    assert.equal(result.ok, true);
+  } finally {
+    unlinkSync(file);
+  }
+});

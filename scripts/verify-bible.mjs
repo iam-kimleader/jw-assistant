@@ -2,6 +2,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadIndex } from '../src/verse-address.mjs';
+import { splitLines } from '../src/text-lines.mjs';
 
 const TEXT_DIR = 'core/bible/text';
 
@@ -19,7 +20,7 @@ export function verifyBible(index) {
       problems.push(`파일이 없다: ${file}`);
       continue;
     }
-    const lines = readFileSync(file, 'utf8').split('\n').filter(l => l.length > 0);
+    const lines = splitLines(readFileSync(file, 'utf8')).filter(l => l.length > 0);
 
     const seen = new Map(); // "장:절" -> true
     let prevChapter = -Infinity;

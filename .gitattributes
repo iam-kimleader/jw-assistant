@@ -1,0 +1,10 @@
+# 저장소 전체 텍스트 파일의 줄바꿈을 core.autocrlf 설정과 무관하게 LF 로 고정한다.
+* text=auto eol=lf
+
+# 정확성 검사가 의존하는 성경 산출물은 LF 를 명시적으로 다시 못박아 둔다.
+core/bible/index.json text eol=lf
+core/bible/text/*.md text eol=lf
+core/bible/refs/*.tsv text eol=lf
+
+# wol.jw.org 에서 캡처한 원본 HTML 은 실제 응답 바이트 그대로 보존해야 하므로 줄바꿈 정규화 대상에서 제외한다.
+tests/fixtures/wol-40-24.html -text !eol

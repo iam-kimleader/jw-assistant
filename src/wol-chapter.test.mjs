@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { chapterUrl, parseChapter } from './wol-chapter.mjs';
+import { splitLines } from './text-lines.mjs';
 
 const FIX = 'tests/fixtures/wol-40-24.html';
 const SNAPSHOT = 'tests/fixtures/wol-40-24.snapshot.tsv';
@@ -51,7 +52,7 @@ test('본문에 태그와 참조 기호가 남아 있지 않다', { skip }, () =
 
 test('51개 절 전체가 저장된 스냅샷과 일치한다', { skip }, () => {
   const verses = parseChapter(html);
-  const snapshot = readFileSync(SNAPSHOT, 'utf8').trim().split('\n');
+  const snapshot = splitLines(readFileSync(SNAPSHOT, 'utf8').trim());
   assert.equal(verses.length, snapshot.length);
   verses.forEach((v, i) => {
     assert.equal(`${v.chapter}:${v.verse}\t${v.text}`, snapshot[i]);

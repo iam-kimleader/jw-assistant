@@ -3,6 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadIndex, toAddress, formatAddress } from '../src/verse-address.mjs';
+import { splitLines } from '../src/text-lines.mjs';
 
 const REFS_DIR = 'core/bible/refs';
 const EXPECTED_TOTAL = 65578;
@@ -51,7 +52,7 @@ export function verifyRefs(index, dbPath = '.cache/nwtsty_KO.db') {
       problems.push(`파일이 없다: ${file}`);
       continue;
     }
-    const lines = readFileSync(file, 'utf8').split('\n').filter(l => l.length > 0);
+    const lines = splitLines(readFileSync(file, 'utf8')).filter(l => l.length > 0);
     const actual = new Map(); // "장:절" -> 참조 문자열
 
     for (const [i, line] of lines.entries()) {
