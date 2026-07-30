@@ -1168,8 +1168,9 @@ let total = 0;
 for (const book of index.books) {
   const lines = [];
   for (const ch of book.chapters) {
-    for (let v = 1; v <= ch.verses; v++) {
-      const id = ch.firstVerseId + v - 1;
+    // 절 번호는 1 부터 시작하지 않을 수 있다. Task 7 의 정정을 따른다
+    for (let v = ch.firstVerseNumber; v <= ch.lastVerseNumber; v++) {
+      const id = ch.firstVerseId + (v - ch.firstVerseNumber);
       const refs = byVerse.get(id);
       if (!refs || refs.length === 0) continue;
       lines.push(`${ch.num}:${v}\t${refs.join(', ')}`);
