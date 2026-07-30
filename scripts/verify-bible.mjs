@@ -22,6 +22,8 @@ export function verifyBible(index) {
     const lines = readFileSync(file, 'utf8').split('\n').filter(l => l.length > 0);
 
     const seen = new Map(); // "장:절" -> true
+    let prevChapter = -Infinity;
+    let prevVerse = -Infinity;
     for (const [i, line] of lines.entries()) {
       const m = line.match(/^(\d+):(\d+)\t(.+)$/);
       if (!m) {
@@ -34,6 +36,13 @@ export function verifyBible(index) {
       if (m[3].trim().length === 0) problems.push(`${book.title} ${key} 이 비어 있다`);
       if (HTML_TAG.test(m[3])) problems.push(`${book.title} ${key} 에 HTML 태그가 남아 있다`);
       if (RESIDUAL_ENTITY.test(m[3])) problems.push(`${book.title} ${key} 에 잔류 HTML 엔티티가 남아 있다`);
+      const chapter = Number(m[1]);
+      const verse = Number(m[2]);
+      if (chapter < prevChapter || (chapter === prevChapter && verse <= prevVerse)) {
+        problems.push(`${book.title} ${key} 이 앞 절보다 순서가 뒤로 간다`);
+      }
+      prevChapter = chapter;
+      prevVerse = verse;
     }
 
     for (const ch of book.chapters) {

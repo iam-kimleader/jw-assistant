@@ -10,6 +10,7 @@
     "extract:index": "node --no-warnings scripts/extract-index.mjs",
     "extract:refs": "node --no-warnings scripts/extract-refs.mjs",
     "fetch:bible": "node --no-warnings scripts/fetch-bible.mjs",
-    "verify": "node --no-warnings scripts/verify-bible.mjs"
+    "verify": "node --no-warnings scripts/verify-bible.mjs",
+    "verify:refs": "node --no-warnings scripts/verify-refs.mjs"
   }
 }

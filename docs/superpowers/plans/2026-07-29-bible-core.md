@@ -62,6 +62,29 @@ Task 5 의 `verify-bible` 이 127건의 불일치를 보고해 드러났고, 원
 Task 7 이 이 결함을 정정한다. **Task 6 은 Task 7 이 끝난 뒤에 착수한다** — 상호 참조 65,578건을
 사람이 읽는 성구로 바꿀 때 이 계산을 쓰기 때문이다.
 
+## 계획 결함 정정 2 (2026-07-30, Task 6 수행 중 발견)
+
+**Task 6 Step 3 의 최초 코드는 장을 넘어가는 범위 참조에서 장 번호를 잃어버렸다.**
+`from_ === to_` 가 아닐 때 `` `${formatAddress(index, r.from_)}-${toAddress(index, r.to_).verse}` ``
+로 라벨을 만들었는데, 이는 끝 절의 장 번호를 통째로 버리고 숫자(절 번호)만 남긴다.
+끝 절이 시작 절과 다른 장에 있으면, 마치 시작 절과 같은 장에 있는 것처럼 잘못 읽힌다.
+
+실제 DB 에서 장을 넘어가는 범위 참조는 정확히 4건이고, 책을 넘어가는 범위는 0건이다.
+
+| 참조원 | 올바른 라벨 | 옛 코드의 출력 |
+|---|---|---|
+| 열왕기상 9:10 | 열왕기상 6:37-7:1 | 열왕기상 6:37-1 |
+| 역대기상 13:5 | 사무엘상 6:21-7:1 | 사무엘상 6:21-1 |
+| 에스라 4:8 | 에스라 4:8-6:18 | 에스라 4:8-18 |
+| 다니엘 2:4 | 다니엘 2:4-7:28 | 다니엘 2:4-28 |
+
+네 경우 모두 끝 절의 장 번호가 사라지고 절 번호만 남아, 실제와 다른 절을 가리키는
+성구가 조용히 만들어졌다. `scripts/extract-refs.mjs` 는 끝 절의 장이 시작 절과 다르면
+장 번호를 앞에 붙이는 분기로 이미 고쳐져 있다. 위 Task 6 Step 3 의 코드 블록도 같은
+내용으로 정정했다. 계획 문서가 복사·붙여넣기 소스로 쓰이는 이상, 코드와 계획이
+서로 다른 채로 남으면 다음에 누군가 계획대로 Task 6 을 다시 실행할 때 이 오류가
+그대로 재현된다.
+
 ---
 
 ### Task 1: 프로젝트 골조와 ZIP 리더
@@ -1156,9 +1179,25 @@ db.close();
 // 출발 절별로 참조를 모은다
 const byVerse = new Map();
 for (const r of rows) {
-  const label = r.from_ === r.to_
-    ? formatAddress(index, r.from_)
-    : `${formatAddress(index, r.from_)}-${toAddress(index, r.to_).verse}`;
+  let label;
+  if (r.from_ === r.to_) {
+    label = formatAddress(index, r.from_);
+  } else {
+    if (r.from_ > r.to_) {
+      throw new Error(`범위가 거꾸로 됐다 — 참조원 절 ID ${r.src}, from ${r.from_} > to ${r.to_}`);
+    }
+    const from = toAddress(index, r.from_);
+    const to = toAddress(index, r.to_);
+    if (to.book !== from.book) {
+      // 책이 달라지는 범위 — 끝 주소를 통째로 적어야 틀리지 않는다
+      label = `${formatAddress(index, r.from_)}-${formatAddress(index, r.to_)}`;
+    } else if (to.chapter !== from.chapter) {
+      // 장이 달라지는 범위 — 끝 절 앞에 장 번호를 반드시 붙인다 (안 붙이면 같은 장으로 오독된다)
+      label = `${formatAddress(index, r.from_)}-${to.chapter}:${to.verse}`;
+    } else {
+      label = `${formatAddress(index, r.from_)}-${to.verse}`;
+    }
+  }
   if (!byVerse.has(r.src)) byVerse.set(r.src, []);
   byVerse.get(r.src).push(label);
 }

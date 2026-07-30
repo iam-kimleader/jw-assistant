@@ -41,6 +41,13 @@ for (const book of index.books) {
   for (const ch of book.chapters) {
     const html = await getChapterHtml(book.num, ch.num);
     const verses = parseChapter(html);
+    for (const v of verses) {
+      if (v.book !== book.num || v.chapter !== ch.num) {
+        throw new Error(
+          `요청한 장과 받은 장이 다르다 — 요청 ${book.num}권 ${ch.num}장, 수신 ${v.book}권 ${v.chapter}장`
+        );
+      }
+    }
     if (verses.length !== ch.verses) {
       throw new Error(
         `${book.title} ${ch.num}장의 절 수가 맞지 않는다 — 기준 ${ch.verses}, 수집 ${verses.length}`

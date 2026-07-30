@@ -32,7 +32,7 @@ function toPlainText(fragment) {
     .replace(/&mdash;/g, '—')
     .replace(/&copy;/g, '©')
     // 그 밖의 숫자 엔티티(10진수/16진수)는 실제 문자로 일반화하여 디코딩한다.
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#[xX]([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
     .replace(/&amp;/g, '&')
     .replace(/\s+/g, ' ')

@@ -24,6 +24,9 @@ for (const r of rows) {
   if (r.from_ === r.to_) {
     label = formatAddress(index, r.from_);
   } else {
+    if (r.from_ > r.to_) {
+      throw new Error(`범위가 거꾸로 됐다 — 참조원 절 ID ${r.src}, from ${r.from_} > to ${r.to_}`);
+    }
     const from = toAddress(index, r.from_);
     const to = toAddress(index, r.to_);
     if (to.book !== from.book) {
