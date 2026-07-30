@@ -18,7 +18,9 @@ function sliceBalanced(html, from) {
 }
 
 function toPlainText(fragment) {
-  const text = fragment
+  return fragment
+    // 절/장 번호 표시 앵커를 통째로 제거한다 (장의 첫 절은 절 번호 대신 장 번호가 나온다).
+    .replace(/<a\b[^>]*class="[^"]*\bvp\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
     // 상호참조(+) 와 각주(*) 링크를 통째로 제거한다
     .replace(/<a\b[^>]*class="[^"]*\bb\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
     .replace(/<a\b[^>]*class="[^"]*\bfn\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
@@ -27,12 +29,14 @@ function toPlainText(fragment) {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
+    .replace(/&mdash;/g, '—')
+    .replace(/&copy;/g, '©')
+    // 그 밖의 숫자 엔티티(10진수/16진수)는 실제 문자로 일반화하여 디코딩한다.
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
     .replace(/&amp;/g, '&')
     .replace(/\s+/g, ' ')
     .trim();
-  // 절 앞의 절/장 번호 표시(장의 첫 절은 절 번호 대신 장 번호가 나온다)를 뗀다
-  return text.replace(/^\d+\s*/, '').trim();
 }
 
 export function parseChapter(html) {
@@ -60,5 +64,10 @@ export function parseChapter(html) {
       text: prev ? `${prev.text} ${text}`.trim() : text,
     });
   }
-  return [...byVerse.values()].sort((a, b) => a.verse - b.verse);
+  const verses = [...byVerse.values()].sort((a, b) => a.verse - b.verse);
+  // 본문이 빈 절을 조용히 통과시키지 않고 바로 실패시킨다.
+  for (const v of verses) {
+    if (!v.text) throw new Error(`절 본문이 비어 있다: ${v.book}권 ${v.chapter}장 ${v.verse}절`);
+  }
+  return verses;
 }

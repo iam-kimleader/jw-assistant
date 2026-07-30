@@ -5,7 +5,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { chapterUrl, parseChapter } from './wol-chapter.mjs';
 
 const FIX = 'tests/fixtures/wol-40-24.html';
-const skip = !existsSync(FIX);
+const SNAPSHOT = 'tests/fixtures/wol-40-24.snapshot.tsv';
+const skip = !existsSync(FIX) || !existsSync(SNAPSHOT);
 const html = skip ? '' : readFileSync(FIX, 'utf8');
 
 test('장 URL 을 만든다', () => {
@@ -40,8 +41,19 @@ test('13절과 14절 본문이 정확하다', { skip }, () => {
 test('본문에 태그와 참조 기호가 남아 있지 않다', { skip }, () => {
   for (const v of parseChapter(html)) {
     assert.ok(!v.text.includes('<'), `${v.verse}절에 태그가 남아 있다`);
-    assert.ok(!v.text.includes('&nbsp;'), `${v.verse}절에 엔티티가 남아 있다`);
+    assert.ok(!/&(\w+|#\d+);/.test(v.text), `${v.verse}절에 엔티티가 남아 있다`);
+    assert.ok(!v.text.includes('+'), `${v.verse}절에 상호참조 기호가 남아 있다`);
+    assert.ok(!v.text.includes('*'), `${v.verse}절에 각주 기호가 남아 있다`);
     assert.ok(!/^\d/.test(v.text), `${v.verse}절이 숫자로 시작한다`);
     assert.ok(v.text.length > 0, `${v.verse}절이 비어 있다`);
   }
+});
+
+test('51개 절 전체가 저장된 스냅샷과 일치한다', { skip }, () => {
+  const verses = parseChapter(html);
+  const snapshot = readFileSync(SNAPSHOT, 'utf8').trim().split('\n');
+  assert.equal(verses.length, snapshot.length);
+  verses.forEach((v, i) => {
+    assert.equal(`${v.chapter}:${v.verse}\t${v.text}`, snapshot[i]);
+  });
 });
