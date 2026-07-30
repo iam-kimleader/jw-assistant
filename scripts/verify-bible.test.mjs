@@ -33,7 +33,7 @@ test('잔류 HTML 태그와 엔티티(대문자 16진수 포함)를 문제로 �
     'utf8'
   );
   try {
-    const fakeIndex = { books: [{ title: '테스트책', slug: '__verify-bible-test-fixture', chapters: [{ num: 1, verses: 2 }] }] };
+    const fakeIndex = { books: [{ title: '테스트책', slug: '__verify-bible-test-fixture', chapters: [{ num: 1, verses: 2, firstVerseNumber: 1, lastVerseNumber: 2 }] }] };
     const result = verifyBible(fakeIndex);
     assert.equal(result.ok, false);
     assert.ok(result.problems.some(p => p.includes('태그')), 'HTML 태그 문제가 보고되지 않았다');
