@@ -35,6 +35,33 @@
 | wol 절 마크업 | `<span id="v{권}-{장}-{절}-1" class="v">` 안에 `<a class="vl vx vp study">번호 </a>` + 본문 + `<a class="b">+</a>` |
 | 교차 검증 | 마태 24장 → DB 51절, wol `class="v"` 51개. 일치 |
 
+## 계획 결함 정정 (2026-07-30, Task 5 수행 중 발견)
+
+**이 계획의 최초 판은 "각 장의 절 번호는 1부터 N까지 이어진다" 고 가정했다. 이 가정은 틀렸다.**
+Task 5 의 `verify-bible` 이 127건의 불일치를 보고해 드러났고, 원인은 정확히 두 가지다.
+
+| 예외 | 규모 | 내용 |
+|---|---|---|
+| 시편 표제 | 116편 | 신세계역은 표제("다윗의 시가. 아들 압살롬을 피해 도망할 때")를 절 번호 없이 1절 위에 둔다. wol 은 이를 **0절**로 매긴다 |
+| 요한복음 8:1-11 | 1개 장 | 신세계역은 간음한 여자 대목을 본문에서 빼고 각주로 처리한다. 8장은 **12절에서 시작**한다 |
+
+116 + 11 = 127 로 정확히 일치하므로, **이 둘 외에 다른 이상은 없다.** 장 안에서 절 번호는 연속이다.
+
+수집된 본문 자체는 정확하다. 결함은 `core/bible/index.json` 과 `src/verse-address.mjs` 에만 있다.
+영향은 심각하다. `toVerseId(19, 3, 8)` 이 시편 3:8 이 아니라 3:7 을 가리킨다.
+
+**정정된 사실**
+
+| 항목 | 값 |
+|---|---|
+| 장의 절 번호 범위 | `1..N` 이 아니다. 장마다 시작 번호가 다를 수 있다 |
+| 시작 번호 도출 규칙 | **각 장 마지막 행의 `Label` 은 항상 진짜 절 번호다.** 장 번호 마커는 첫 행에만 붙는다. 따라서 `시작번호 = 마지막행Label - (행수 - 1)` |
+| 검증 사례 | 창세기 1장 → 1, 시편 3편 → 0, 요한복음 8장 → 12, 마태복음 17장 → 1 |
+| 시편 표제 처리 | 사용자 결정으로 **0절로 보존**한다. 본문 파일에 `3:0` 형태로 남는다 |
+
+Task 7 이 이 결함을 정정한다. **Task 6 은 Task 7 이 끝난 뒤에 착수한다** — 상호 참조 65,578건을
+사람이 읽는 성구로 바꿀 때 이 계산을 쓰기 때문이다.
+
 ---
 
 ### Task 1: 프로젝트 골조와 ZIP 리더
@@ -1164,6 +1191,154 @@ Expected: `생성: core/bible/refs — 참조 65578건` 출력 후 3개 테스�
 ```bash
 git add scripts/extract-refs.mjs scripts/extract-refs.test.mjs core/bible/refs/
 git commit -m "상호 참조 추출 추가 — 절-대-절 난외 참조 65578건"
+```
+
+---
+
+### Task 7: 절 번호 모델 정정
+
+**이 태스크는 Task 6 보다 먼저 수행한다.** 위의 "계획 결함 정정" 절이 배경이다.
+
+**Files:**
+- Modify: `scripts/extract-index.mjs`
+- Modify: `src/verse-address.mjs`
+- Modify: `src/verse-address.test.mjs`
+- Modify: `scripts/verify-bible.mjs`
+- Modify: `scripts/extract-index.test.mjs`
+- 재생성: `core/bible/index.json`
+
+**Interfaces:**
+- `core/bible/index.json` 의 각 장 객체에 두 필드를 더한다.
+  - `firstVerseNumber: number` — 그 장의 첫 절 번호. 시편 표제가 있으면 0, 요한복음 8장은 12, 그 밖에는 1
+  - `lastVerseNumber: number` — `firstVerseNumber + verses - 1`
+  - 기존 `num` · `firstVerseId` · `lastVerseId` · `verses` 는 그대로 둔다. `verses` 는 행 수이며 표제를 포함한다
+- `toAddress(index, verseId)` 는 `verse` 를 `firstVerseNumber + (verseId - firstVerseId)` 로 계산한다
+- `toVerseId(index, book, chapter, verse)` 는 `firstVerseId + (verse - firstVerseNumber)` 를 돌려주고, `verse` 가 `firstVerseNumber..lastVerseNumber` 밖이면 오류를 던진다
+- `verifyBible(index)` 는 `1..verses` 가 아니라 `firstVerseNumber..lastVerseNumber` 가 본문에 모두 있는지 검사한다
+
+- [ ] **Step 1: 실패하는 테스트를 먼저 쓴다**
+
+`src/verse-address.test.mjs` 에 아래 테스트를 더한다. 기존 테스트는 지우지 않는다.
+
+```js
+test('시편 표제는 0절이고 마지막 절이 밀리지 않는다', { skip }, () => {
+  assert.equal(toVerseId(idx, 19, 3, 0), 13958);   // 표제
+  assert.equal(toVerseId(idx, 19, 3, 1), 13959);
+  assert.equal(toVerseId(idx, 19, 3, 8), 13966);   // 정정 전에는 13965 를 내놓았다
+  assert.deepEqual(toAddress(idx, 13958), { book: 19, title: '시편', chapter: 3, verse: 0 });
+  assert.deepEqual(toAddress(idx, 13966), { book: 19, title: '시편', chapter: 3, verse: 8 });
+  assert.throws(() => toVerseId(idx, 19, 3, 9), /범위/);
+});
+
+test('요한복음 8장은 12절에서 시작한다', { skip }, () => {
+  assert.equal(toVerseId(idx, 43, 8, 12), 26485);
+  assert.equal(toVerseId(idx, 43, 8, 59), 26532);
+  assert.deepEqual(toAddress(idx, 26485), { book: 43, title: '요한복음', chapter: 8, verse: 12 });
+  assert.throws(() => toVerseId(idx, 43, 8, 11), /범위/);
+  assert.throws(() => toVerseId(idx, 43, 8, 1), /범위/);
+});
+
+test('표제도 예외도 없는 장은 1절에서 시작한다', { skip }, () => {
+  assert.equal(toVerseId(idx, 1, 1, 1), 0);
+  assert.equal(toVerseId(idx, 40, 24, 14), 24087);
+  assert.equal(toVerseId(idx, 66, 22, 21), 31193);
+});
+```
+
+`scripts/extract-index.test.mjs` 에도 더한다.
+
+```js
+test('장마다 절 번호 범위가 기록된다', { skip }, () => {
+  const ps3 = idx.books.find(b => b.num === 19).chapters.find(c => c.num === 3);
+  assert.equal(ps3.firstVerseNumber, 0);
+  assert.equal(ps3.lastVerseNumber, 8);
+  const jn8 = idx.books.find(b => b.num === 43).chapters.find(c => c.num === 8);
+  assert.equal(jn8.firstVerseNumber, 12);
+  assert.equal(jn8.lastVerseNumber, 59);
+  const gn1 = idx.books.find(b => b.num === 1).chapters.find(c => c.num === 1);
+  assert.equal(gn1.firstVerseNumber, 1);
+  assert.equal(gn1.lastVerseNumber, 31);
+});
+
+test('시작 번호가 0 또는 1이 아닌 장은 요한복음 8장 하나뿐이다', { skip }, () => {
+  const odd = [];
+  for (const b of idx.books) {
+    for (const c of b.chapters) {
+      if (c.firstVerseNumber !== 1 && c.firstVerseNumber !== 0) odd.push(`${b.title} ${c.num}`);
+    }
+  }
+  assert.deepEqual(odd, ['요한복음 8']);
+});
+
+test('표제가 있는 장은 정확히 116개다', { skip }, () => {
+  let n = 0;
+  for (const b of idx.books) for (const c of b.chapters) if (c.firstVerseNumber === 0) n++;
+  assert.equal(n, 116);
+});
+```
+
+- [ ] **Step 2: 테스트를 돌려 실패를 확인한다**
+
+Run: `npm test`
+Expected: FAIL — `firstVerseNumber` 가 `undefined` 라서 새 테스트들이 깨진다
+
+- [ ] **Step 3: `scripts/extract-index.mjs` 에 절 번호 범위를 더한다**
+
+각 장 마지막 행의 `Label` 에서 시작 번호를 역산한다. 마지막 행의 라벨은 언제나 진짜 절 번호다.
+
+```js
+// BibleVerse.Label 은 HTML 이 섞여 있으므로 태그를 걷어내고 숫자만 본다
+const labelRows = db.prepare(
+  'SELECT BibleVerseId id, Label FROM BibleVerse ORDER BY BibleVerseId'
+).all();
+const labelOf = new Map(
+  labelRows.map(r => [r.id, String(r.Label ?? '').replace(/<[^>]*>/g, '').trim()])
+);
+
+function firstVerseNumberOf(chapter) {
+  const rows = chapter.lastVerseId - chapter.firstVerseId + 1;
+  const last = labelOf.get(chapter.lastVerseId);
+  if (!/^\d+$/.test(last)) {
+    throw new Error(`마지막 절의 라벨이 숫자가 아니다: id ${chapter.lastVerseId} = ${JSON.stringify(last)}`);
+  }
+  return Number(last) - (rows - 1);
+}
+```
+
+각 장 객체를 만들 때 `firstVerseNumber` 와 `lastVerseNumber` 를 채운다.
+
+- [ ] **Step 4: 인덱스를 재생성하고 결과를 눈으로 확인한다**
+
+Run: `npm run extract:index`
+그 다음 시편 3편·요한복음 8장·창세기 1장의 세 필드를 출력해 각각 `0/8`, `12/59`, `1/31` 인지 확인한다.
+
+- [ ] **Step 5: `src/verse-address.mjs` 를 정정한다**
+
+`toAddress` 의 `verse` 계산을 `c.firstVerseNumber + (verseId - c.firstVerseId)` 로 바꾼다.
+`toVerseId` 의 범위 검사를 `verse < c.firstVerseNumber || verse > c.lastVerseNumber` 로 바꾸고,
+반환값을 `c.firstVerseId + (verse - c.firstVerseNumber)` 로 바꾼다.
+`Number.isInteger(verse)` 검사는 그대로 둔다.
+
+- [ ] **Step 6: `scripts/verify-bible.mjs` 를 정정한다**
+
+빠진 절을 찾는 반복문을 `for (let v = ch.firstVerseNumber; v <= ch.lastVerseNumber; v++)` 로 바꾼다.
+HTML 태그·잔류 엔티티 검사와 중복 검사는 그대로 둔다.
+
+- [ ] **Step 7: 전부 통과하는지 확인한다**
+
+Run: `npm test`
+Expected: PASS — 새 테스트를 포함해 전부 통과하고, skip 으로 빠지는 것이 없다
+
+Run: `npm run verify`
+Expected: `검증 통과 — 66권 1189장 31194절이 기준선과 일치한다.` 127건이 0건이 되어야 한다
+
+- [ ] **Step 8: 커밋한다**
+
+```bash
+git add scripts/extract-index.mjs scripts/extract-index.test.mjs \
+        src/verse-address.mjs src/verse-address.test.mjs \
+        scripts/verify-bible.mjs core/bible/index.json checklist.md
+git commit -m "절 번호 모델 정정 — 시편 표제 0절과 요한복음 8장 시작 절 반영"
 ```
 
 ---
