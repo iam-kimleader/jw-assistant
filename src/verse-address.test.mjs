@@ -33,6 +33,10 @@ test('주소를 문자열로 포맷한다', { skip }, () => {
 test('문자열 성구를 해석한다', { skip }, () => {
   assert.deepEqual(parseReference(idx, '마태복음 24:14'), { book: 40, chapter: 24, verse: 14 });
   assert.deepEqual(parseReference(idx, '요한 계시록 22:21'), { book: 66, chapter: 22, verse: 21 });
+  // 공백과 내장 숫자를 모두 포함하는 권명 회귀 테스트
+  assert.deepEqual(parseReference(idx, '요한 1서 2:5'), { book: 62, chapter: 2, verse: 5 });
+  assert.deepEqual(parseReference(idx, '요한 2서 1:3'), { book: 63, chapter: 1, verse: 3 });
+  assert.deepEqual(parseReference(idx, '요한 3서 1:14'), { book: 64, chapter: 1, verse: 14 });
 });
 
 test('범위를 벗어나면 오류를 던진다', { skip }, () => {
