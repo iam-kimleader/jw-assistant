@@ -38,11 +38,33 @@ export function formatAddress(index, verseId) {
 export function parseReference(index, text) {
   const m = String(text).trim().match(/^(.+?)\s+(\d+):(\d+)$/);
   if (!m) throw new Error(`성구 형식을 해석할 수 없다: ${text}`);
-  const title = m[1].trim();
-  const b = index.books.find(x => x.title === title || x.title.replace(/\s+/g, '') === title.replace(/\s+/g, ''));
-  if (!b) throw new Error(`권을 찾을 수 없다: ${title}`);
+  const b = findBook(index, m[1]);
   const chapter = Number(m[2]);
   const verse = Number(m[3]);
   toVerseId(index, b.num, chapter, verse); // 범위 검증을 겸한다
   return { book: b.num, chapter, verse };
+}
+
+// 권 이름은 공백(고린도 전서)과 숫자(요한 1서)를 품을 수 있으므로 공백을 무시하고 맞춘다
+function findBook(index, title) {
+  const wanted = title.trim();
+  const squashed = wanted.replace(/\s+/g, '');
+  const b = index.books.find(x => x.title === wanted || x.title.replace(/\s+/g, '') === squashed);
+  if (!b) throw new Error(`권을 찾을 수 없다: ${wanted}`);
+  return b;
+}
+
+// "마태복음 24:14" · "마태복음 28:19-20" · "열왕기상 6:37-7:1" 세 형태를 모두 받는다
+export function parseRange(index, text) {
+  const m = String(text).trim().match(/^(.+?)\s+(\d+):(\d+)(?:\s*-\s*(?:(\d+):)?(\d+))?$/);
+  if (!m) throw new Error(`성구 형식을 해석할 수 없다: ${text}`);
+  const b = findBook(index, m[1]);
+  const fromChapter = Number(m[2]);
+  const fromVerse = Number(m[3]);
+  const toChapter = m[4] === undefined ? fromChapter : Number(m[4]);
+  const toVerse = m[5] === undefined ? fromVerse : Number(m[5]);
+  const fromId = toVerseId(index, b.num, fromChapter, fromVerse);
+  const toId = toVerseId(index, b.num, toChapter, toVerse);
+  if (toId < fromId) throw new Error(`범위가 거꾸로 됐다: ${text}`);
+  return { book: b.num, title: b.title, fromChapter, fromVerse, toChapter, toVerse, fromId, toId };
 }

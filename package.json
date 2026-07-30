@@ -11,6 +11,8 @@
     "extract:refs": "node --no-warnings scripts/extract-refs.mjs",
     "fetch:bible": "node --no-warnings scripts/fetch-bible.mjs",
     "verify": "node --no-warnings scripts/verify-bible.mjs",
-    "verify:refs": "node --no-warnings scripts/verify-refs.mjs"
+    "verify:refs": "node --no-warnings scripts/verify-refs.mjs",
+    "성구": "node --no-warnings scripts/lookup.mjs",
+    "lookup": "node --no-warnings scripts/lookup.mjs"
   }
 }
