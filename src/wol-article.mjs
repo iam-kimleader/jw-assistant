@@ -17,10 +17,25 @@ function 문단들(html) {
 const 속성값 = (속성, 이름) => (속성.match(new RegExp(`${이름}="([^"]*)"`)) || [])[1] ?? null;
 const 클래스목록 = 속성 => (속성값(속성, 'class') || '').split(/\s+/).filter(Boolean);
 
-// href 가 /ko/wol/bc/ 로 시작하고 data-bid 가 있고 class 목록에 낱말 b 가 있는 앵커만 인용으로 본다
+// href 에 /wol/bc/ 가 들어 있고 data-bid 가 있고 class 목록에 낱말 b 가 있는 앵커만 인용으로 본다.
+// 절대 URL(https://wol.jw.org/ko/wol/bc/...)로 와도 잡을 수 있게 접두 대신 부분 일치를 쓴다 —
+// data-bid 와 class="b" 두 조건만으로 이미 인용 앵커가 충분히 특정된다.
 function 인용앵커인가(속성) {
   const href = 속성값(속성, 'href');
-  return !!href && href.startsWith('/ko/wol/bc/') && !!속성값(속성, 'data-bid') && 클래스목록(속성).includes('b');
+  return !!href && /\/wol\/bc\//.test(href) && !!속성값(속성, 'data-bid') && 클래스목록(속성).includes('b');
+}
+
+// 문서 전체(그룹으로 묶이기 전)에서 인용앵커인가를 만족하는 <a> 개수를 센다.
+// 결산용이다 — 그룹 구성 과정에서 조용히 버려지는 인용이 있는지 scripts/prepare-meeting.mjs 가 이 값과
+// 통계.인용수 를 비교해 알아낸다.
+function 문서인용수세기(html) {
+  const 전체앵커 = /<a\b([^>]*)>([\s\S]*?)<\/a>/g;
+  let n = 0;
+  let m;
+  while ((m = 전체앵커.exec(html))) {
+    if (인용앵커인가(m[1])) n++;
+  }
+  return n;
 }
 
 function 인용뽑기(본문) {
@@ -66,9 +81,13 @@ export function parseArticle(html) {
 
   let 주제성구 = null;
   if (주제p) {
-    const c = 인용뽑기(주제p.본문)[0];
+    // themeScrp 문단에 성구 링크가 둘 이상일 수 있다(예 —마태복음 24:14; 28:19, 20).
+    // 전체를 인용목록에 담아 둘째부터 조용히 사라지지 않게 한다. 라벨·bid·인용문은
+    // 첫 인용을 가리키는 기존 필드 그대로 두어 이미 이 필드를 쓰는 곳을 깨지 않는다.
+    const 인용목록 = 인용뽑기(주제p.본문);
+    const c = 인용목록[0];
     const 인용문m = 주제p.본문.match(/<em\b[^>]*>([\s\S]*?)<\/em>/);
-    if (c) 주제성구 = { 인용문: 인용문m ? 텍스트(인용문m[1]) : '', 라벨: c.라벨, bid: c.bid };
+    if (c) 주제성구 = { 인용문: 인용문m ? 텍스트(인용문m[1]) : '', 라벨: c.라벨, bid: c.bid, 인용목록 };
   }
 
   // 질문 문단(class="qu")을 pid 로 색인하고, data-rel-pid 를 가진 문단을 그 아래에 붙인다
@@ -105,5 +124,6 @@ export function parseArticle(html) {
     요점,
     주제성구,
     문단그룹: 순서.map(pid => 그룹.get(pid)),
+    문서인용수: 문서인용수세기(html),
   };
 }
