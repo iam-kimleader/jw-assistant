@@ -21,9 +21,27 @@ test('주제 성구를 인용문과 라벨로 나눠 뽑는다', () => {
 });
 
 test('문단그룹을 data-rel-pid 로 묶는다', () => {
-  // 픽스처의 질문은 p46·p47·p48 세 개다
-  assert.equal(기사.문단그룹.length, 3);
-  assert.deepEqual(기사.문단그룹.map(g => g.문단번호), [[1, 2], [3], [4, 5]]);
+  // 픽스처의 질문은 p46·p47·p48·p49·p50·p51 여섯 개다. p49·p50 은 문단 하나(p12)를 공유한다
+  assert.equal(기사.문단그룹.length, 6);
+  assert.deepEqual(기사.문단그룹.map(g => g.문단번호), [[1, 2], [3], [4, 5], [6], [6], [7]]);
+});
+
+test('data-rel-pid 가 여러 그룹을 가리키면 문단이 두 그룹 모두에 들어간다', () => {
+  const [여섯째, 일곱째] = [기사.문단그룹[3], 기사.문단그룹[4]];
+  assert.deepEqual(여섯째.문단번호, [6]);
+  assert.deepEqual(일곱째.문단번호, [6]);
+  assert.deepEqual(여섯째.인용.map(c => c.bid), ['26-1']);
+  assert.deepEqual(일곱째.인용.map(c => c.bid), ['26-1']);
+});
+
+test('속성 순서가 뒤바뀐 인용 앵커도 인용으로 잡는다', () => {
+  const 여덟째 = 기사.문단그룹[5];
+  assert.deepEqual(여덟째.인용.map(c => c.bid), ['27-1']);
+  assert.equal(여덟째.인용[0].라벨, '데살로니가 전서 5:6');
+});
+
+test('속성 순서가 뒤바뀐 parNum span 도 문단 번호로 잡는다', () => {
+  assert.deepEqual(기사.문단그룹[5].문단번호, [7]);
 });
 
 test('질문 본문에서 태그를 걷어낸다', () => {

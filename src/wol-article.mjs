@@ -1,7 +1,9 @@
 // wol 파수대 연구 기사 HTML 에서 질문·문단·인용 성구 구조를 뽑아내는 파서
 import { htmlToText as 텍스트 } from './html-text.mjs';
 
-const 인용태그 = /<a\b[^>]*href="\/ko\/wol\/bc\/[^"]*"[^>]*data-bid="([^"]+)"[^>]*class="[^"]*\bb\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
+// 속성 순서에 기대지 않는다 — <a ...>...</a> 를 통째로 잡은 뒤 안에서 href·data-bid·class 를 따로 확인한다
+const 앵커 = /<a\b([^>]*)>([\s\S]*?)<\/a>/g;
+const 열린스팬 = /<span\b([^>]*)>/g;
 
 // <p ...>...</p> 를 순서대로 모두 잘라낸다. 속성과 본문을 함께 준다
 function 문단들(html) {
@@ -13,20 +15,39 @@ function 문단들(html) {
 }
 
 const 속성값 = (속성, 이름) => (속성.match(new RegExp(`${이름}="([^"]*)"`)) || [])[1] ?? null;
+const 클래스목록 = 속성 => (속성값(속성, 'class') || '').split(/\s+/).filter(Boolean);
+
+// href 가 /ko/wol/bc/ 로 시작하고 data-bid 가 있고 class 목록에 낱말 b 가 있는 앵커만 인용으로 본다
+function 인용앵커인가(속성) {
+  const href = 속성값(속성, 'href');
+  return !!href && href.startsWith('/ko/wol/bc/') && !!속성값(속성, 'data-bid') && 클래스목록(속성).includes('b');
+}
 
 function 인용뽑기(본문) {
   const out = [];
-  인용태그.lastIndex = 0;
+  앵커.lastIndex = 0;
   let m;
-  while ((m = 인용태그.exec(본문))) {
-    const 뒤 = 본문.slice(인용태그.lastIndex, 인용태그.lastIndex + 60);
+  while ((m = 앵커.exec(본문))) {
+    const 속성 = m[1];
+    if (!인용앵커인가(속성)) continue;
+    const 뒤 = 본문.slice(앵커.lastIndex, 앵커.lastIndex + 60);
     out.push({
-      bid: m[1],
+      bid: 속성값(속성, 'data-bid'),
       라벨: 텍스트(m[2]),
       낭독: /낭독/.test(텍스트(뒤).slice(0, 8)),
     });
   }
   return out;
+}
+
+// class="parNum" 인 <span> 의 data-pnum 을 속성 순서에 상관없이 찾는다
+function 파라넘(본문) {
+  열린스팬.lastIndex = 0;
+  let m;
+  while ((m = 열린스팬.exec(본문))) {
+    if (클래스목록(m[1]).includes('parNum')) return 속성값(m[1], 'data-pnum');
+  }
+  return null;
 }
 
 export function parseArticle(html) {
@@ -65,11 +86,16 @@ export function parseArticle(html) {
   for (const p of ps) {
     const rel = 속성값(p.속성, 'data-rel-pid');
     if (!rel) continue;
-    const 대상 = 그룹.get(rel.replace(/[[\]]/g, '').split(',')[0].trim());
-    if (!대상) continue;
-    const pnum = (p.본문.match(/class="parNum"[^>]*data-pnum="(\d+)"/) || [])[1];
-    if (pnum) 대상.문단번호.push(Number(pnum));
-    대상.인용.push(...인용뽑기(p.본문));
+    // data-rel-pid 는 "[46]" 처럼 하나일 수도, "[49, 50]" 처럼 여럿일 수도 있다 — 걸린 그룹 전부에 붙인다
+    const pid들 = rel.replace(/[[\]]/g, '').split(',').map(s => s.trim()).filter(Boolean);
+    const pnum = 파라넘(p.본문);
+    const 인용 = 인용뽑기(p.본문);
+    for (const pid of pid들) {
+      const 대상 = 그룹.get(pid);
+      if (!대상) continue;
+      if (pnum) 대상.문단번호.push(Number(pnum));
+      대상.인용.push(...인용);
+    }
   }
 
   return {
