@@ -29,6 +29,9 @@
 |---|---|---|
 | `src/citation-parse.mjs` | wol 성구 라벨 → 절 주소. 별칭·접미사·목록·범위·권 이어받기 | 순수 |
 | `src/citation-parse.test.mjs` | 위의 시험 | |
+| `src/html-text.mjs` | HTML 조각 → 사람이 읽는 한 줄 문자열. 두 파서가 함께 쓴다 | 순수 |
+| `src/html-text.test.mjs` | 위의 시험 | |
+| `src/wol-chapter.mjs` (수정) | 엔티티 디코딩을 `html-text.mjs` 에 넘긴다 | 순수 |
 | `src/wol-article.mjs` | 기사 HTML → 제목·주제성구·요점·문단그룹 구조체 | 순수 |
 | `src/wol-article.test.mjs` | 위의 시험 | |
 | `tests/fixtures/파수대-기사-합성.html` | 실물 구조를 본뜬 합성 픽스처 | |
@@ -343,6 +346,128 @@ git commit -m "성구 라벨 해석 모듈 추가 — 별칭·접미사·목록�
 
 ---
 
+## Task 1.5: HTML 텍스트 추출 공통화 (`src/html-text.mjs`)
+
+`src/wol-chapter.mjs` 의 `toPlainText` 가 엔티티 디코딩과 공백 정리를 하고 있고, Task 2 의 파서도 같은 일이 필요하다. 복사본을 두 개 두면 나중에 한쪽만 고쳐 어긋난다. 먼저 뽑아 둔다.
+
+**Files:**
+- Create: `src/html-text.mjs`
+- Test: `src/html-text.test.mjs`
+- Modify: `src/wol-chapter.mjs` — `toPlainText` 가 새 모듈을 부르게 한다
+
+**Interfaces:**
+- Consumes: 없음
+- Produces: `htmlToText(fragment)` → `string`. 태그를 걷어내고 HTML 엔티티를 디코딩하며 연속 공백을 하나로 줄이고 양끝을 다듬는다
+
+- [ ] **Step 1: 실패하는 시험을 쓴다**
+
+`src/html-text.test.mjs` 를 만든다.
+
+```javascript
+// HTML 조각을 사람이 읽는 문자열로 바꾸는 일이 정확한지 검증하는 테스트
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { htmlToText } from './html-text.mjs';
+
+test('태그를 걷어낸다', () => {
+  assert.equal(htmlToText('<p>가나<strong>다라</strong></p>'), '가나다라');
+});
+
+test('이름 있는 엔티티를 디코딩한다', () => {
+  assert.equal(htmlToText('가&nbsp;나'), '가 나');
+  assert.equal(htmlToText('&lt;&gt;&quot;'), '<>"');
+  assert.equal(htmlToText('가&mdash;나'), '가—나');
+  assert.equal(htmlToText('&copy;'), '©');
+});
+
+test('숫자 엔티티를 10진수와 16진수 모두 디코딩한다', () => {
+  assert.equal(htmlToText('&#44032;'), '가');
+  assert.equal(htmlToText('&#xAC00;'), '가');
+});
+
+test('&amp; 를 마지막에 풀어 이중 디코딩을 막는다', () => {
+  assert.equal(htmlToText('&amp;lt;'), '&lt;');
+});
+
+test('연속 공백을 하나로 줄이고 양끝을 다듬는다', () => {
+  assert.equal(htmlToText('  가\n\n  나  '), '가 나');
+});
+
+test('빈 입력에도 안전하다', () => {
+  assert.equal(htmlToText(''), '');
+  assert.equal(htmlToText('<span></span>'), '');
+});
+```
+
+- [ ] **Step 2: 시험이 실패하는 것을 확인한다**
+
+Run: `npm test`
+Expected: FAIL — `Cannot find module './html-text.mjs'`
+
+- [ ] **Step 3: 구현한다**
+
+`src/html-text.mjs` 를 만든다.
+
+```javascript
+// HTML 조각에서 태그와 엔티티를 걷어내 사람이 읽는 한 줄 문자열로 만드는 모듈
+export function htmlToText(fragment) {
+  return String(fragment)
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&mdash;/g, '—')
+    .replace(/&copy;/g, '©')
+    .replace(/&#[xX]([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+    // &amp; 는 마지막에 푼다. 먼저 풀면 "&amp;lt;" 가 "<" 로 이중 디코딩된다
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+```
+
+- [ ] **Step 4: `wol-chapter.mjs` 가 새 모듈을 쓰게 한다**
+
+`src/wol-chapter.mjs` 의 `toPlainText` 를 아래로 바꾸고, 파일 위쪽 import 에 한 줄을 더한다. 절 앵커와 참조·각주 링크를 통째로 지우는 부분은 이 파서만의 일이므로 그대로 둔다.
+
+```javascript
+import { htmlToText } from './html-text.mjs';
+```
+
+```javascript
+function toPlainText(fragment) {
+  return htmlToText(
+    fragment
+      // 절/장 번호 표시 앵커를 통째로 제거한다 (장의 첫 절은 절 번호 대신 장 번호가 나온다).
+      .replace(/<a\b[^>]*class="[^"]*\bvp\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
+      // 상호참조(+) 와 각주(*) 링크를 통째로 제거한다
+      .replace(/<a\b[^>]*class="[^"]*\bb\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
+      .replace(/<a\b[^>]*class="[^"]*\bfn\b[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
+  );
+}
+```
+
+- [ ] **Step 5: 회귀가 없는지 확인한다**
+
+Run: `npm test`
+Expected: PASS — 새 시험 6개와 기존 `src/wol-chapter.test.mjs` 가 모두 통과한다. 기존 시험이 깨지면 `htmlToText` 가 원래 동작과 어긋난 것이므로 되돌려 맞춘다.
+
+- [ ] **Step 6: 본문이 바뀌지 않았는지 실측으로 확인한다**
+
+Run: `npm run verify`
+Expected: PASS — 수집된 본문 31,194절이 인덱스 기준선과 그대로 일치한다
+
+- [ ] **Step 7: 커밋한다**
+
+```bash
+git add src/html-text.mjs src/html-text.test.mjs src/wol-chapter.mjs
+git commit -m "HTML 텍스트 추출을 html-text.mjs 로 뽑아 두 파서가 함께 쓰게 한다"
+```
+
+---
+
 ## Task 2: 기사 파서 (`src/wol-article.mjs`)
 
 **Files:**
@@ -351,7 +476,7 @@ git commit -m "성구 라벨 해석 모듈 추가 — 별칭·접미사·목록�
 - Test: `src/wol-article.test.mjs`
 
 **Interfaces:**
-- Consumes: 없음 (순수 문자열 처리)
+- Consumes: Task 1.5 의 `src/html-text.mjs` 의 `htmlToText`
 - Produces:
   - `parseArticle(html)` → `{주라벨, 제목, 노래, 요점, 주제성구, 문단그룹}`
     - `주제성구` — `{인용문: string, 라벨: string, bid: string}` 또는 `null`
@@ -462,22 +587,9 @@ Expected: FAIL — `Cannot find module './wol-article.mjs'`
 
 ```javascript
 // wol 파수대 연구 기사 HTML 에서 질문·문단·인용 성구 구조를 뽑아내는 파서
-const 인용태그 = /<a\b[^>]*href="\/ko\/wol\/bc\/[^"]*"[^>]*data-bid="([^"]+)"[^>]*class="[^"]*\bb\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
+import { htmlToText as 텍스트 } from './html-text.mjs';
 
-function 텍스트(fragment) {
-  return String(fragment)
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&mdash;/g, '—')
-    .replace(/&#[xX]([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-    .replace(/&amp;/g, '&')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
+const 인용태그 = /<a\b[^>]*href="\/ko\/wol\/bc\/[^"]*"[^>]*data-bid="([^"]+)"[^>]*class="[^"]*\bb\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
 
 // <p ...>...</p> 를 순서대로 모두 잘라낸다. 속성과 본문을 함께 준다
 function 문단들(html) {
