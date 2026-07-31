@@ -13,6 +13,7 @@ const USAGE = [
   '  npm run 집회준비                     오늘이 속한 주',
   '  npm run 집회준비 -- 2026-08-02       날짜로 다른 주를 지정',
   '  npm run 집회준비 -- --docid 2026403  기사를 직접 지정 (wol 구조가 바뀌었을 때)',
+  '  npm run 집회준비 -- --덮어쓰기           이미 있는 예습지를 덮어쓴다',
 ].join('\n');
 
 const 캐시디렉토리 = '.cache/wol';
@@ -34,7 +35,17 @@ if (인자.includes('--help') || 인자.includes('-h')) {
   process.exit(0);
 }
 
-const docid지정 = 인자.includes('--docid') ? 인자[인자.indexOf('--docid') + 1] : null;
+let docid지정 = null;
+if (인자.includes('--docid')) {
+  const 값 = 인자[인자.indexOf('--docid') + 1];
+  if (!값 || 값.startsWith('-')) {
+    console.error(`--docid 뒤에 값이 없다.\n\n${USAGE}`);
+    process.exit(1);
+  }
+  docid지정 = 값;
+}
+
+const 덮어쓰기 = 인자.includes('--덮어쓰기');
 const 날짜인자 = 인자.find(a => /^\d{4}-\d{2}-\d{2}$/.test(a));
 
 // 이 기기의 달력 날짜를 그대로 UTC 자정으로 옮긴다.
@@ -47,6 +58,12 @@ function 오늘의날짜() {
 const 기준일 = 날짜인자 ? new Date(`${날짜인자}T00:00:00Z`) : 오늘의날짜();
 if (Number.isNaN(기준일.getTime())) {
   console.error(`날짜를 해석할 수 없다: ${날짜인자}\n\n${USAGE}`);
+  process.exit(1);
+}
+// JS 의 Date 는 실재하지 않는 날짜(예 2026-02-31)를 거부하지 않고 다음 날로 굴려 버린다.
+// 굴러갔으면 조용히 넘어가지 않고 무엇으로 해석됐는지 보여주며 멈춘다.
+if (날짜인자 && 기준일.toISOString().slice(0, 10) !== 날짜인자) {
+  console.error(`날짜가 실재하지 않아 다른 날짜로 굴러갔다 — 입력 ${날짜인자}, 해석 결과 ${기준일.toISOString().slice(0, 10)}\n\n${USAGE}`);
   process.exit(1);
 }
 
@@ -98,6 +115,15 @@ const { 마크다운, 통계 } = buildPrepSheet(기사, 도구, { 기사URL, 주
 const 폴더 = join('activities', 'meetings', weekStart(기준일));
 mkdirSync(폴더, { recursive: true });
 const 산출물 = join(폴더, '파수대-예습.md');
+
+// 이미 예습지가 있으면 그 안의 "내 답" 이 날아갈 수 있으므로, 명시적으로 --덮어쓰기 를
+// 주지 않는 한 쓰지 않고 멈춘다.
+if (existsSync(산출물) && !덮어쓰기) {
+  console.error(`예습지가 이미 있다 — ${산출물}`);
+  console.error('다시 만들려면 --덮어쓰기 를 붙여서 실행한다.');
+  process.exit(1);
+}
+
 writeFileSync(산출물, 마크다운, 'utf8');
 
 console.log(`\n${기사.주라벨}  ${기사.제목}`);
@@ -105,3 +131,4 @@ console.log(`예습지 → ${산출물}`);
 console.log(`인용 ${통계.인용수}건 중 ${통계.해석수}건 해석, ${통계.미해결.length}건 미해결`);
 for (const m of 통계.미해결) console.log(`  ⚠ ${m.라벨} — ${m.사유}`);
 console.log();
+if (통계.미해결.length) process.exitCode = 1;
