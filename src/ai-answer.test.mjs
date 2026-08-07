@@ -202,3 +202,39 @@ test('영적 보물 질문이 범위 밖 성구를 고르면 AI 답변을 채택
   assert.equal(result.answers[0].답변, '예레미야 22:3을 사용한 로컬 폴백 답변입니다.');
   assert.equal(result.answers[0].성구[0].본문[0].주소, '예레미야 22:3');
 });
+
+test('선택 성구 필드가 비어도 답변에 범위 안 성구가 있으면 AI 답변을 채택한다', async () => {
+  const weeklyAnswer = {
+    id: 'gem-2',
+    질문: '이번 주 성경 읽기를 통해 어떤 영적 보물을 발견했습니까?',
+    답변: '로컬 폴백 답변입니다.',
+    핵심문장: [],
+    참고출판물: [],
+    성구: [],
+    삽화: [],
+    주간성경읽기: {
+      범위: '예레미야 22-23장',
+      책: '예레미야',
+      본문: [{ 주소: '예레미야 22:3', 본문: '공의와 의를 행하여라.' }],
+    },
+  };
+  const result = await enhanceAnswersWithAI([weeklyAnswer], {}, {
+    apiKey: 'test-key',
+    fetchImpl: async () => ({
+      ok: true,
+      json: async () => ({
+        output: [{ content: [{
+          type: 'output_text',
+          text: JSON.stringify({ answers: [{
+            id: 'gem-2',
+            answer: '예레미야 22:3에서 공의와 의를 행해야 한다는 교훈을 배웠습니다.',
+            selectedVerse: '',
+          }] }),
+        }] }],
+      }),
+    }),
+  });
+
+  assert.equal(result.answers[0].생성방식, 'ai');
+  assert.equal(result.answers[0].성구[0].본문[0].주소, '예레미야 22:3');
+});

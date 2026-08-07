@@ -174,7 +174,7 @@ async function 단일묶음생성(answers, context, settings) {
       const text = 자연스럽게(item.answer);
       if (!answer || !text) continue;
       const selectedVerse = answer.주간성경읽기
-        ? findWeeklyReadingVerse(answer.주간성경읽기, item.selectedVerse)
+        ? findWeeklyReadingVerse(answer.주간성경읽기, `${item.selectedVerse ?? ''} ${text}`)
         : null;
       if (answer.주간성경읽기 && !selectedVerse) {
         logger.warn('주간 성경 읽기 선택 성구 검증 실패.', String(item.selectedVerse ?? '').slice(0, 100));
