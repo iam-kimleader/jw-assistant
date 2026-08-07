@@ -203,3 +203,5 @@ Vercel 프로젝트는 `honeskor-1168s-projects/jw-assistant` 로 만들어졌�
 폴백은 `gen-field` 직전 문단 13개를 각각 질문으로 뽑고, 질문 핵심어와 가장 많이 겹치는 장 본문을 먼저 배치한다. 이 순서는 외부 AI 없이 답변 초안을 만드는 현재 방식에서 첫 문장이 질문과 직접 관련되게 하기 위한 것이다. 기존 `qu` 질문 구조에는 적용하지 않는다.
 
 수정 후 `npm test`는 135개 중 133개 통과, 2개 스킵, 실패 0개다. `prepareLifeAndMinistry('2026-08-03')`의 회중 성서 연구 출처는 `https://wol.jw.org/ko/wol/d/r8/lp-ko/1102025902`, 질문은 13개였다. 첫 질문은 `노아는 어떻게 용기를 나타냈습니까?`이고 첫 답변은 노아와 가족에게 용기가 필요했다는 문장으로 시작했다.
+
+수정 커밋 `a6d5453`을 GitHub `origin/main`에 푸시하고 Vercel 프로덕션에 재배포했다. 배포 ID는 `dpl_873TDr9Kg2vGhKCG63ypCCm1mBix`이고 기존 별칭 `https://jw-assistant-seven.vercel.app`에 연결됐다. 외부 검증에서 홈은 HTTP 200이었고 생활과 봉사 API는 오류 없이 `1102025902`, 질문 13개, 노아의 용기에 관한 첫 답변을 반환했다.
