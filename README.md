@@ -4,6 +4,8 @@
 신세계역 성경 66권의 본문과 상호참조를 로컬 파일로 구축하고 기계로 검증한다.
 설계 문서는 `docs/superpowers/specs/2026-07-29-jw-assistant-design.md`,
 구현 계획은 `docs/superpowers/plans/2026-07-29-bible-core.md` 에 있다.
+현재 웹 서비스의 운영 구조, 장애 해결법, 유지보수 절차와 남은 위험은
+`docs/핵심-운영-인수인계.md`를 정본으로 삼는다.
 
 ## 파이프라인
 
