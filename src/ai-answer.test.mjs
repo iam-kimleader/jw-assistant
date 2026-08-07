@@ -51,7 +51,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   assert.equal(request.model, 'gpt-5.4-mini');
   assert.equal(request.text.format.type, 'json_schema');
   assert.equal(request.text.format.strict, true);
-  assert.equal(request.reasoning.effort, 'medium');
+  assert.equal(request.reasoning.effort, 'low');
   const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
   assert.match(textInput, /홍수 전의 문명은 발달했지만 사회는 폭력과 악으로 가득했습니다/);
   assert.match(textInput, /https:\/\/wol\.jw\.org\/ko\/wol\/d\/r8\/lp-ko\/2002161#p4/);

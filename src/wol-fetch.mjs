@@ -143,3 +143,40 @@ export async function fetchBinary(url) {
     throw error;
   }
 }
+
+function httpsRedirect(url) {
+  return new Promise((resolve, reject) => {
+    const req = get(url, { headers: 요청헤더, timeout: 30000 }, res => {
+      const status = res.statusCode ?? 0;
+      const location = res.headers.location;
+      res.resume();
+      if ([301, 302, 303, 307, 308].includes(status) && location) {
+        resolve(new URL(location, url).href);
+        return;
+      }
+      reject(new Error(`HTTP ${status} 응답에 Location 헤더가 없다.`));
+    });
+    req.on('timeout', () => req.destroy(new Error(`리디렉션 확인 시간이 초과되었다. ${url}`)));
+    req.on('error', reject);
+  });
+}
+
+export async function resolveRedirect(url) {
+  try {
+    const response = await fetch(url, {
+      headers: 요청헤더,
+      redirect: 'manual',
+      signal: AbortSignal.timeout(30000),
+    });
+    const location = response.headers.get('location');
+    await response.body?.cancel();
+    if ([301, 302, 303, 307, 308].includes(response.status) && location) return new URL(location, url).href;
+    throw new Error(`HTTP ${response.status} 응답에 Location 헤더가 없다.`);
+  } catch (fetchError) {
+    try {
+      return await httpsRedirect(url);
+    } catch (httpsError) {
+      throw new Error(`${url}의 연결 문서를 찾지 못했다. fetch ${fetchError.message}; https ${httpsError.message}`);
+    }
+  }
+}

@@ -46,6 +46,19 @@ test('표시 문구의 항 범위에 해당하는 본문만 고른다', () => {
   assert.equal(selected.url, 'https://wol.jw.org/ko/wol/d/r8/lp-ko/2012284#p12');
 });
 
+test('WOL 리디렉션의 정확한 문단 범위를 가장 먼저 사용한다', () => {
+  const selected = selectPublicationContent(
+    parsePublicationDocument(html),
+    '「파12」 4/15 23면 5-8항',
+    '노아가 방주를 지으라는 명령을 받은 때는 언제였습니까?',
+    'https://wol.jw.org/ko/wol/d/r8/lp-ko/2012284#h=12:0-16:0',
+  );
+  assert.match(selected.본문, /120년은 하느님의 판결/);
+  assert.match(selected.본문, /여호와께서는 정하신 때에 구출/);
+  assert.doesNotMatch(selected.본문, /시간적인 요소가 중요/);
+  assert.equal(selected.url, 'https://wol.jw.org/ko/wol/d/r8/lp-ko/2012284#h=12:0-16:0');
+});
+
 test('네모 참고 자료는 보충 상자 본문을 고른다', () => {
   const selected = selectPublicationContent(parsePublicationDocument(html), '네모', '대홍수가 실제로 일어났습니까?');
   assert.equal(selected.본문, '대홍수 전승에는 여러 공통점이 있습니다.');
@@ -92,11 +105,15 @@ test('질문별 원문을 보강한 뒤 공개 응답에서는 본문만 제거�
   }];
   const enriched = await enrichAnswersWithPublicationReferences(answers, {
     accessedAt: '2026-08-08',
-    fetchDocument: async () => html,
+    fetchDocument: async () => ({
+      html,
+      resolvedUrl: 'https://wol.jw.org/ko/wol/d/r8/lp-ko/2012284#h=12:0-16:0',
+    }),
   });
 
   assert.match(enriched[0].참고출판물[0].본문, /방주 명령은 수십 년 뒤/);
   assert.equal(enriched[0].참고출판물[0].조회일, '2026-08-08');
+  assert.equal(enriched[0].참고출판물[0].url, 'https://wol.jw.org/ko/wol/d/r8/lp-ko/2012284#h=12:0-16:0');
   const stripped = stripPublicationContents(enriched);
   assert.equal('본문' in stripped[0].참고출판물[0], false);
   assert.equal(stripped[0].참고출판물[0].표시, '「파12」 4/15 23면 5-8항');

@@ -1,5 +1,5 @@
 // 질문에 연결된 WOL 참고 출판물을 읽어 AI용 근거 본문과 공개 링크를 구성한다.
-import { fetchCached } from './wol-fetch.mjs';
+import { fetchCached, resolveRedirect } from './wol-fetch.mjs';
 import { 요소들, 속성값, 파라넘, 텍스트 } from './wol-html.mjs';
 
 const 최대본문길이 = 12_000;
@@ -111,9 +111,15 @@ export function parsePublicationDocument(html) {
   };
 }
 
-export function selectPublicationContent(document, label, question) {
+export function selectPublicationContent(document, label, question, resolvedUrl = '') {
   let selected = [];
-  if (/네모/.test(label)) selected = document.문단들.filter(문단 => 문단.상자);
+  const exactRange = String(resolvedUrl).match(/#h=(\d+):\d+-(\d+):\d+/);
+  if (exactRange) {
+    const start = Number(exactRange[1]);
+    const end = Number(exactRange[2]);
+    selected = document.문단들.filter(문단 => 문단.pid !== null && 문단.pid >= start && 문단.pid < end);
+  }
+  if (!selected.length && /네모/.test(label)) selected = document.문단들.filter(문단 => 문단.상자);
 
   const range = 항범위(label);
   if (!selected.length && range) {
@@ -125,7 +131,8 @@ export function selectPublicationContent(document, label, question) {
   }
 
   if (!selected.length) selected = 관련문단(document.문단들.filter(문단 => !문단.상자), question);
-  return 링크본문(document, selected);
+  const result = 링크본문(document, selected);
+  return { ...result, url: resolvedUrl || result.url };
 }
 
 function 캐시이름(url) {
@@ -142,15 +149,32 @@ function 공식참고URL(url) {
 }
 
 export async function enrichAnswersWithPublicationReferences(answers, options = {}) {
-  const fetchDocument = options.fetchDocument ?? ((url, cacheName) => fetchCached(url, cacheName));
+  const fetchDocument = options.fetchDocument ?? (async url => {
+    const resolvedUrl = await resolveRedirect(url);
+    const canonical = new URL(resolvedUrl);
+    canonical.hash = '';
+    const docId = canonical.pathname.split('/').filter(Boolean).pop();
+    return {
+      html: await fetchCached(canonical.href, `reference-doc-${docId}.html`),
+      resolvedUrl,
+    };
+  });
   const accessedAt = options.accessedAt ?? 서울날짜();
   const logger = options.logger ?? console;
   const documents = new Map();
+  let fetchQueue = Promise.resolve();
 
   function load(url) {
     const officialUrl = 공식참고URL(url);
     if (!documents.has(officialUrl)) {
-      documents.set(officialUrl, fetchDocument(officialUrl, 캐시이름(officialUrl)).then(parsePublicationDocument));
+      const task = fetchQueue.then(async () => {
+        const fetched = await fetchDocument(officialUrl, 캐시이름(officialUrl));
+        const html = typeof fetched === 'string' ? fetched : fetched.html;
+        const document = parsePublicationDocument(html);
+        return { ...document, resolvedUrl: typeof fetched === 'string' ? '' : fetched.resolvedUrl };
+      });
+      fetchQueue = task.catch(() => undefined);
+      documents.set(officialUrl, task);
     }
     return documents.get(officialUrl);
   }
@@ -160,7 +184,12 @@ export async function enrichAnswersWithPublicationReferences(answers, options = 
     참고출판물: await Promise.all((answer.참고출판물 ?? []).map(async reference => {
       try {
         const document = await load(reference.url);
-        const selected = selectPublicationContent(document, reference.표시, [answer.상위질문, answer.질문].filter(Boolean).join(' '));
+        const selected = selectPublicationContent(
+          document,
+          reference.표시,
+          [answer.상위질문, answer.질문].filter(Boolean).join(' '),
+          document.resolvedUrl,
+        );
         return {
           표시: reference.표시,
           제목: document.제목,

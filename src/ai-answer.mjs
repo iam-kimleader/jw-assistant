@@ -78,7 +78,7 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
   return {
     model,
     store: false,
-    reasoning: { effort: 'medium' },
+    reasoning: { effort: 'low' },
     input: [
       {
         role: 'system',
