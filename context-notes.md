@@ -225,3 +225,9 @@ Vercel 프로젝트는 `honeskor-1168s-projects/jw-assistant` 로 만들어졌�
 Vercel 프로젝트에서 `OPENAI_API_KEY`가 `Sensitive` 변수로 Preview와 Production 환경에 등록된 것을 확인했다. 환경 변수는 새 프로덕션 배포 후 실제 API 응답의 `generation.mode`가 `ai`인지 확인해야 활성화 검증이 끝난다.
 
 OG 메타데이터 전용 테스트 3개와 전체 테스트를 실행했다. 전체 141개 중 139개 통과, 기존 2개 스킵, 실패 0개였다. 로컬 공개 주소 `/og-image-jw-assistant.png`는 HTTP 200, `image/png`, `Cache-Control: public, max-age=86400`으로 응답했고 본문 크기는 원본과 같은 2,011,880바이트였다.
+
+커밋 `4cea05c`로 OG 이미지를 GitHub에 올리고 Vercel에 배포했다. 프로덕션 HTML은 새 제목과 OG 이미지 절대 URL을 포함했고, 이미지 응답은 HTTP 200, `image/png`, 2,011,880바이트, `1448×1086`으로 확인됐다.
+
+API 키를 반영한 첫 실제 AI 호출은 폴백으로 돌아왔다. 서버 로그에는 OpenAI `400 invalid_value`, 매개변수 `url`, 원격 이미지 다운로드 시간 초과가 기록됐다. 키 인증이나 모델 접근 문제가 아니라 OpenAI가 WOL 이미지 URL을 직접 받지 못한 것이 원인이었다.
+
+서버가 WOL 이미지를 바이너리로 먼저 내려받고 Base64 데이터 URL로 변환해 Responses API에 전달하도록 수정했다. 최종 전체 테스트는 143개 중 141개 통과, 기존 2개 스킵, 실패 0개였다. Vercel 배포 `dpl_H2whZcyXnvDNbrEP4aHuvsvNrHu1`에서 생활과 봉사 API를 실제 호출한 결과 `generation.mode`는 `ai`, 모델은 `gpt-5.4-mini`, 전체 15개 답변 모두 `생성방식: ai`였다. `삽화 다` 질문도 AI 답변을 반환해 이미지 입력 경로까지 확인됐다.

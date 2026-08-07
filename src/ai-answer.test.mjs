@@ -28,6 +28,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   let request;
   const result = await enhanceAnswersWithAI(답변들, { title: '노아', sourceUrl: 'https://wol.jw.org/example' }, {
     apiKey: 'test-key',
+    imageFetchImpl: async () => ({ bytes: Buffer.from('image-bytes'), contentType: 'image/png' }),
     fetchImpl: async (_url, options) => {
       request = JSON.parse(options.body);
       return {
@@ -42,7 +43,9 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   assert.equal(request.model, 'gpt-5.4-mini');
   assert.equal(request.text.format.type, 'json_schema');
   assert.equal(request.text.format.strict, true);
-  assert.ok(request.input[1].content.some(item => item.type === 'input_image'));
+  const imageInput = request.input[1].content.find(item => item.type === 'input_image');
+  assert.match(imageInput.image_url, /^data:image\/png;base64,/);
+  assert.doesNotMatch(imageInput.image_url, /wol\.jw\.org/);
   assert.equal(result.answers[0].답변, '사람들이 경고에 주의를 기울이지 않는다는 점이 비슷합니다.');
   assert.equal(result.generation.mode, 'ai');
 });
@@ -52,14 +55,15 @@ test('API 오류는 비밀 키 없이 상태와 오류 코드만 기록한다', 
   const result = await enhanceAnswersWithAI(답변들, {}, {
     apiKey: 'secret-test-key',
     logger: { error: (...args) => logs.push(args.join(' ')) },
+    imageFetchImpl: async () => ({ bytes: Buffer.from('image-bytes'), contentType: 'image/png' }),
     fetchImpl: async () => ({
       ok: false,
       status: 401,
-      json: async () => ({ error: { type: 'invalid_request_error', code: 'invalid_api_key' } }),
+      json: async () => ({ error: { type: 'invalid_request_error', code: 'invalid_api_key', param: 'api_key', message: '키가 올바르지 않습니다.' } }),
     }),
   });
 
   assert.equal(result.generation.mode, 'fallback');
-  assert.match(logs[0], /OpenAI API 401 \(invalid_request_error\/invalid_api_key\)/);
+  assert.match(logs[0], /OpenAI API 401 \(invalid_request_error \| invalid_api_key \| api_key \| 키가 올바르지 않습니다\.\)/);
   assert.doesNotMatch(logs[0], /secret-test-key/);
 });

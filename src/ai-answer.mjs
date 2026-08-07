@@ -1,4 +1,6 @@
 // 준비 자료와 삽화를 OpenAI Responses API의 한국어 답변으로 다듬는 모듈
+import { fetchBinary } from './wol-fetch.mjs';
+
 const 기본모델 = 'gpt-5.4-mini';
 
 function 폴백(answers, warning) {
@@ -27,7 +29,7 @@ function 자연스럽게(text) {
     .trim();
 }
 
-function 요청본문(answers, context, model) {
+async function 요청본문(answers, context, model, imageFetchImpl, logger) {
   const 자료 = answers.map(answer => ({
     id: answer.id,
     질문: answer.질문,
@@ -55,7 +57,13 @@ function 요청본문(answers, context, model) {
   for (const answer of answers) {
     for (const image of answer.삽화 ?? []) {
       content.push({ type: 'input_text', text: `다음 이미지는 질문 ID ${answer.id}에 연결된 삽화입니다. 대체 설명: ${image.alt || '없음'}` });
-      content.push({ type: 'input_image', image_url: image.url, detail: 'auto' });
+      try {
+        const downloaded = await imageFetchImpl(image.url);
+        const imageUrl = `data:${downloaded.contentType};base64,${Buffer.from(downloaded.bytes).toString('base64')}`;
+        content.push({ type: 'input_image', image_url: imageUrl, detail: 'auto' });
+      } catch (error) {
+        logger.error('AI 삽화 다운로드 실패.', error instanceof Error ? error.message : String(error));
+      }
     }
   }
 
@@ -118,20 +126,27 @@ export async function enhanceAnswersWithAI(answers, context = {}, options = {}) 
 
   const model = options.model ?? process.env.OPENAI_MODEL ?? 기본모델;
   const fetchImpl = options.fetchImpl ?? fetch;
+  const imageFetchImpl = options.imageFetchImpl ?? fetchBinary;
   const logger = options.logger ?? console;
   try {
+    const body = await 요청본문(answers, context, model, imageFetchImpl, logger);
     const response = await fetchImpl('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(요청본문(answers, context, model)),
+      body: JSON.stringify(body),
       signal: AbortSignal.timeout(120_000),
     });
     const payload = await response.json();
     if (!response.ok) {
-      const detail = [payload.error?.type, payload.error?.code].filter(Boolean).join('/');
+      const detail = [
+        payload.error?.type,
+        payload.error?.code,
+        payload.error?.param,
+        String(payload.error?.message ?? '').slice(0, 300),
+      ].filter(Boolean).join(' | ');
       throw new Error(`OpenAI API ${response.status ?? 'error'}${detail ? ` (${detail})` : ''}`);
     }
 
