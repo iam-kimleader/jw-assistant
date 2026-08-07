@@ -59,3 +59,12 @@
 - [x] Task 5 Vercel 프로젝트 생성과 프로덕션 배포.
 - [x] Task 6 Vercel 함수의 WOL fetch 폴백 추가와 배포 API 검증.
 - [ ] Task 7 Vercel 계정에 GitHub Login Connection을 추가한 뒤 자동 배포 연결.
+
+## 회중 성서 연구 서책 수정 — 2026-08-07
+
+- [x] Task 1 `용하`를 WOL 출판물 심벌 `wcg`로 매핑.
+- [x] Task 2 `2장`과 `2 노아` 형식의 출판물 장 링크를 모두 인식.
+- [x] Task 3 답 입력 칸으로 구성된 `wcg` 질문 구조를 인식.
+- [x] Task 4 회귀 테스트와 전체 테스트 통과.
+- [x] Task 5 2026년 8월 3일 주간 API가 「용하」 2장 노아 자료를 반환하는지 확인.
+- [ ] Task 6 GitHub 푸시와 Vercel 프로덕션 재배포 후 확인.

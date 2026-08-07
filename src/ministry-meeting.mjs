@@ -2,7 +2,7 @@
 import { 요소들, 링크들, 인용뽑기, 텍스트 } from './wol-html.mjs';
 
 const 서책심벌 = {
-  용하: 'rr',
+  용하: 'wcg',
   순: 'rr',
 };
 
@@ -61,7 +61,8 @@ export function parseMinistryMeeting(html) {
 
 export function findPublicationChapter(indexHtml, chapterNumber) {
   const links = 링크들(indexHtml);
-  const hit = links.find(l => new RegExp(`(^|\\s)${chapterNumber}장(\\s|$)`).test(l.텍스트));
+  const 장표기 = new RegExp(`^\\s*${chapterNumber}(?:장(?:\\s|$)|\\s+)`);
+  const hit = links.find(l => 장표기.test(l.텍스트));
   if (!hit?.href) return null;
   return hit.href.startsWith('http') ? hit.href : `https://wol.jw.org${hit.href}`;
 }

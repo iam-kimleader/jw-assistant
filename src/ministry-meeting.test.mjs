@@ -25,10 +25,15 @@ test('영적 보물 찾기와 회중 성서 연구 정보를 뽑는다', () => {
   assert.equal(result.영적보물질문[0].인용[0].라벨, '렘 23:33');
   assert.equal(result.회중성서연구.서책명, '용하');
   assert.equal(result.회중성서연구.장, 2);
-  assert.equal(result.회중성서연구.심벌, 'rr');
+  assert.equal(result.회중성서연구.심벌, 'wcg');
 });
 
-test('출판물 색인에서 장 링크를 찾는다', () => {
+test('출판물 색인에서 장으로 표시된 링크를 찾는다', () => {
   const index = '<a href="/ko/wol/d/r8/lp-ko/1102017162">2장 하느님께서 그들의 예물을 기뻐하셨다</a>';
   assert.equal(findPublicationChapter(index, 2), 'https://wol.jw.org/ko/wol/d/r8/lp-ko/1102017162');
+});
+
+test('출판물 색인에서 장 번호와 인물로 표시된 링크를 찾는다', () => {
+  const index = '<a href="/ko/wol/d/r8/lp-ko/1102025902"><span>2 노아</span><span>세상을 정죄하다</span></a>';
+  assert.equal(findPublicationChapter(index, 2), 'https://wol.jw.org/ko/wol/d/r8/lp-ko/1102025902');
 });

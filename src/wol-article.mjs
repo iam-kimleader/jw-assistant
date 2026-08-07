@@ -1,5 +1,47 @@
-// wol 파수대 연구 기사 HTML 에서 질문·문단·인용 성구 구조를 뽑아내는 파서
+// WOL 파수대와 대화형 연구 기사에서 질문·문단·인용 성구 구조를 뽑는 파서
 import { 문단들, 문서인용수세기, 속성값, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
+
+const 질문불용어 = new Set(['어떻게', '무엇', '있습니까', '했습니까', '합니까', '하는', '통해', '다음', '같이', '대해']);
+
+function 질문검색어(질문) {
+  return [...new Set(텍스트(질문)
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .split(/\s+/)
+    .map(낱말 => 낱말.replace(/(?:에게서는|에게서|께서는|에서는|으로써|으로|처럼|보다|부터|까지|에게|께서|에서|하고|이며|이나|거나|은|는|이|가|을|를|의|에|와|과|도|만|로)$/u, ''))
+    .filter(낱말 => 낱말.length >= 2 && !질문불용어.has(낱말)))];
+}
+
+function 관련문단먼저(문단들, 질문) {
+  const 검색어 = 질문검색어(질문);
+  return 문단들
+    .map((문단, index) => ({ 문단, index, 점수: 검색어.filter(낱말 => 문단.includes(낱말)).length }))
+    .sort((a, b) => b.점수 - a.점수 || a.index - b.index)
+    .map(item => item.문단);
+}
+
+function 대화형질문그룹(html) {
+  const 본문시작 = html.search(/<div\b(?=[^>]*class="[^"]*\bbodyTxt\b)[^>]*>/);
+  const 토의시작 = html.indexOf('토의해 보십시오', 본문시작);
+  const 근거문단 = 본문시작 >= 0 && 토의시작 > 본문시작
+    ? 문단들(html.slice(본문시작, 토의시작))
+      .filter(p => !/class="[^"]*\bcontextTtl\b/.test(p.속성))
+      .map(p => 텍스트(p.본문))
+      .filter(Boolean)
+    : [];
+
+  const 질문들 = [];
+  const 질문앞답칸 = /<p\b([^>]*)>((?:(?!<\/p>)[\s\S])*)<\/p>\s*<div\b(?=[^>]*class="[^"]*\bgen-field\b)[^>]*>/g;
+  let m;
+  while ((m = 질문앞답칸.exec(html))) {
+    질문들.push({
+      질문: 텍스트(m[2]),
+      문단번호: [],
+      문단본문: 관련문단먼저(근거문단, m[2]),
+      인용: 인용뽑기(m[2]),
+    });
+  }
+  return 질문들;
+}
 
 export function parseArticle(html) {
   const ps = 문단들(html);
@@ -35,6 +77,13 @@ export function parseArticle(html) {
     if (!pid) continue;
     그룹.set(pid, { 질문: 텍스트(p.본문), 문단번호: [], 문단본문: [], 인용: 인용뽑기(p.본문) });
     순서.push(pid);
+  }
+  if (!그룹.size) {
+    for (const [i, item] of 대화형질문그룹(html).entries()) {
+      const pid = `interactive-${i + 1}`;
+      그룹.set(pid, item);
+      순서.push(pid);
+    }
   }
   if (!그룹.size) throw new Error('기사 구조를 찾을 수 없다 — 질문 문단이 하나도 없다');
 
