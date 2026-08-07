@@ -9,7 +9,8 @@ import { fetchCached } from './wol-fetch.mjs';
 import { buildArticleAnswers, buildAnswerDraft } from './prep-answer.mjs';
 import { enhanceAnswersWithAI } from './ai-answer.mjs';
 import { enrichAnswersWithPublicationReferences, stripPublicationContents } from './publication-reference.mjs';
-import { findPublicationChapter, parseMinistryMeeting, readingRangeNote } from './ministry-meeting.mjs';
+import { findPublicationChapter, parseMinistryMeeting } from './ministry-meeting.mjs';
+import { buildWeeklyReadingEvidence, buildWeeklyReadingFallback } from './weekly-reading.mjs';
 
 export function createTools(root = process.cwd()) {
   const index = loadIndex(join(root, 'core/bible/index.json'));
@@ -23,7 +24,11 @@ export function createTools(root = process.cwd()) {
 async function generateAnswers(answers, context) {
   const enriched = await enrichAnswersWithPublicationReferences(answers, { accessedAt: context.accessedAt });
   const result = await enhanceAnswersWithAI(enriched, context);
-  return { ...result, answers: stripPublicationContents(result.answers) };
+  const publicAnswers = stripPublicationContents(result.answers).map(answer => {
+    const { 주간성경읽기, ...publicAnswer } = answer;
+    return publicAnswer;
+  });
+  return { ...result, answers: publicAnswers };
 }
 
 function 날짜객체(dateText) {
@@ -99,10 +104,12 @@ export async function prepareLifeAndMinistry(dateText, root = process.cwd()) {
   const 교재URL = articleUrl(week.교재docId);
   const html = await fetchCached(교재URL, `doc-${week.교재docId}.html`);
   const meeting = parseMinistryMeeting(html);
+  const 주간읽기질문 = meeting.영적보물질문.find(q => /이번 주 성경 읽기/.test(q.질문));
+  const 주간성경읽기 = 주간읽기질문 ? buildWeeklyReadingEvidence(meeting.성경범위, 도구) : null;
   const gems = meeting.영적보물질문.map(q => {
     const draft = buildAnswerDraft({ ...q, 출처URL: 교재URL }, 도구);
-    if (!draft.핵심문장.length && !draft.성구.length && meeting.성경범위) {
-      draft.답변 = `${readingRangeNote(meeting.성경범위)} 출판물 근거 미확인 — 내 정리임.`;
+    if (q === 주간읽기질문 && 주간성경읽기) {
+      Object.assign(draft, buildWeeklyReadingFallback(주간성경읽기), { 주간성경읽기 });
     }
     return draft;
   });

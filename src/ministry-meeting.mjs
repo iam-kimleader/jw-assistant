@@ -66,8 +66,3 @@ export function findPublicationChapter(indexHtml, chapterNumber) {
   if (!hit?.href) return null;
   return hit.href.startsWith('http') ? hit.href : `https://wol.jw.org${hit.href}`;
 }
-
-export function readingRangeNote(성경범위) {
-  if (!성경범위) return '';
-  return `${성경범위} 범위에서 여호와의 성품, 경고, 위로, 실천할 점 중 하나를 골라 답변을 보강할 수 있습니다.`;
-}

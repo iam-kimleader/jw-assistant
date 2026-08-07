@@ -42,7 +42,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
       return {
         ok: true,
         json: async () => ({
-          output: [{ content: [{ type: 'output_text', text: JSON.stringify({ answers: [{ id: 'q-1', answer: '하느님의 न्याय이 실제로 집행됩니다.' }] }) }] }],
+          output: [{ content: [{ type: 'output_text', text: JSON.stringify({ answers: [{ id: 'q-1', answer: '하느님의 न्याय이 실제로 집행됩니다.', selectedVerse: '' }] }) }] }],
         }),
       };
     },
@@ -51,6 +51,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   assert.equal(request.model, 'gpt-5.4-mini');
   assert.equal(request.text.format.type, 'json_schema');
   assert.equal(request.text.format.strict, true);
+  assert.deepEqual(request.text.format.schema.properties.answers.items.required, ['id', 'answer', 'selectedVerse']);
   assert.equal(request.reasoning.effort, 'low');
   const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
   assert.match(textInput, /홍수 전의 문명은 발달했지만 사회는 폭력과 악으로 가득했습니다/);
@@ -102,7 +103,7 @@ test('답변이 많으면 작은 묶음으로 나눠 병렬 생성한다', async
           output: [{
             content: [{
               type: 'output_text',
-              text: JSON.stringify({ answers: items.map(item => ({ id: item.id, answer: `${item.id} 생성 답변입니다.` })) }),
+              text: JSON.stringify({ answers: items.map(item => ({ id: item.id, answer: `${item.id} 생성 답변입니다.`, selectedVerse: '' })) }),
             }],
           }],
         }),
@@ -114,4 +115,88 @@ test('답변이 많으면 작은 묶음으로 나눠 병렬 생성한다', async
   assert.equal(result.answers.length, 7);
   assert.equal(result.answers[6].답변, 'q-7 생성 답변입니다.');
   assert.deepEqual(result.generation, { mode: 'ai', model: 'gpt-5.4-mini', batches: 3 });
+});
+
+test('영적 보물 질문은 주간 범위 본문을 보내고 범위 안의 선택 성구를 표시한다', async () => {
+  const weeklyAnswer = {
+    ...답변들[0],
+    id: 'gem-2',
+    질문: '이번 주 성경 읽기를 통해 어떤 영적 보물을 발견했습니까?',
+    답변: '로컬 폴백 답변입니다.',
+    핵심문장: [],
+    참고출판물: [],
+    성구: [],
+    삽화: [],
+    주간성경읽기: {
+      범위: '예레미야 22-23장',
+      본문: [
+        { 주소: '예레미야 22:3', 본문: '공의와 의를 행하여라.' },
+        { 주소: '예레미야 23:24', 본문: '내가 하늘과 땅을 가득 채우고 있지 않느냐?' },
+      ],
+    },
+  };
+  let request;
+  const result = await enhanceAnswersWithAI([weeklyAnswer], { title: '생활과 봉사' }, {
+    apiKey: 'test-key',
+    fetchImpl: async (_url, options) => {
+      request = JSON.parse(options.body);
+      return {
+        ok: true,
+        json: async () => ({
+          output: [{ content: [{
+            type: 'output_text',
+            text: JSON.stringify({ answers: [{
+              id: 'gem-2',
+              answer: '예레미야 22:3에서 여호와께서 공의를 중요하게 여기신다는 점을 배웠습니다.',
+              selectedVerse: '예레미야 22:3',
+            }] }),
+          }] }],
+        }),
+      };
+    },
+  });
+
+  const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
+  assert.match(textInput, /예레미야 22-23장/);
+  assert.match(textInput, /예레미야 23:24/);
+  assert.equal(result.answers[0].생성방식, 'ai');
+  assert.equal(result.answers[0].성구[0].본문[0].주소, '예레미야 22:3');
+  assert.equal(result.answers[0].성구[0].본문[0].본문, '공의와 의를 행하여라.');
+});
+
+test('영적 보물 질문이 범위 밖 성구를 고르면 AI 답변을 채택하지 않는다', async () => {
+  const weeklyAnswer = {
+    id: 'gem-2',
+    질문: '이번 주 성경 읽기를 통해 어떤 영적 보물을 발견했습니까?',
+    답변: '예레미야 22:3을 사용한 로컬 폴백 답변입니다.',
+    핵심문장: [],
+    참고출판물: [],
+    성구: [{ 라벨: '폴백', 본문: [{ 주소: '예레미야 22:3', 본문: '공의와 의를 행하여라.' }] }],
+    삽화: [],
+    주간성경읽기: {
+      범위: '예레미야 22-23장',
+      본문: [{ 주소: '예레미야 22:3', 본문: '공의와 의를 행하여라.' }],
+    },
+  };
+  const result = await enhanceAnswersWithAI([weeklyAnswer], {}, {
+    apiKey: 'test-key',
+    logger: { error: () => {} },
+    fetchImpl: async () => ({
+      ok: true,
+      json: async () => ({
+        output: [{ content: [{
+          type: 'output_text',
+          text: JSON.stringify({ answers: [{
+            id: 'gem-2',
+            answer: '노아에 관한 잘못된 답변입니다.',
+            selectedVerse: '창세기 6:9',
+          }] }),
+        }] }],
+      }),
+    }),
+  });
+
+  assert.equal(result.generation.mode, 'fallback');
+  assert.equal(result.answers[0].답변, '예레미야 22:3을 사용한 로컬 폴백 답변입니다.');
+  assert.equal(result.answers[0].성구[0].본문[0].주소, '예레미야 22:3');
 });

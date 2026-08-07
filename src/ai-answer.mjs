@@ -45,7 +45,11 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
       조회일: reference.조회일,
       본문: reference.본문,
     })),
-    성구: (answer.성구 ?? []).map(group => ({
+    주간성경읽기: answer.주간성경읽기 ? {
+      범위: answer.주간성경읽기.범위,
+      본문: answer.주간성경읽기.본문,
+    } : undefined,
+    성구: (answer.주간성경읽기 ? [] : (answer.성구 ?? [])).map(group => ({
       라벨: group.라벨,
       본문: group.본문.map(verse => ({ 주소: verse.주소, 본문: verse.본문 })),
     })),
@@ -88,7 +92,10 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
           text: [
             '여호와의 증인의 성경 이해를 따르는 한국어 성경 연구 보조자입니다.',
             '제공된 공식 출판물 문장, 질문별 참고 출판물 본문, 정확한 성구 본문, 삽화만 근거로 각 질문에 직접 답하십시오.',
+            '질문별 자료는 서로 독립적입니다. 한 질문의 출판물, 성구, 삽화, 주간 성경 읽기 자료를 다른 질문의 답변에 섞지 마십시오.',
             '참고 출판물이 있으면 해당 본문의 사실과 논리를 우선 사용하고, 질문과 어떤 관련이 있는지 설명하십시오.',
+            '주간성경읽기가 제공된 질문은 반드시 그 범위 안에서 의미 있는 성구 하나를 골라 답하고, selectedVerse에는 제공된 주소를 글자 그대로 쓰십시오. 답변에도 그 성구 주소와 배운 점 또는 적용점을 포함하십시오.',
+            '주간성경읽기가 없는 질문의 selectedVerse는 빈 문자열로 쓰십시오.',
             '단순히 문장을 옮기지 말고 원인과 결과, 시간 순서, 대조점, 실생활 의미 가운데 질문에 필요한 연결을 분명히 하십시오.',
             '합리적인 추론은 자료에서 확인되는 사실과 구분되는 표현으로 제시하고, 질문에 여러 부분이 있으면 빠짐없이 모두 답하십시오.',
             '독자적인 새 교리를 만들지 말고, 자료에 없는 교리적 결론은 답변 끝에 "출판물 근거 미확인 — 내 정리임."이라고 밝히십시오.',
@@ -118,8 +125,9 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
                 properties: {
                   id: { type: 'string' },
                   answer: { type: 'string' },
+                  selectedVerse: { type: 'string' },
                 },
-                required: ['id', 'answer'],
+                required: ['id', 'answer', 'selectedVerse'],
                 additionalProperties: false,
               },
             },
@@ -157,16 +165,33 @@ async function 단일묶음생성(answers, context, settings) {
     }
 
     const parsed = JSON.parse(출력텍스트(payload));
-    const 허용ID = new Set(answers.map(answer => answer.id));
-    const 생성답변 = new Map((parsed.answers ?? [])
-      .filter(item => 허용ID.has(item.id) && 자연스럽게(item.answer))
-      .map(item => [item.id, 자연스럽게(item.answer)]));
+    const 원본답변 = new Map(answers.map(answer => [answer.id, answer]));
+    const 생성답변 = new Map();
+    for (const item of parsed.answers ?? []) {
+      const answer = 원본답변.get(item.id);
+      const text = 자연스럽게(item.answer);
+      if (!answer || !text) continue;
+      const selectedVerse = answer.주간성경읽기
+        ? answer.주간성경읽기.본문.find(verse => verse.주소 === String(item.selectedVerse ?? '').trim())
+        : null;
+      if (answer.주간성경읽기 && !selectedVerse) continue;
+      생성답변.set(item.id, { text, selectedVerse });
+    }
     if (!생성답변.size) throw new Error('OpenAI API가 답변을 반환하지 않음');
 
     return {
-      answers: answers.map(answer => 생성답변.has(answer.id)
-        ? { ...answer, 답변: 생성답변.get(answer.id), 생성방식: 'ai' }
-        : answer),
+      answers: answers.map(answer => {
+        const generated = 생성답변.get(answer.id);
+        if (!generated) return answer;
+        return {
+          ...answer,
+          답변: generated.text,
+          생성방식: 'ai',
+          성구: generated.selectedVerse
+            ? [{ 라벨: `${answer.주간성경읽기.범위}에서 선택한 성구`, 본문: [generated.selectedVerse] }]
+            : answer.성구,
+        };
+      }),
       generation: { mode: 'ai', model },
     };
   } catch (error) {
