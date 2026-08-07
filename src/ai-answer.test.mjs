@@ -42,7 +42,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
       return {
         ok: true,
         json: async () => ({
-          output: [{ content: [{ type: 'output_text', text: JSON.stringify({ answers: [{ id: 'q-1', answer: '사람들이 경고에 주의를 기울이지 않는다는 점이 비슷합니다.' }] }) }] }],
+          output: [{ content: [{ type: 'output_text', text: JSON.stringify({ answers: [{ id: 'q-1', answer: '하느님의 न्याय이 실제로 집행됩니다.' }] }) }] }],
         }),
       };
     },
@@ -58,7 +58,7 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   const imageInput = request.input[1].content.find(item => item.type === 'input_image');
   assert.match(imageInput.image_url, /^data:image\/png;base64,/);
   assert.doesNotMatch(imageInput.image_url, /wol\.jw\.org/);
-  assert.equal(result.answers[0].답변, '사람들이 경고에 주의를 기울이지 않는다는 점이 비슷합니다.');
+  assert.equal(result.answers[0].답변, '하느님의 심판이 실제로 집행됩니다.');
   assert.equal(result.generation.mode, 'ai');
 });
 
