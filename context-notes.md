@@ -183,3 +183,9 @@ Claude 의 WebFetch 도구로는 wol.jw.org 이 두 번 다 60초 타임아웃�
 WOL HTML 캐시는 로컬에서는 `.cache/wol`, Vercel에서는 `os.tmpdir()/jw-assistant-wol` 을 쓴다. 서버리스 파일 시스템에서는 배포 디렉터리가 쓰기 불가능할 수 있으므로, 캐시 쓰기가 실패해도 HTML 응답은 그대로 돌려주도록 했다.
 
 첫 배포 뒤 `/api/watchtower` 와 `/api/life-ministry` 가 `/var/task/core/bible/index.json` 을 찾지 못했다. Vercel의 함수 번들 추적이 `fs` 로 읽는 데이터 파일을 자동 포함하지 않았기 때문이다. `vercel.json` 의 `functions["api/*.js"].includeFiles` 에 `core/bible/**` 를 추가해야 한다.
+
+Vercel에서 성경 코어 파일을 포함한 뒤에는 WOL 페이지 요청이 `fetch failed` 로 실패했다. Node 기본 `fetch` 의 런타임 차이를 줄이기 위해 `src/wol-fetch.mjs` 에 IPv4 우선 DNS 설정, `Accept-Encoding: identity`, Node `https` 폴백, 실패 원인 요약을 추가했다.
+
+최종 프로덕션 배포는 `https://jw-assistant-seven.vercel.app` 별칭으로 확인했다. 루트 페이지는 HTTP 200, `/api/options` 는 21주 옵션, `/api/watchtower?date=2026-08-03` 은 13개 답변, `/api/life-ministry?date=2026-08-03` 은 영적 보물 2개와 회중 성서 연구 20개 답변을 반환했다.
+
+Vercel 프로젝트는 `honeskor-1168s-projects/jw-assistant` 로 만들어졌다. Vercel CLI가 GitHub 저장소 연결을 시도했지만, Vercel 계정에 GitHub Login Connection이 없어 자동 배포 연결은 완료되지 않았다. 현재 배포는 CLI 로컬 업로드 방식으로 완료됐고, 자동 배포를 켜려면 Vercel 계정 설정에서 GitHub Login Connection을 먼저 추가해야 한다.

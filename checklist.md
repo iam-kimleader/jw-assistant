@@ -54,6 +54,8 @@
 
 - [x] Task 1 Vercel 정적 라우팅과 Serverless API 어댑터 추가.
 - [x] Task 2 Vercel 환경에서 WOL 캐시가 임시 디렉터리를 쓰도록 조정.
-- [ ] Task 3 Vercel 함수에 성경 코어 파일 포함.
-- [ ] Task 4 테스트 후 커밋과 GitHub 푸시.
-- [ ] Task 5 Vercel 프로젝트 연결과 배포.
+- [x] Task 3 Vercel 함수에 성경 코어 파일 포함.
+- [x] Task 4 테스트 후 커밋과 GitHub 푸시.
+- [x] Task 5 Vercel 프로젝트 생성과 프로덕션 배포.
+- [x] Task 6 Vercel 함수의 WOL fetch 폴백 추가와 배포 API 검증.
+- [ ] Task 7 Vercel 계정에 GitHub Login Connection을 추가한 뒤 자동 배포 연결.
