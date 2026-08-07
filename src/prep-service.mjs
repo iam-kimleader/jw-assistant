@@ -7,6 +7,7 @@ import { articleUrl, isoWeek, weekPageUrl, parseWeekPage } from './wol-week.mjs'
 import { parseArticle } from './wol-article.mjs';
 import { fetchCached } from './wol-fetch.mjs';
 import { buildArticleAnswers, buildAnswerDraft } from './prep-answer.mjs';
+import { enhanceAnswersWithAI } from './ai-answer.mjs';
 import { findPublicationChapter, parseMinistryMeeting, readingRangeNote } from './ministry-meeting.mjs';
 
 export function createTools(root = process.cwd()) {
@@ -39,13 +40,18 @@ export async function prepareWatchtower(dateText, root = process.cwd()) {
   const 기사URL = articleUrl(week.파수대docId);
   const html = await fetchCached(기사URL, `doc-${week.파수대docId}.html`);
   const 기사 = parseArticle(html);
+  const 생성결과 = await enhanceAnswersWithAI(buildArticleAnswers(기사, 도구, 기사URL), {
+    title: 기사.제목,
+    sourceUrl: 기사URL,
+  });
   return {
     type: 'watchtower',
     title: 기사.제목,
     subtitle: 기사.주라벨,
     sourceUrl: 기사URL,
     weekUrl: week.주페이지URL,
-    answers: buildArticleAnswers(기사, 도구, 기사URL),
+    answers: 생성결과.answers,
+    generation: 생성결과.generation,
   };
 }
 
@@ -94,15 +100,21 @@ export async function prepareLifeAndMinistry(dateText, root = process.cwd()) {
     return draft;
   });
   const study = await resolveCongregationStudy(meeting, 도구);
+  const 생성결과 = await enhanceAnswersWithAI([...gems, ...study.answers], {
+    title: `생활과 봉사 — ${meeting.주라벨}`,
+    sourceUrl: [교재URL, study.sourceUrl].filter(Boolean).join(', '),
+  });
+  const 생성답변 = new Map(생성결과.answers.map(answer => [answer.id, answer]));
   return {
     type: 'life-ministry',
     title: `생활과 봉사 — ${meeting.주라벨}`,
     subtitle: meeting.성경범위,
     sourceUrl: 교재URL,
     weekUrl: week.주페이지URL,
+    generation: 생성결과.generation,
     sections: [
-      { id: 'spiritual-gems', title: '영적 보물 찾기', answers: gems },
-      { id: 'congregation-study', title: '회중 성서 연구', sourceUrl: study.sourceUrl, warning: study.warning, answers: study.answers },
+      { id: 'spiritual-gems', title: '영적 보물 찾기', answers: gems.map(answer => 생성답변.get(answer.id) ?? answer) },
+      { id: 'congregation-study', title: '회중 성서 연구', sourceUrl: study.sourceUrl, warning: study.warning, answers: study.answers.map(answer => 생성답변.get(answer.id) ?? answer) },
     ],
   };
 }

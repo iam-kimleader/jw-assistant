@@ -46,12 +46,27 @@ function studyHeader(data) {
 }
 
 function copyText(answer) {
-  const lines = [answer.질문, '', answer.답변];
-  for (const group of answer.성구 || []) {
-    lines.push('', group.라벨);
-    for (const verse of group.본문) lines.push(`${verse.주소} ${verse.본문}`);
+  return answer.답변;
+}
+
+async function writeClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // 권한이 제한된 브라우저에서는 아래의 선택 영역 복사 방식으로 이어 간다.
+    }
   }
-  return lines.join('\n');
+  const input = document.createElement('textarea');
+  input.value = text;
+  input.setAttribute('readonly', '');
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  document.body.append(input);
+  input.select();
+  document.execCommand('copy');
+  input.remove();
 }
 
 function renderAnswer(answer) {
@@ -75,22 +90,53 @@ function renderAnswer(answer) {
   }
   const copy = node.querySelector('.copy-button');
   copy.addEventListener('click', async () => {
-    await navigator.clipboard.writeText(copyText(answer));
-    copy.textContent = '완료';
+    await writeClipboard(copyText(answer));
+    copy.textContent = '복사 완료';
     copy.classList.add('done');
     setTimeout(() => {
-      copy.textContent = '복사';
+      copy.textContent = '답변 복사';
       copy.classList.remove('done');
     }, 1300);
   });
   return node;
 }
 
+function renderAnswers(panel, answers) {
+  let 이전소제목 = '';
+  let 이전상위질문 = '';
+  for (const answer of answers) {
+    if (answer.소제목 && answer.소제목 !== 이전소제목) {
+      const heading = document.createElement('h3');
+      heading.className = 'study-subheading';
+      heading.textContent = answer.소제목;
+      panel.append(heading);
+      이전소제목 = answer.소제목;
+      이전상위질문 = '';
+    }
+    if (answer.상위질문 && answer.상위질문 !== 이전상위질문) {
+      const context = document.createElement('p');
+      context.className = 'parent-question';
+      context.textContent = answer.상위질문;
+      panel.append(context);
+      이전상위질문 = answer.상위질문;
+    } else if (!answer.상위질문) {
+      이전상위질문 = '';
+    }
+    panel.append(renderAnswer(answer));
+  }
+}
+
 function renderResult(panel, data) {
   panel.innerHTML = '';
   panel.append(studyHeader(data));
+  if (data.generation?.warning) {
+    const warning = document.createElement('div');
+    warning.className = 'status-box warning generation-warning';
+    warning.textContent = data.generation.warning;
+    panel.append(warning);
+  }
   if (data.answers) {
-    for (const answer of data.answers) panel.append(renderAnswer(answer));
+    renderAnswers(panel, data.answers);
     return;
   }
   for (const section of data.sections || []) {
@@ -104,7 +150,7 @@ function renderResult(panel, data) {
       warning.textContent = section.warning;
       panel.append(warning);
     }
-    for (const answer of section.answers || []) panel.append(renderAnswer(answer));
+    renderAnswers(panel, section.answers || []);
   }
 }
 

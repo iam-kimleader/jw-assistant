@@ -1,5 +1,5 @@
 // WOL 파수대와 대화형 연구 기사에서 질문·문단·인용 성구 구조를 뽑는 파서
-import { 문단들, 문서인용수세기, 속성값, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
+import { 문단들, 문서인용수세기, 속성값, 요소들, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
 
 const 질문불용어 = new Set(['어떻게', '무엇', '있습니까', '했습니까', '합니까', '하는', '통해', '다음', '같이', '대해']);
 
@@ -19,6 +19,30 @@ function 관련문단먼저(문단들, 질문) {
     .map(item => item.문단);
 }
 
+function 직전소제목(소제목들, index) {
+  let 직전 = '';
+  for (const 소제목 of 소제목들) {
+    if (소제목.index >= index) break;
+    직전 = 소제목.텍스트;
+  }
+  return 직전;
+}
+
+function 삽화뽑기(html) {
+  const 삽화 = [];
+  const 이미지 = /<img\b([^>]*)>/g;
+  let m;
+  while ((m = 이미지.exec(html))) {
+    const src = 속성값(m[1], 'src');
+    if (!src) continue;
+    삽화.push({
+      url: new URL(src, 'https://wol.jw.org').href,
+      alt: 텍스트(속성값(m[1], 'alt') ?? ''),
+    });
+  }
+  return 삽화;
+}
+
 function 대화형질문그룹(html) {
   const 본문시작 = html.search(/<div\b(?=[^>]*class="[^"]*\bbodyTxt\b)[^>]*>/);
   const 토의시작 = html.indexOf('토의해 보십시오', 본문시작);
@@ -29,22 +53,45 @@ function 대화형질문그룹(html) {
       .filter(Boolean)
     : [];
 
+  const 소제목들 = 요소들(html, ['h2', 'h3']).map(요소 => ({ index: 요소.index, 텍스트: 요소.텍스트 }));
+  const 모든문단 = 요소들(html, ['p']);
   const 질문들 = [];
   const 질문앞답칸 = /<p\b([^>]*)>((?:(?!<\/p>)[\s\S])*)<\/p>\s*<div\b(?=[^>]*class="[^"]*\bgen-field\b)[^>]*>/g;
   let m;
   while ((m = 질문앞답칸.exec(html))) {
+    const 질문 = 텍스트(m[2]);
     질문들.push({
-      질문: 텍스트(m[2]),
+      index: m.index,
+      질문,
       문단번호: [],
-      문단본문: 관련문단먼저(근거문단, m[2]),
+      문단본문: 관련문단먼저(근거문단, 질문),
       인용: 인용뽑기(m[2]),
+      소제목: 직전소제목(소제목들, m.index),
     });
   }
-  return 질문들;
+
+  return 질문들.map((항목, index) => {
+    const 소제목시작 = [...소제목들].reverse().find(소제목 => 소제목.index < 항목.index)?.index ?? 본문시작;
+    const 상위질문 = /[?？]/.test(항목.질문) ? '' : [...모든문단]
+      .reverse()
+      .find(문단 => 문단.index < 항목.index && 문단.index > 소제목시작 && /다음과 같이/.test(문단.텍스트) && /[?？]/.test(문단.텍스트))?.텍스트 ?? '';
+    const 다음질문시작 = 질문들[index + 1]?.index ?? html.length;
+    const 삽화 = /삽화/.test(항목.질문) ? 삽화뽑기(html.slice(항목.index, 다음질문시작)) : [];
+    return {
+      질문: 항목.질문,
+      상위질문,
+      소제목: 항목.소제목,
+      삽화,
+      문단번호: 항목.문단번호,
+      문단본문: 관련문단먼저(근거문단, [상위질문, 항목.질문].filter(Boolean).join(' ')),
+      인용: 항목.인용,
+    };
+  });
 }
 
 export function parseArticle(html) {
-  const ps = 문단들(html);
+  const ps = 요소들(html, ['p']);
+  const 소제목들 = 요소들(html, ['h2', 'h3']).map(요소 => ({ index: 요소.index, 텍스트: 요소.텍스트 }));
 
   const 주라벨p = ps.find(p => /class="[^"]*\bcontextTtl\b/.test(p.속성));
   const 제목m = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/);
@@ -75,7 +122,15 @@ export function parseArticle(html) {
     if (!/class="[^"]*\bqu\b/.test(p.속성)) continue;
     const pid = 속성값(p.속성, 'data-pid');
     if (!pid) continue;
-    그룹.set(pid, { 질문: 텍스트(p.본문), 문단번호: [], 문단본문: [], 인용: 인용뽑기(p.본문) });
+    그룹.set(pid, {
+      질문: 텍스트(p.본문),
+      문단번호: [],
+      문단본문: [],
+      인용: 인용뽑기(p.본문),
+      소제목: 직전소제목(소제목들, p.index),
+      삽화: [],
+      _index: p.index,
+    });
     순서.push(pid);
   }
   if (!그룹.size) {
@@ -104,13 +159,23 @@ export function parseArticle(html) {
     }
   }
 
+  const 문단그룹 = 순서.map((pid, index) => {
+    const 항목 = 그룹.get(pid);
+    if (항목._index !== undefined && /삽화/.test(항목.질문)) {
+      const 다음시작 = 그룹.get(순서[index + 1])?._index ?? html.length;
+      항목.삽화 = 삽화뽑기(html.slice(항목._index, 다음시작));
+    }
+    const { _index, ...공개항목 } = 항목;
+    return 공개항목;
+  });
+
   return {
     주라벨: 텍스트(주라벨p.본문),
     제목: 텍스트(제목m[1]),
     노래: 노래p ? 텍스트(노래p.본문) : '',
     요점,
     주제성구,
-    문단그룹: 순서.map(pid => 그룹.get(pid)),
+    문단그룹,
     문서인용수: 문서인용수세기(html),
   };
 }

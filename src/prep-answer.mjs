@@ -14,6 +14,32 @@ function 질문번호제거(text) {
   return String(text).replace(/^\s*\d+(?:[-,]\s*\d+)?\.\s*/, '').trim();
 }
 
+const 질문불용어 = new Set(['어떻게', '무엇을', '무엇', '있습니까', '합니까', '하는', '것은', '것의', '대해']);
+
+function 질문낱말(text) {
+  return [...new Set(String(text)
+    .replace(/\([ㄱ-ㅎ]\)/g, ' ')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .split(/\s+/)
+    .filter(낱말 => 낱말.length >= 2 && !질문불용어.has(낱말)))];
+}
+
+function 질문나누기(text) {
+  const 질문 = 질문번호제거(text);
+  const 표시들 = [...질문.matchAll(/\(([ㄱ-ㅎ])\)\s*/g)];
+  if (표시들.length < 2) return [{ 구분: '', 질문 }];
+
+  const 공통문맥 = 질문.slice(0, 표시들[0].index).trim();
+  return 표시들.map((표시, index) => {
+    const 끝 = 표시들[index + 1]?.index ?? 질문.length;
+    const 하위질문 = 질문.slice(표시.index + 표시[0].length, 끝).trim();
+    return {
+      구분: `(${표시[1]})`,
+      질문: [공통문맥, 하위질문].filter(Boolean).join(' '),
+    };
+  });
+}
+
 function 성구본문(도구, 주소들) {
   return 주소들.map(a => ({
     주소: formatAddress(도구.index, a.verseId),
@@ -21,9 +47,14 @@ function 성구본문(도구, 주소들) {
   }));
 }
 
-function 핵심문장(문단본문, 최대 = 3) {
+function 핵심문장(문단본문, 질문, 최대 = 3) {
   const 문장들 = 문장나누기(문단본문.join(' ')).filter(s => !/^\(?\d+분\)?/.test(s));
-  return 문장들.slice(0, 최대);
+  const 낱말들 = 질문낱말(질문);
+  return 문장들
+    .map((문장, index) => ({ 문장, index, 점수: 낱말들.filter(낱말 => 문장.includes(낱말)).length }))
+    .sort((a, b) => b.점수 - a.점수 || a.index - b.index)
+    .slice(0, 최대)
+    .map(item => item.문장);
 }
 
 export function buildAnswerDraft(항목, 도구) {
@@ -39,18 +70,14 @@ export function buildAnswerDraft(항목, 도구) {
     성구.push({ 라벨: c.라벨, 낭독: !!c.낭독, 본문: 성구본문(도구, c.해석.주소들) });
   }
 
-  const 핵심 = 핵심문장(항목.문단본문 ?? []);
+  const 핵심 = 핵심문장(항목.문단본문 ?? [], [항목.상위질문, 질문].filter(Boolean).join(' '));
   const 답변줄 = [];
   if (핵심.length) {
-    답변줄.push(`문단의 흐름을 근거로 보면 ${핵심.join(' ')}`);
+    답변줄.push(핵심.join(' '));
   } else if (성구.length) {
-    답변줄.push(`이 질문은 아래 성구 표현을 중심으로 답할 수 있습니다.`);
+    답변줄.push(성구.flatMap(group => group.본문).slice(0, 2).map(verse => verse.본문).join(' '));
   } else {
     답변줄.push('이 질문은 자료를 직접 읽고 핵심 표현을 정리해 답해야 합니다.');
-  }
-  if (성구.length) {
-    const 첫성구 = 성구[0].본문.map(v => `${v.주소}은(는) "${v.본문}"라고 말합니다`).join(' ');
-    답변줄.push(`성구 근거로는 ${첫성구}.`);
   }
   if (!핵심.length && !성구.length) {
     답변줄.push('출판물 근거 미확인 — 내 정리임.');
@@ -60,7 +87,10 @@ export function buildAnswerDraft(항목, 도구) {
     id: 항목.id,
     번호: 항목.번호,
     질문,
-    원질문: 항목.질문,
+    원질문: 항목.원질문 ?? 항목.질문,
+    상위질문: 항목.상위질문 ?? '',
+    소제목: 항목.소제목 ?? '',
+    삽화: 항목.삽화 ?? [],
     문단번호: 항목.문단번호 ?? [],
     답변: 답변줄.join(' '),
     핵심문장: 핵심,
@@ -71,13 +101,20 @@ export function buildAnswerDraft(항목, 도구) {
 }
 
 export function buildArticleAnswers(기사, 도구, 출처URL) {
-  return 기사.문단그룹.map((g, i) => buildAnswerDraft({
-    id: `q-${i + 1}`,
-    번호: g.문단번호?.length ? g.문단번호.join(', ') : String(i + 1),
-    질문: g.질문,
-    문단번호: g.문단번호,
-    문단본문: g.문단본문,
-    인용: g.인용,
-    출처URL,
-  }, 도구));
+  return 기사.문단그룹.flatMap((g, i) => {
+    const 질문들 = 질문나누기(g.질문);
+    return 질문들.map((하위, 하위번호) => buildAnswerDraft({
+      id: 질문들.length > 1 ? `q-${i + 1}-${하위번호 + 1}` : `q-${i + 1}`,
+      번호: g.문단번호?.length ? g.문단번호.join(', ') : String(i + 1),
+      질문: [하위.구분, 하위.질문].filter(Boolean).join(' '),
+      원질문: g.질문,
+      상위질문: g.상위질문,
+      소제목: g.소제목,
+      삽화: g.삽화,
+      문단번호: g.문단번호,
+      문단본문: g.문단본문,
+      인용: g.인용,
+      출처URL,
+    }, 도구));
+  });
 }

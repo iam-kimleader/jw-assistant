@@ -126,12 +126,24 @@ test('답 입력 칸 앞의 문단을 회중 성서 연구 질문으로 뽑는�
       <div class="gen-field"><textarea></textarea></div>
       <p id="p29" data-pid="29">우리 시대는 노아의 날과 어떻게 비슷합니까? (<a href="/ko/wol/bc/r8/lp-ko/1/0/0" data-bid="1-1" class="b">마태 24:36-39</a>)</p>
       <div class="gen-field"><textarea></textarea></div>
+      <p id="p31" data-pid="31">당신은 노아의 본을 통해 다음과 같이 하는 것의 중요성에 대해 무엇을 배웠습니까?</p>
+      <p id="p32" data-pid="32">잘 계획하고 조직하는 것 <strong>삽화 다</strong></p>
+      <div class="gen-field"><textarea></textarea></div>
+      <figure><img src="/ko/wol/mp/r8/lp-ko/wcg/2025/41" alt="일정이 적힌 다이어리와 달력이 보입니다."></figure>
+      <h2 id="p40" data-pid="40"><strong>시야를 넓혀 생각해 보기</strong></h2>
+      <p id="p41" data-pid="41">이 성경 기록을 통해 여호와에 대해 무엇을 배울 수 있을까?</p>
+      <div class="gen-field"><textarea></textarea></div>
     </div>
   `;
   const result = parseArticle(대화형기사);
   assert.equal(result.주라벨, '2 노아');
-  assert.equal(result.문단그룹.length, 2);
+  assert.equal(result.문단그룹.length, 4);
   assert.equal(result.문단그룹[0].질문, '노아는 어떻게 용기를 나타냈습니까?');
   assert.equal(result.문단그룹[0].문단본문[0], '노아와 그의 가족이 그 일을 하는 데는 용기가 필요했습니다.');
   assert.equal(result.문단그룹[1].인용[0].라벨, '마태 24:36-39');
+  assert.equal(result.문단그룹[0].소제목, '토의해 보십시오');
+  assert.equal(result.문단그룹[2].상위질문, '당신은 노아의 본을 통해 다음과 같이 하는 것의 중요성에 대해 무엇을 배웠습니까?');
+  assert.equal(result.문단그룹[2].삽화[0].url, 'https://wol.jw.org/ko/wol/mp/r8/lp-ko/wcg/2025/41');
+  assert.equal(result.문단그룹[2].삽화[0].alt, '일정이 적힌 다이어리와 달력이 보입니다.');
+  assert.equal(result.문단그룹[3].소제목, '시야를 넓혀 생각해 보기');
 });
