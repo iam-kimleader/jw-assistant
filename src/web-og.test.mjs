@@ -28,3 +28,7 @@ test('Vercel이 공개 OG 이미지 경로를 원본 파일로 연결한다', ()
     rewrite.source === '/og-image-jw-assistant.png'
     && rewrite.destination === '/asset/og-image-jw-assistant.png'));
 });
+
+test('Vercel 함수는 WOL과 사용자에 가까운 서울 리전에서 실행한다', () => {
+  assert.deepEqual(vercel.regions, ['icn1']);
+});

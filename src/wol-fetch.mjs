@@ -39,7 +39,7 @@ async function 기본BinaryFetch(url) {
 
 function httpsFetch(url, redirectCount = 0) {
   return new Promise((resolve, reject) => {
-    const req = get(url, { headers: 요청헤더, timeout: 30000 }, res => {
+    const req = get(url, { headers: 요청헤더, timeout: 8000 }, res => {
       const status = res.statusCode ?? 0;
       const location = res.headers.location;
       if ([301, 302, 303, 307, 308].includes(status) && location && redirectCount < 5) {
@@ -166,7 +166,7 @@ export async function resolveRedirect(url) {
     const response = await fetch(url, {
       headers: 요청헤더,
       redirect: 'manual',
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(8000),
     });
     const location = response.headers.get('location');
     await response.body?.cancel();
