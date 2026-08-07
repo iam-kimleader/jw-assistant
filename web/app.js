@@ -1,4 +1,6 @@
 // 성경 연구 도움 웹앱의 화면 전환과 API 호출을 담당한다.
+import { estimatePreparationProgress } from '/progress.js';
+
 const state = {
   currentView: 'home',
   weeks: [],
@@ -32,6 +34,55 @@ function status(panel, text, kind = '') {
   box.className = `status-box ${kind}`;
   box.textContent = text;
   panel.append(box);
+}
+
+function preparationProgress(panel) {
+  panel.innerHTML = '';
+  const box = document.createElement('div');
+  box.className = 'status-box progress-status';
+  box.setAttribute('role', 'status');
+  box.setAttribute('aria-live', 'polite');
+
+  const text = document.createElement('div');
+  text.className = 'progress-copy';
+  const title = document.createElement('strong');
+  title.textContent = '답변을 준비하고 있습니다.';
+  const detail = document.createElement('span');
+  detail.textContent = '예상 진행률';
+  text.append(title, detail);
+
+  const gauge = document.createElement('div');
+  gauge.className = 'progress-gauge';
+  gauge.setAttribute('role', 'progressbar');
+  gauge.setAttribute('aria-label', '답변 준비 예상 진행률');
+  gauge.setAttribute('aria-valuemin', '0');
+  gauge.setAttribute('aria-valuemax', '100');
+  const value = document.createElement('span');
+  value.className = 'progress-value';
+  gauge.append(value);
+  box.append(text, gauge);
+  panel.append(box);
+
+  const startedAt = Date.now();
+  function update(progress) {
+    const percent = Math.max(0, Math.min(100, Math.round(progress)));
+    gauge.style.setProperty('--progress-angle', `${percent * 3.6}deg`);
+    gauge.setAttribute('aria-valuenow', String(percent));
+    gauge.setAttribute('aria-valuetext', `예상 진행률 ${percent}퍼센트`);
+    value.textContent = `${percent}%`;
+  }
+  update(estimatePreparationProgress(0));
+  const timer = setInterval(() => update(estimatePreparationProgress(Date.now() - startedAt)), 1_000);
+
+  return {
+    complete() {
+      clearInterval(timer);
+      update(100);
+    },
+    stop() {
+      clearInterval(timer);
+    },
+  };
 }
 
 function studyHeader(data) {
@@ -181,15 +232,24 @@ function renderResult(panel, data) {
 async function loadPrep(kind) {
   const panel = document.querySelector(kind === 'watchtower' ? '#watchtower-result' : '#life-result');
   const select = document.querySelector(kind === 'watchtower' ? '#watchtower-week' : '#life-week');
+  const button = document.querySelector(kind === 'watchtower' ? '#watchtower-load' : '#life-load');
   const path = kind === 'watchtower' ? '/api/watchtower' : '/api/life-ministry';
-  status(panel, '준비하고 있습니다.');
+  const progress = preparationProgress(panel);
+  button.disabled = true;
+  button.setAttribute('aria-busy', 'true');
   try {
     const response = await fetch(`${path}?date=${encodeURIComponent(select.value)}`);
     const data = await response.json();
     if (!response.ok || data.error) throw new Error(data.error || '요청에 실패했습니다.');
+    progress.complete();
+    await new Promise(resolve => setTimeout(resolve, 300));
     renderResult(panel, data);
   } catch (error) {
+    progress.stop();
     status(panel, error.message, 'warning');
+  } finally {
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
   }
 }
 
