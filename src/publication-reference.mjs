@@ -1,6 +1,7 @@
 // 질문에 연결된 WOL 참고 출판물을 읽어 AI용 근거 본문과 공개 링크를 구성한다.
 import { fetchCached, resolveRedirect } from './wol-fetch.mjs';
 import { 요소들, 속성값, 파라넘, 텍스트 } from './wol-html.mjs';
+import referenceMap from './wol-reference-map.json' with { type: 'json' };
 
 const 최대본문길이 = 12_000;
 const 불용어 = new Set(['어떻게', '무엇', '무엇을', '있습니까', '했습니까', '합니까', '하는', '것은', '것의', '대해', '통해']);
@@ -150,7 +151,7 @@ function 공식참고URL(url) {
 
 export async function enrichAnswersWithPublicationReferences(answers, options = {}) {
   const fetchDocument = options.fetchDocument ?? (async url => {
-    const resolvedUrl = await resolveRedirect(url);
+    const resolvedUrl = referenceMap[url] ?? await resolveRedirect(url);
     const canonical = new URL(resolvedUrl);
     canonical.hash = '';
     const docId = canonical.pathname.split('/').filter(Boolean).pop();

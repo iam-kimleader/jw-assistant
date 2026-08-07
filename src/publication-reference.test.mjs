@@ -7,6 +7,7 @@ import {
   selectPublicationContent,
   stripPublicationContents,
 } from './publication-reference.mjs';
+import referenceMap from './wol-reference-map.json' with { type: 'json' };
 
 const html = `
   <article id="article" class="article document docId-2012284 pub-w">
@@ -25,6 +26,20 @@ const html = `
     <input type="hidden" id="parentTitle" value="파수대—여호와의 왕국 선포 2012"/>
   </article>
 `;
+
+test('현재 회중 성서 연구의 참고 링크 5개가 정확한 WOL 범위로 미리 해석되어 있다', () => {
+  const entries = Object.entries(referenceMap).filter(([url]) => url.includes('/1102025902/'));
+  assert.equal(entries.length, 5);
+  assert.ok(entries.every(([, url]) => /\/wol\/d\/.+#h=\d+:\d+-\d+:\d+$/.test(url)));
+});
+
+test('현재 21주 범위의 매니페스트가 공식 WOL 참고 링크만 담는다', () => {
+  const entries = Object.entries(referenceMap);
+  assert.ok(entries.length >= 5);
+  assert.ok(entries.every(([source, target]) =>
+    /^https:\/\/wol\.jw\.org\/ko\/wol\/pc\//.test(source)
+    && /^https:\/\/wol\.jw\.org\/ko\/wol\/d\/.+#h=\d+:\d+-\d+:\d+$/.test(target)));
+});
 
 test('참고 출판물 제목과 실제 문서 URL을 뽑는다', () => {
   const document = parsePublicationDocument(html);
