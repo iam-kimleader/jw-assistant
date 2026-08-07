@@ -78,4 +78,5 @@
 - [x] Task 5 `답변 복사` 버튼이 답변 본문만 복사하도록 수정.
 - [x] Task 6 답변 영역의 연한 초록색 배경과 소제목 화면 구분 적용.
 - [x] Task 7 단위 테스트, 실제 주간 API, 데스크톱·모바일 화면 검증.
-- [ ] Task 8 GitHub 푸시와 Vercel 프로덕션 배포.
+- [x] Task 8 GitHub 푸시와 Vercel 프로덕션 배포.
+- [ ] Task 9 Vercel에 `OPENAI_API_KEY`를 설정하고 실제 AI 응답 검증.
