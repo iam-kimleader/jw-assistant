@@ -173,3 +173,11 @@ Claude 의 WebFetch 도구로는 wol.jw.org 이 두 번 다 60초 타임아웃�
 성구 약칭은 파수대 기사보다 생활과 봉사 교재와 서책 본문에서 더 짧게 나온다. `렘 23:33` 같은 약칭과, 같은 `data-bid` 그룹 안에서 장 번호까지 생략된 `14, 15` 같은 조각을 해석하도록 `src/citation-parse.mjs` 를 보강했다. 이 변경은 현재 주 생활과 봉사 API에서 영적 보물 첫 질문이 성구 근거를 갖는지 확인해 검증했다.
 
 검증 결과 `npm test` 는 133개 테스트 중 131개 통과, 2개 스킵이다. 로컬 서버에서 홈 HTML, 날짜 옵션 API, 파수대 API, 생활과 봉사 API를 확인했다. 현재 주 기준으로 파수대는 13개 답변, 생활과 봉사는 영적 보물 2개와 회중 성서 연구 20개 답변을 반환했다.
+
+## 2026-08-07 — Vercel 배포는 로컬 서버와 Serverless 어댑터를 함께 둔다
+
+로컬 개발은 `src/web-server.mjs` 를 계속 쓴다. Vercel은 장기 실행 HTTP 서버가 아니라 Serverless Function을 쓰므로 `api/options.js`, `api/watchtower.js`, `api/life-ministry.js` 를 얇은 어댑터로 추가했다. 세 함수는 기존 `src/prep-service.mjs` 를 그대로 호출하므로 준비 로직은 중복하지 않는다.
+
+정적 화면은 `web/` 에 유지한다. `vercel.json` 에서 `/`, `/styles.css`, `/app.js` 를 `web/` 파일로 rewrite 한다. 이렇게 하면 로컬 서버 구조를 바꾸지 않고 Vercel에서도 같은 화면 경로를 유지할 수 있다.
+
+WOL HTML 캐시는 로컬에서는 `.cache/wol`, Vercel에서는 `os.tmpdir()/jw-assistant-wol` 을 쓴다. 서버리스 파일 시스템에서는 배포 디렉터리가 쓰기 불가능할 수 있으므로, 캐시 쓰기가 실패해도 HTML 응답은 그대로 돌려주도록 했다.

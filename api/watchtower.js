@@ -1,0 +1,11 @@
+// Vercel에서 파수대 연구 준비 자료를 제공하는 Serverless Function
+import { prepareWatchtower } from '../src/prep-service.mjs';
+
+export default async function handler(req, res) {
+  try {
+    const date = new URL(req.url, 'http://localhost').searchParams.get('date');
+    res.status(200).json(await prepareWatchtower(date, process.cwd()));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}

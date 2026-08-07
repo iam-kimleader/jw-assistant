@@ -49,3 +49,10 @@
 - [x] Task 5 jw.org 모티브 홈과 준비 화면 UI.
 - [x] Task 6 답변 복사 버튼과 비활성 도움 카드.
 - [x] Task 7 테스트와 로컬 서버 검증.
+
+## Vercel 배포 — 2026-08-07
+
+- [x] Task 1 Vercel 정적 라우팅과 Serverless API 어댑터 추가.
+- [x] Task 2 Vercel 환경에서 WOL 캐시가 임시 디렉터리를 쓰도록 조정.
+- [ ] Task 3 테스트 후 커밋과 GitHub 푸시.
+- [ ] Task 4 Vercel 프로젝트 연결과 배포.
