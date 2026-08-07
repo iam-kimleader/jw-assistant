@@ -133,3 +133,19 @@ test('질문별 원문을 보강한 뒤 공개 응답에서는 본문만 제거�
   assert.equal('본문' in stripped[0].참고출판물[0], false);
   assert.equal(stripped[0].참고출판물[0].표시, '「파12」 4/15 23면 5-8항');
 });
+
+test('별도 참고 자료가 없는 질문에도 공식 출판물 원문 링크를 제공한다', () => {
+  const sourceUrl = 'https://wol.jw.org/ko/wol/d/r8/lp-ko/1102025902';
+  const [stripped] = stripPublicationContents([{
+    id: 'q-1',
+    질문: '우리 시대는 노아의 날과 어떻게 비슷합니까?',
+    출처URL: sourceUrl,
+    참고출판물: [],
+  }]);
+
+  assert.deepEqual(stripped.참고출판물, [{
+    표시: '이 질문이 실린 공식 출판물',
+    url: sourceUrl,
+    원문URL: sourceUrl,
+  }]);
+});

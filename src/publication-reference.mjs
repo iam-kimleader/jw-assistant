@@ -209,8 +209,15 @@ export async function enrichAnswersWithPublicationReferences(answers, options = 
 }
 
 export function stripPublicationContents(answers) {
-  return answers.map(answer => ({
-    ...answer,
-    참고출판물: (answer.참고출판물 ?? []).map(({ 본문, ...reference }) => reference),
-  }));
+  return answers.map(answer => {
+    const references = (answer.참고출판물 ?? []).map(({ 본문, ...reference }) => reference);
+    if (!references.length && answer.출처URL) {
+      references.push({
+        표시: '이 질문이 실린 공식 출판물',
+        url: answer.출처URL,
+        원문URL: answer.출처URL,
+      });
+    }
+    return { ...answer, 참고출판물: references };
+  });
 }
