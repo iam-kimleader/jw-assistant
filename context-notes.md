@@ -181,3 +181,5 @@ Claude 의 WebFetch 도구로는 wol.jw.org 이 두 번 다 60초 타임아웃�
 정적 화면은 `web/` 에 유지한다. `vercel.json` 에서 `/`, `/styles.css`, `/app.js` 를 `web/` 파일로 rewrite 한다. 이렇게 하면 로컬 서버 구조를 바꾸지 않고 Vercel에서도 같은 화면 경로를 유지할 수 있다.
 
 WOL HTML 캐시는 로컬에서는 `.cache/wol`, Vercel에서는 `os.tmpdir()/jw-assistant-wol` 을 쓴다. 서버리스 파일 시스템에서는 배포 디렉터리가 쓰기 불가능할 수 있으므로, 캐시 쓰기가 실패해도 HTML 응답은 그대로 돌려주도록 했다.
+
+첫 배포 뒤 `/api/watchtower` 와 `/api/life-ministry` 가 `/var/task/core/bible/index.json` 을 찾지 못했다. Vercel의 함수 번들 추적이 `fs` 로 읽는 데이터 파일을 자동 포함하지 않았기 때문이다. `vercel.json` 의 `functions["api/*.js"].includeFiles` 에 `core/bible/**` 를 추가해야 한다.
