@@ -279,3 +279,5 @@ Vercel 프로덕션 배포 `dpl_FSFpANk7nuK8JbQQxS2B3LbtFjjU`에서 2026년 8월
 진행률 계산, 96% 상한, 원형 게이지 구조, Vercel 정적 경로를 검증하는 테스트 4개를 추가했다. 전체 테스트는 163개 중 161개 통과, 기존 2개 스킵, 실패 0개다.
 
 설치된 Chrome과 Playwright로 API 응답을 보류한 채 1440×900 데스크톱과 390×844 모바일 로딩 화면을 확인했다. 두 화면에서 48×48 원형 게이지가 5%로 표시됐고 `role="progressbar"`, `aria-valuetext="예상 진행률 5퍼센트"`, 준비 버튼 비활성화가 확인됐다. 가로 넘침은 두 화면 모두 0건이다. 검증 이미지는 `jw-progress-desktop.png`와 `jw-progress-mobile.png`로 남겼다.
+
+기능 커밋 `61ed122`를 GitHub `main`에 푸시하고 Vercel 프로덕션 배포 `dpl_219ybmYzWjc5uV9d8qkHvaXhZtqo`를 공개 별칭에 연결했다. 공개 사이트에서 `/progress.js`는 HTTP 200으로 응답했다. 모바일 브라우저 검증에서 로딩 중 5%와 비활성 버튼을 확인했고, 완료 응답 뒤에는 게이지가 결과로 교체되고 버튼이 다시 활성화됐다. 콘솔 오류와 가로 넘침은 0건이다.
