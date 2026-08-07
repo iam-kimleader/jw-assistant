@@ -26,7 +26,21 @@ export function buildWeeklyReadingEvidence(label, tools) {
     }
   }
   if (!verses.length) throw new Error(`주간 성경 읽기 본문이 비어 있다: ${range}`);
-  return { 범위: range, 본문: verses };
+  return { 범위: range, 책: book.title, 본문: verses };
+}
+
+export function findWeeklyReadingVerse(reading, selectedVerse) {
+  const value = String(selectedVerse ?? '').trim();
+  if (!value || !String(reading.책 ?? '').trim()) return null;
+  const compact = value.replace(/\s+/g, '');
+  const book = reading.책.replace(/\s+/g, '');
+  if (!compact.includes(book)) return null;
+  return reading.본문.find(verse => {
+    const address = verse.주소.replace(/\s+/g, '');
+    const index = compact.indexOf(address);
+    if (index < 0) return false;
+    return !/\d/.test(compact[index + address.length] ?? '');
+  }) ?? null;
 }
 
 function 보물점수(verse) {

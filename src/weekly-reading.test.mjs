@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { loadIndex } from './verse-address.mjs';
 import { createTextReader } from './bible-text.mjs';
-import { buildWeeklyReadingEvidence, buildWeeklyReadingFallback } from './weekly-reading.mjs';
+import { buildWeeklyReadingEvidence, buildWeeklyReadingFallback, findWeeklyReadingVerse } from './weekly-reading.mjs';
 
 const skip = !existsSync('core/bible/index.json') || !existsSync('core/bible/text');
 
@@ -18,6 +18,7 @@ test('예레미야 22-23장을 로컬 성경의 70절로 펼친다', { skip }, (
   const reading = buildWeeklyReadingEvidence('예레미야 22-23장', reader);
 
   assert.equal(reading.범위, '예레미야 22-23장');
+  assert.equal(reading.책, '예레미야');
   assert.equal(reading.본문.length, 70);
   assert.equal(reading.본문[0].주소, '예레미야 22:1');
   assert.equal(reading.본문.at(-1).주소, '예레미야 23:40');
@@ -46,6 +47,15 @@ test('폴백 답변도 주간 범위 안의 특정 성구를 사용한다', { sk
   assert.equal(reading.본문.some(verse => verse.주소 === selected.주소 && verse.본문 === selected.본문), true);
   assert.match(fallback.답변, new RegExp(selected.주소));
   assert.match(fallback.성구[0].라벨, /예레미야 22-23장/);
+});
+
+test('선택 성구의 범위 표기는 허용하고 다른 책이나 불완전한 주소는 거부한다', { skip }, () => {
+  const reading = buildWeeklyReadingEvidence('예레미야 22-23장', tools());
+  assert.equal(findWeeklyReadingVerse(reading, '예레미야 22:3-4').주소, '예레미야 22:3');
+  assert.equal(findWeeklyReadingVerse(reading, '예레미야 22:3, 4').주소, '예레미야 22:3');
+  assert.equal(findWeeklyReadingVerse(reading, '예레미야 22:30').주소, '예레미야 22:30');
+  assert.equal(findWeeklyReadingVerse(reading, '창세기 22:3'), null);
+  assert.equal(findWeeklyReadingVerse(reading, '22:3'), null);
 });
 
 test('잘못된 주간 범위는 조용히 다른 본문을 사용하지 않는다', { skip }, () => {

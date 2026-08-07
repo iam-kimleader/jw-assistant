@@ -1,5 +1,6 @@
 // 준비 자료와 삽화를 OpenAI Responses API의 한국어 답변으로 다듬는 모듈
 import { fetchBinary } from './wol-fetch.mjs';
+import { findWeeklyReadingVerse } from './weekly-reading.mjs';
 
 const 기본모델 = 'gpt-5.4-mini';
 
@@ -47,6 +48,7 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
     })),
     주간성경읽기: answer.주간성경읽기 ? {
       범위: answer.주간성경읽기.범위,
+      책: answer.주간성경읽기.책,
       본문: answer.주간성경읽기.본문,
     } : undefined,
     성구: (answer.주간성경읽기 ? [] : (answer.성구 ?? [])).map(group => ({
@@ -172,9 +174,12 @@ async function 단일묶음생성(answers, context, settings) {
       const text = 자연스럽게(item.answer);
       if (!answer || !text) continue;
       const selectedVerse = answer.주간성경읽기
-        ? answer.주간성경읽기.본문.find(verse => verse.주소 === String(item.selectedVerse ?? '').trim())
+        ? findWeeklyReadingVerse(answer.주간성경읽기, item.selectedVerse)
         : null;
-      if (answer.주간성경읽기 && !selectedVerse) continue;
+      if (answer.주간성경읽기 && !selectedVerse) {
+        logger.warn('주간 성경 읽기 선택 성구 검증 실패.', String(item.selectedVerse ?? '').slice(0, 100));
+        continue;
+      }
       생성답변.set(item.id, { text, selectedVerse });
     }
     if (!생성답변.size) throw new Error('OpenAI API가 답변을 반환하지 않음');
