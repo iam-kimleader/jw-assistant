@@ -79,3 +79,39 @@ test('API 오류는 비밀 키 없이 상태와 오류 코드만 기록한다', 
   assert.match(logs[0], /OpenAI API 401 \(invalid_request_error \| invalid_api_key \| api_key \| 키가 올바르지 않습니다\.\)/);
   assert.doesNotMatch(logs[0], /secret-test-key/);
 });
+
+test('답변이 많으면 작은 묶음으로 나눠 병렬 생성한다', async () => {
+  const manyAnswers = Array.from({ length: 7 }, (_, index) => ({
+    ...답변들[0],
+    id: `q-${index + 1}`,
+    삽화: [],
+    참고출판물: [],
+  }));
+  let calls = 0;
+  const result = await enhanceAnswersWithAI(manyAnswers, { title: '노아' }, {
+    apiKey: 'test-key',
+    batchSize: 3,
+    fetchImpl: async (_url, options) => {
+      calls++;
+      const request = JSON.parse(options.body);
+      const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
+      const items = JSON.parse(textInput.split('질문별 자료:\n')[1]);
+      return {
+        ok: true,
+        json: async () => ({
+          output: [{
+            content: [{
+              type: 'output_text',
+              text: JSON.stringify({ answers: items.map(item => ({ id: item.id, answer: `${item.id} 생성 답변입니다.` })) }),
+            }],
+          }],
+        }),
+      };
+    },
+  });
+
+  assert.equal(calls, 3);
+  assert.equal(result.answers.length, 7);
+  assert.equal(result.answers[6].답변, 'q-7 생성 답변입니다.');
+  assert.deepEqual(result.generation, { mode: 'ai', model: 'gpt-5.4-mini', batches: 3 });
+});

@@ -130,16 +130,8 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
   };
 }
 
-export async function enhanceAnswersWithAI(answers, context = {}, options = {}) {
-  if (!answers.length) return { answers, generation: { mode: 'empty' } };
-
-  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY ?? '';
-  if (!apiKey) return 폴백(answers, 'AI 답변 기능이 설정되지 않아 공식 자료 기반 초안을 표시합니다.');
-
-  const model = options.model ?? process.env.OPENAI_MODEL ?? 기본모델;
-  const fetchImpl = options.fetchImpl ?? fetch;
-  const imageFetchImpl = options.imageFetchImpl ?? fetchBinary;
-  const logger = options.logger ?? console;
+async function 단일묶음생성(answers, context, settings) {
+  const { apiKey, model, fetchImpl, imageFetchImpl, logger } = settings;
   try {
     const body = await 요청본문(answers, context, model, imageFetchImpl, logger);
     const response = await fetchImpl('https://api.openai.com/v1/responses', {
@@ -179,4 +171,36 @@ export async function enhanceAnswersWithAI(answers, context = {}, options = {}) 
     logger.error('AI 답변 생성 실패.', error instanceof Error ? error.message : String(error));
     return 폴백(answers, 'AI 답변을 불러오지 못해 공식 자료 기반 초안을 표시합니다.');
   }
+}
+
+export async function enhanceAnswersWithAI(answers, context = {}, options = {}) {
+  if (!answers.length) return { answers, generation: { mode: 'empty' } };
+
+  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY ?? '';
+  if (!apiKey) return 폴백(answers, 'AI 답변 기능이 설정되지 않아 공식 자료 기반 초안을 표시합니다.');
+
+  const model = options.model ?? process.env.OPENAI_MODEL ?? 기본모델;
+  const configuredBatchSize = Number(options.batchSize ?? process.env.OPENAI_BATCH_SIZE ?? 5);
+  const batchSize = Number.isInteger(configuredBatchSize) && configuredBatchSize > 0 ? configuredBatchSize : 5;
+  const settings = {
+    apiKey,
+    model,
+    fetchImpl: options.fetchImpl ?? fetch,
+    imageFetchImpl: options.imageFetchImpl ?? fetchBinary,
+    logger: options.logger ?? console,
+  };
+  const batches = [];
+  for (let index = 0; index < answers.length; index += batchSize) batches.push(answers.slice(index, index + batchSize));
+  if (batches.length === 1) return 단일묶음생성(answers, context, settings);
+
+  const results = await Promise.all(batches.map(batch => 단일묶음생성(batch, context, settings)));
+  const aiBatches = results.filter(result => result.generation.mode === 'ai').length;
+  return {
+    answers: results.flatMap(result => result.answers),
+    generation: aiBatches === results.length
+      ? { mode: 'ai', model, batches: results.length }
+      : aiBatches > 0
+        ? { mode: 'partial-ai', model, batches: results.length, warning: '일부 답변은 AI를 불러오지 못해 공식 자료 기반 초안을 표시합니다.' }
+        : { mode: 'fallback', warning: 'AI 답변을 불러오지 못해 공식 자료 기반 초안을 표시합니다.' },
+  };
 }
