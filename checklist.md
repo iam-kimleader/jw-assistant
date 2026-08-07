@@ -80,3 +80,11 @@
 - [x] Task 7 단위 테스트, 실제 주간 API, 데스크톱·모바일 화면 검증.
 - [x] Task 8 GitHub 푸시와 Vercel 프로덕션 배포.
 - [ ] Task 9 Vercel에 `OPENAI_API_KEY`를 설정하고 실제 AI 응답 검증.
+
+## OG 이미지와 AI 활성화 검증 — 2026-08-07
+
+- [x] Task 1 `asset/og-image-jw-assistant.png`를 공개 정적 경로로 제공.
+- [x] Task 2 제목, 설명, Open Graph, Twitter Card 메타데이터 추가.
+- [x] Task 3 로컬 HTML과 이미지 응답 및 전체 테스트 검증.
+- [ ] Task 4 GitHub 푸시와 Vercel 프로덕션 재배포.
+- [ ] Task 5 프로덕션 OG 이미지와 실제 AI 생성 모드 검증.

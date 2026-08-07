@@ -1,13 +1,14 @@
 // 정적 웹앱과 준비 자료 JSON API를 제공하는 서버
 import { createServer } from 'node:http';
 import { existsSync, readFileSync } from 'node:fs';
-import { extname, join, normalize } from 'node:path';
+import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 
 const root = normalize(join(fileURLToPath(new URL('..', import.meta.url))));
 const webRoot = join(root, 'web');
+const ogImage = join(root, 'asset', 'og-image-jw-assistant.png');
 const port = Number(process.env.PORT || 3000);
 
 const types = new Map([
@@ -15,6 +16,7 @@ const types = new Map([
   ['.css', 'text/css; charset=utf-8'],
   ['.js', 'text/javascript; charset=utf-8'],
   ['.json', 'application/json; charset=utf-8'],
+  ['.png', 'image/png'],
 ]);
 
 function json(res, status, data) {
@@ -25,13 +27,16 @@ function json(res, status, data) {
 
 function staticFile(res, pathname) {
   const clean = pathname === '/' ? '/index.html' : pathname;
-  const target = normalize(join(webRoot, clean));
-  if (!target.startsWith(webRoot) || !existsSync(target)) {
+  const target = pathname === '/og-image-jw-assistant.png' ? ogImage : normalize(join(webRoot, clean));
+  const 공개파일 = target === ogImage || target.startsWith(`${webRoot}${sep}`);
+  if (!공개파일 || !existsSync(target)) {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('찾을 수 없습니다.');
     return;
   }
-  res.writeHead(200, { 'Content-Type': types.get(extname(target)) ?? 'application/octet-stream' });
+  const headers = { 'Content-Type': types.get(extname(target)) ?? 'application/octet-stream' };
+  if (target === ogImage) headers['Cache-Control'] = 'public, max-age=86400';
+  res.writeHead(200, headers);
   res.end(readFileSync(target));
 }
 

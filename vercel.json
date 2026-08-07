@@ -8,6 +8,7 @@
   "rewrites": [
     { "source": "/styles.css", "destination": "/web/styles.css" },
     { "source": "/app.js", "destination": "/web/app.js" },
+    { "source": "/og-image-jw-assistant.png", "destination": "/asset/og-image-jw-assistant.png" },
     { "source": "/", "destination": "/web/index.html" },
     { "source": "/life-ministry", "destination": "/web/index.html" },
     { "source": "/watchtower", "destination": "/web/index.html" }

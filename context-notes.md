@@ -217,3 +217,11 @@ Vercel 프로젝트는 `honeskor-1168s-projects/jw-assistant` 로 만들어졌�
 전체 테스트는 138개 중 136개 통과, 2개 스킵, 실패 0개였다. 실제 2026년 8월 3일 주간 생활과 봉사 API에서 회중 성서 연구 질문 13개와 네 가지 소제목을 확인했고, `삽화 다`에는 WOL 이미지 URL과 대체 설명이 연결됐다. 같은 주 파수대는 원래 13개 질문 그룹에서 `(ㄱ)`과 `(ㄴ)`이 분리되어 답변 카드 14개를 반환했다.
 
 커밋 `1d4cece`를 GitHub `origin/main`에 푸시하고 Vercel 배포 `dpl_HPwmVpV8TKgydzFLp9iZB13AJ2wv`를 프로덕션 별칭 `https://jw-assistant-seven.vercel.app`에 연결했다. 프로덕션 브라우저에서 소제목, 상위 질문, 문항별 `답변 복사`, 참고 성구 제외 복사를 확인했다. 로컬과 Vercel 프로젝트 모두 `OPENAI_API_KEY`가 아직 없으므로 현재 프로덕션은 자료 기반 폴백 모드다. 실제 AI 답변 검증은 키 설정 뒤에 진행해야 한다.
+
+## 2026-08-07 — OG 이미지 공개 원칙
+
+사용자가 `asset/og-image-jw-assistant.png`가 서비스의 OG 이미지라고 확인했다. 파일은 `1448×1086` PNG이며 원본을 자르거나 재인코딩하지 않는다. 공개 주소는 `https://jw-assistant-seven.vercel.app/og-image-jw-assistant.png`로 고정하고 HTML에 실제 폭과 높이, 이미지 설명을 기록한다. 로컬 Node 서버와 Vercel이 같은 경로를 제공하도록 각각 정적 경로와 rewrite를 둔다.
+
+Vercel 프로젝트에서 `OPENAI_API_KEY`가 `Sensitive` 변수로 Preview와 Production 환경에 등록된 것을 확인했다. 환경 변수는 새 프로덕션 배포 후 실제 API 응답의 `generation.mode`가 `ai`인지 확인해야 활성화 검증이 끝난다.
+
+OG 메타데이터 전용 테스트 3개와 전체 테스트를 실행했다. 전체 141개 중 139개 통과, 기존 2개 스킵, 실패 0개였다. 로컬 공개 주소 `/og-image-jw-assistant.png`는 HTTP 200, `image/png`, `Cache-Control: public, max-age=86400`으로 응답했고 본문 크기는 원본과 같은 2,011,880바이트였다.
