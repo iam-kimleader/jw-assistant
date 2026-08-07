@@ -46,3 +46,20 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   assert.equal(result.answers[0].답변, '사람들이 경고에 주의를 기울이지 않는다는 점이 비슷합니다.');
   assert.equal(result.generation.mode, 'ai');
 });
+
+test('API 오류는 비밀 키 없이 상태와 오류 코드만 기록한다', async () => {
+  const logs = [];
+  const result = await enhanceAnswersWithAI(답변들, {}, {
+    apiKey: 'secret-test-key',
+    logger: { error: (...args) => logs.push(args.join(' ')) },
+    fetchImpl: async () => ({
+      ok: false,
+      status: 401,
+      json: async () => ({ error: { type: 'invalid_request_error', code: 'invalid_api_key' } }),
+    }),
+  });
+
+  assert.equal(result.generation.mode, 'fallback');
+  assert.match(logs[0], /OpenAI API 401 \(invalid_request_error\/invalid_api_key\)/);
+  assert.doesNotMatch(logs[0], /secret-test-key/);
+});

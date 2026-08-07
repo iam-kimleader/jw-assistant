@@ -118,6 +118,7 @@ export async function enhanceAnswersWithAI(answers, context = {}, options = {}) 
 
   const model = options.model ?? process.env.OPENAI_MODEL ?? 기본모델;
   const fetchImpl = options.fetchImpl ?? fetch;
+  const logger = options.logger ?? console;
   try {
     const response = await fetchImpl('https://api.openai.com/v1/responses', {
       method: 'POST',
@@ -129,7 +130,10 @@ export async function enhanceAnswersWithAI(answers, context = {}, options = {}) 
       signal: AbortSignal.timeout(120_000),
     });
     const payload = await response.json();
-    if (!response.ok) throw new Error(`OpenAI API ${response.status ?? 'error'}`);
+    if (!response.ok) {
+      const detail = [payload.error?.type, payload.error?.code].filter(Boolean).join('/');
+      throw new Error(`OpenAI API ${response.status ?? 'error'}${detail ? ` (${detail})` : ''}`);
+    }
 
     const parsed = JSON.parse(출력텍스트(payload));
     const 허용ID = new Set(answers.map(answer => answer.id));
@@ -144,7 +148,8 @@ export async function enhanceAnswersWithAI(answers, context = {}, options = {}) 
         : answer),
       generation: { mode: 'ai', model },
     };
-  } catch {
+  } catch (error) {
+    logger.error('AI 답변 생성 실패.', error instanceof Error ? error.message : String(error));
     return 폴백(answers, 'AI 답변을 불러오지 못해 공식 자료 기반 초안을 표시합니다.');
   }
 }
