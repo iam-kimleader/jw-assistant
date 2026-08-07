@@ -326,6 +326,44 @@ select {
   line-height: 1.7;
 }
 
+.publication-references {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--gold);
+  background: #fffaf0;
+}
+
+.publication-references:empty {
+  display: none;
+}
+
+.publication-references-title {
+  color: #4c5157;
+  font-size: 14px;
+}
+
+.publication-reference {
+  display: grid;
+  gap: 2px;
+}
+
+.publication-reference a {
+  width: fit-content;
+  color: var(--blue-dark);
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.publication-reference span {
+  color: #626970;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .generation-warning {
   padding: 12px 16px;
   box-shadow: none;

@@ -36,6 +36,14 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
     상위질문: answer.상위질문 || undefined,
     소제목: answer.소제목 || undefined,
     출판물근거: answer.핵심문장,
+    참고출판물: (answer.참고출판물 ?? []).map(reference => ({
+      표시: reference.표시,
+      제목: reference.제목,
+      출판물: reference.출판물,
+      URL: reference.url,
+      조회일: reference.조회일,
+      본문: reference.본문,
+    })),
     성구: (answer.성구 ?? []).map(group => ({
       라벨: group.라벨,
       본문: group.본문.map(verse => ({ 주소: verse.주소, 본문: verse.본문 })),
@@ -70,7 +78,7 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
   return {
     model,
     store: false,
-    reasoning: { effort: 'low' },
+    reasoning: { effort: 'medium' },
     input: [
       {
         role: 'system',
@@ -78,11 +86,15 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
           type: 'input_text',
           text: [
             '여호와의 증인의 성경 이해를 따르는 한국어 성경 연구 보조자입니다.',
-            '제공된 공식 출판물 문장, 정확한 성구 본문, 삽화만 근거로 각 질문에 직접 답하십시오.',
+            '제공된 공식 출판물 문장, 질문별 참고 출판물 본문, 정확한 성구 본문, 삽화만 근거로 각 질문에 직접 답하십시오.',
+            '참고 출판물이 있으면 해당 본문의 사실과 논리를 우선 사용하고, 질문과 어떤 관련이 있는지 설명하십시오.',
+            '단순히 문장을 옮기지 말고 원인과 결과, 시간 순서, 대조점, 실생활 의미 가운데 질문에 필요한 연결을 분명히 하십시오.',
+            '합리적인 추론은 자료에서 확인되는 사실과 구분되는 표현으로 제시하고, 질문에 여러 부분이 있으면 빠짐없이 모두 답하십시오.',
             '독자적인 새 교리를 만들지 말고, 자료에 없는 교리적 결론은 답변 끝에 "출판물 근거 미확인 — 내 정리임."이라고 밝히십시오.',
             '적용이나 감상을 묻는 질문에는 제공된 원칙을 바탕으로 자연스럽고 겸손한 1인칭 답변을 작성할 수 있습니다.',
             '삽화가 있으면 실제 이미지와 대체 설명을 함께 살펴 질문에 필요한 관찰을 반영하십시오.',
-            '각 답변은 한국어 2-4문장으로 간결하게 쓰고, "문단의 흐름을 근거로 보면"과 "성구 근거로는"이라는 표현은 사용하지 마십시오.',
+            '각 답변은 보통 한국어 3-6문장으로 충분히 설명하되, 단순한 질문은 억지로 늘리지 마십시오.',
+            '"문단의 흐름을 근거로 보면"과 "성구 근거로는"이라는 표현은 사용하지 마십시오.',
             '질문 ID를 바꾸거나 합치지 마십시오.',
           ].join('\n'),
         }],

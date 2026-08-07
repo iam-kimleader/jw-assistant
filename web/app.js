@@ -74,6 +74,30 @@ function renderAnswer(answer) {
   node.querySelector('.answer-number').textContent = answer.문단번호?.length ? `${answer.문단번호.join(', ')}문단` : answer.번호;
   node.querySelector('h3').textContent = answer.질문;
   node.querySelector('.answer-text').textContent = answer.답변;
+  const references = node.querySelector('.publication-references');
+  if (answer.참고출판물?.length) {
+    const heading = document.createElement('strong');
+    heading.className = 'publication-references-title';
+    heading.textContent = '참고 출판물';
+    references.append(heading);
+  }
+  for (const reference of answer.참고출판물 || []) {
+    const item = document.createElement('div');
+    item.className = 'publication-reference';
+    const link = document.createElement('a');
+    link.href = reference.url || reference.원문URL;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = reference.표시 || reference.제목 || 'WOL 참고 자료';
+    item.append(link);
+    const detailText = [reference.제목, reference.출판물].filter(Boolean).join(' · ');
+    if (detailText) {
+      const detail = document.createElement('span');
+      detail.textContent = detailText;
+      item.append(detail);
+    }
+    references.append(item);
+  }
   const scriptures = node.querySelector('.scriptures');
   for (const group of answer.성구 || []) {
     const box = document.createElement('div');

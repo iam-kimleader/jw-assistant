@@ -94,6 +94,7 @@ export function buildAnswerDraft(항목, 도구) {
     문단번호: 항목.문단번호 ?? [],
     답변: 답변줄.join(' '),
     핵심문장: 핵심,
+    참고출판물: 항목.참고출판물 ?? [],
     성구,
     미해결,
     출처URL: 항목.출처URL,
@@ -114,6 +115,7 @@ export function buildArticleAnswers(기사, 도구, 출처URL) {
       문단번호: g.문단번호,
       문단본문: g.문단본문,
       인용: g.인용,
+      참고출판물: g.참고출판물,
       출처URL,
     }, 도구));
   });

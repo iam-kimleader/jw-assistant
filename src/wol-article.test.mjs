@@ -122,7 +122,7 @@ test('답 입력 칸 앞의 문단을 회중 성서 연구 질문으로 뽑는�
       <p id="p4" data-pid="4">노아는 여호와의 말씀을 믿고 방주를 만들기 시작했습니다.</p>
       <p id="p5" data-pid="5">노아와 그의 가족이 그 일을 하는 데는 용기가 필요했습니다.</p>
       <h3 id="p16" data-pid="16"><strong>토의해 보십시오</strong></h3>
-      <p id="p17" data-pid="17"><strong>노아는 어떻게 용기를 나타냈습니까?</strong></p>
+      <p id="p17" data-pid="17"><strong>노아는 어떻게 용기를 나타냈습니까?</strong> (<a href="/ko/wol/pc/r8/lp-ko/1102025902/0/0">「파02」 3/1 5면 3항–6면 4항</a>)</p>
       <div class="gen-field"><textarea></textarea></div>
       <p id="p29" data-pid="29">우리 시대는 노아의 날과 어떻게 비슷합니까? (<a href="/ko/wol/bc/r8/lp-ko/1/0/0" data-bid="1-1" class="b">마태 24:36-39</a>)</p>
       <div class="gen-field"><textarea></textarea></div>
@@ -138,7 +138,11 @@ test('답 입력 칸 앞의 문단을 회중 성서 연구 질문으로 뽑는�
   const result = parseArticle(대화형기사);
   assert.equal(result.주라벨, '2 노아');
   assert.equal(result.문단그룹.length, 4);
-  assert.equal(result.문단그룹[0].질문, '노아는 어떻게 용기를 나타냈습니까?');
+  assert.equal(result.문단그룹[0].질문, '노아는 어떻게 용기를 나타냈습니까? (「파02」 3/1 5면 3항–6면 4항)');
+  assert.deepEqual(result.문단그룹[0].참고출판물, [{
+    표시: '「파02」 3/1 5면 3항–6면 4항',
+    url: 'https://wol.jw.org/ko/wol/pc/r8/lp-ko/1102025902/0/0',
+  }]);
   assert.equal(result.문단그룹[0].문단본문[0], '노아와 그의 가족이 그 일을 하는 데는 용기가 필요했습니다.');
   assert.equal(result.문단그룹[1].인용[0].라벨, '마태 24:36-39');
   assert.equal(result.문단그룹[0].소제목, '토의해 보십시오');

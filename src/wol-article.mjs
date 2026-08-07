@@ -1,5 +1,5 @@
 // WOL 파수대와 대화형 연구 기사에서 질문·문단·인용 성구 구조를 뽑는 파서
-import { 문단들, 문서인용수세기, 속성값, 요소들, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
+import { 링크들, 문단들, 문서인용수세기, 속성값, 요소들, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
 
 const 질문불용어 = new Set(['어떻게', '무엇', '있습니까', '했습니까', '합니까', '하는', '통해', '다음', '같이', '대해']);
 
@@ -43,6 +43,15 @@ function 삽화뽑기(html) {
   return 삽화;
 }
 
+function 참고출판물뽑기(본문) {
+  return 링크들(본문)
+    .filter(link => link.href && /\/wol\/pc\//.test(link.href))
+    .map(link => ({
+      표시: link.텍스트,
+      url: new URL(link.href, 'https://wol.jw.org').href,
+    }));
+}
+
 function 대화형질문그룹(html) {
   const 본문시작 = html.search(/<div\b(?=[^>]*class="[^"]*\bbodyTxt\b)[^>]*>/);
   const 토의시작 = html.indexOf('토의해 보십시오', 본문시작);
@@ -66,6 +75,7 @@ function 대화형질문그룹(html) {
       문단번호: [],
       문단본문: 관련문단먼저(근거문단, 질문),
       인용: 인용뽑기(m[2]),
+      참고출판물: 참고출판물뽑기(m[2]),
       소제목: 직전소제목(소제목들, m.index),
     });
   }
@@ -85,6 +95,7 @@ function 대화형질문그룹(html) {
       문단번호: 항목.문단번호,
       문단본문: 관련문단먼저(근거문단, [상위질문, 항목.질문].filter(Boolean).join(' ')),
       인용: 항목.인용,
+      참고출판물: 항목.참고출판물,
     };
   });
 }
@@ -127,6 +138,7 @@ export function parseArticle(html) {
       문단번호: [],
       문단본문: [],
       인용: 인용뽑기(p.본문),
+      참고출판물: 참고출판물뽑기(p.본문),
       소제목: 직전소제목(소제목들, p.index),
       삽화: [],
       _index: p.index,

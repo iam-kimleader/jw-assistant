@@ -8,6 +8,7 @@ import { parseArticle } from './wol-article.mjs';
 import { fetchCached } from './wol-fetch.mjs';
 import { buildArticleAnswers, buildAnswerDraft } from './prep-answer.mjs';
 import { enhanceAnswersWithAI } from './ai-answer.mjs';
+import { enrichAnswersWithPublicationReferences, stripPublicationContents } from './publication-reference.mjs';
 import { findPublicationChapter, parseMinistryMeeting, readingRangeNote } from './ministry-meeting.mjs';
 
 export function createTools(root = process.cwd()) {
@@ -17,6 +18,12 @@ export function createTools(root = process.cwd()) {
     text: createTextReader(index, join(root, 'core/bible/text')),
     refs: loadRefs(index, join(root, 'core/bible/refs')),
   };
+}
+
+async function generateAnswers(answers, context) {
+  const enriched = await enrichAnswersWithPublicationReferences(answers, { accessedAt: context.accessedAt });
+  const result = await enhanceAnswersWithAI(enriched, context);
+  return { ...result, answers: stripPublicationContents(result.answers) };
 }
 
 function 날짜객체(dateText) {
@@ -40,7 +47,7 @@ export async function prepareWatchtower(dateText, root = process.cwd()) {
   const 기사URL = articleUrl(week.파수대docId);
   const html = await fetchCached(기사URL, `doc-${week.파수대docId}.html`);
   const 기사 = parseArticle(html);
-  const 생성결과 = await enhanceAnswersWithAI(buildArticleAnswers(기사, 도구, 기사URL), {
+  const 생성결과 = await generateAnswers(buildArticleAnswers(기사, 도구, 기사URL), {
     title: 기사.제목,
     sourceUrl: 기사URL,
   });
@@ -100,7 +107,7 @@ export async function prepareLifeAndMinistry(dateText, root = process.cwd()) {
     return draft;
   });
   const study = await resolveCongregationStudy(meeting, 도구);
-  const 생성결과 = await enhanceAnswersWithAI([...gems, ...study.answers], {
+  const 생성결과 = await generateAnswers([...gems, ...study.answers], {
     title: `생활과 봉사 — ${meeting.주라벨}`,
     sourceUrl: [교재URL, study.sourceUrl].filter(Boolean).join(', '),
   });

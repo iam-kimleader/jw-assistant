@@ -8,6 +8,14 @@ const 답변들 = [{
   질문: '우리 시대는 노아의 날과 어떻게 비슷합니까?',
   답변: '기존 답변입니다.',
   핵심문장: ['노아 시대 사람들은 경고에 주의를 기울이지 않았습니다.'],
+  참고출판물: [{
+    표시: '「파02」 3/1 5면 3항–6면 4항',
+    제목: '그 고대 세상은 왜 멸망되었는가?',
+    출판물: '파수대—여호와의 왕국 선포 2002',
+    url: 'https://wol.jw.org/ko/wol/d/r8/lp-ko/2002161#p4',
+    조회일: '2026-08-08',
+    본문: '홍수 전의 문명은 발달했지만 사회는 폭력과 악으로 가득했습니다.',
+  }],
   성구: [{ 라벨: '마태 24:36-39', 본문: [{ 주소: '마태복음 24:37', 본문: '노아의 날처럼 사람의 아들의 임재도 그러할 것입니다.' }] }],
   삽화: [{ url: 'https://wol.jw.org/ko/wol/mp/example', alt: '노아가 방주를 짓고 있습니다.' }],
 }];
@@ -43,6 +51,10 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
   assert.equal(request.model, 'gpt-5.4-mini');
   assert.equal(request.text.format.type, 'json_schema');
   assert.equal(request.text.format.strict, true);
+  assert.equal(request.reasoning.effort, 'medium');
+  const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
+  assert.match(textInput, /홍수 전의 문명은 발달했지만 사회는 폭력과 악으로 가득했습니다/);
+  assert.match(textInput, /https:\/\/wol\.jw\.org\/ko\/wol\/d\/r8\/lp-ko\/2002161#p4/);
   const imageInput = request.input[1].content.find(item => item.type === 'input_image');
   assert.match(imageInput.image_url, /^data:image\/png;base64,/);
   assert.doesNotMatch(imageInput.image_url, /wol\.jw\.org/);
