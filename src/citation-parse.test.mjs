@@ -21,6 +21,8 @@ test('완전 일치하는 권 이름을 해석한다', { skip }, () => {
 test('별칭표에 있는 권 이름을 해석한다', { skip }, () => {
   assert.equal(resolveBook(idx, '계시록').book, 66);
   assert.equal(resolveBook(idx, '요한').book, 43);
+  assert.equal(resolveBook(idx, '렘').book, 24);
+  assert.equal(resolveBook(idx, '벧전').book, 60);
 });
 
 test('접두가 유일하면 그 권으로 해석한다', { skip }, () => {
@@ -77,6 +79,16 @@ test('후행 세미콜론을 무시한다', { skip }, () => {
 test('권 이름이 없으면 직전 권을 이어받는다', { skip }, () => {
   assert.deepEqual(요약(parseCitation(idx, '119:63', 19)), ['19-119:63']);
   assert.deepEqual(요약(parseCitation(idx, '10:31', 46)), ['46-10:31']);
+});
+
+test('권과 장이 없으면 같은 bid 그룹의 직전 권과 장을 이어받는다', { skip }, () => {
+  const out = resolveAll(idx, [
+    { 라벨: '창세 3:4-6,', bid: '1-1', 낭독: false },
+    { 라벨: '14, 15', bid: '1-2', 낭독: false },
+  ]);
+  assert.equal(out[0].해석.성공, true);
+  assert.equal(out[1].해석.성공, true);
+  assert.deepEqual(요약(out[1].해석), ['1-3:14', '1-3:15']);
 });
 
 test('권 이름이 없는데 직전 권도 없으면 실패로 준다', { skip }, () => {

@@ -1,69 +1,5 @@
 // wol 파수대 연구 기사 HTML 에서 질문·문단·인용 성구 구조를 뽑아내는 파서
-import { htmlToText as 텍스트 } from './html-text.mjs';
-
-// 속성 순서에 기대지 않는다 — <a ...>...</a> 를 통째로 잡은 뒤 안에서 href·data-bid·class 를 따로 확인한다
-const 앵커 = /<a\b([^>]*)>([\s\S]*?)<\/a>/g;
-const 열린스팬 = /<span\b([^>]*)>/g;
-
-// <p ...>...</p> 를 순서대로 모두 잘라낸다. 속성과 본문을 함께 준다
-function 문단들(html) {
-  const out = [];
-  const re = /<p\b([^>]*)>([\s\S]*?)<\/p>/g;
-  let m;
-  while ((m = re.exec(html))) out.push({ 속성: m[1], 본문: m[2] });
-  return out;
-}
-
-const 속성값 = (속성, 이름) => (속성.match(new RegExp(`${이름}="([^"]*)"`)) || [])[1] ?? null;
-const 클래스목록 = 속성 => (속성값(속성, 'class') || '').split(/\s+/).filter(Boolean);
-
-// href 에 /wol/bc/ 가 들어 있고 data-bid 가 있고 class 목록에 낱말 b 가 있는 앵커만 인용으로 본다.
-// 절대 URL(https://wol.jw.org/ko/wol/bc/...)로 와도 잡을 수 있게 접두 대신 부분 일치를 쓴다 —
-// data-bid 와 class="b" 두 조건만으로 이미 인용 앵커가 충분히 특정된다.
-function 인용앵커인가(속성) {
-  const href = 속성값(속성, 'href');
-  return !!href && /\/wol\/bc\//.test(href) && !!속성값(속성, 'data-bid') && 클래스목록(속성).includes('b');
-}
-
-// 문서 전체(그룹으로 묶이기 전)에서 인용앵커인가를 만족하는 <a> 개수를 센다.
-// 결산용이다 — 그룹 구성 과정에서 조용히 버려지는 인용이 있는지 scripts/prepare-meeting.mjs 가 이 값과
-// 통계.인용수 를 비교해 알아낸다.
-function 문서인용수세기(html) {
-  const 전체앵커 = /<a\b([^>]*)>([\s\S]*?)<\/a>/g;
-  let n = 0;
-  let m;
-  while ((m = 전체앵커.exec(html))) {
-    if (인용앵커인가(m[1])) n++;
-  }
-  return n;
-}
-
-function 인용뽑기(본문) {
-  const out = [];
-  앵커.lastIndex = 0;
-  let m;
-  while ((m = 앵커.exec(본문))) {
-    const 속성 = m[1];
-    if (!인용앵커인가(속성)) continue;
-    const 뒤 = 본문.slice(앵커.lastIndex, 앵커.lastIndex + 60);
-    out.push({
-      bid: 속성값(속성, 'data-bid'),
-      라벨: 텍스트(m[2]),
-      낭독: /낭독/.test(텍스트(뒤).slice(0, 8)),
-    });
-  }
-  return out;
-}
-
-// class="parNum" 인 <span> 의 data-pnum 을 속성 순서에 상관없이 찾는다
-function 파라넘(본문) {
-  열린스팬.lastIndex = 0;
-  let m;
-  while ((m = 열린스팬.exec(본문))) {
-    if (클래스목록(m[1]).includes('parNum')) return 속성값(m[1], 'data-pnum');
-  }
-  return null;
-}
+import { 문단들, 문서인용수세기, 속성값, 인용뽑기, 파라넘, 텍스트 } from './wol-html.mjs';
 
 export function parseArticle(html) {
   const ps = 문단들(html);
@@ -97,7 +33,7 @@ export function parseArticle(html) {
     if (!/class="[^"]*\bqu\b/.test(p.속성)) continue;
     const pid = 속성값(p.속성, 'data-pid');
     if (!pid) continue;
-    그룹.set(pid, { 질문: 텍스트(p.본문), 문단번호: [], 인용: 인용뽑기(p.본문) });
+    그룹.set(pid, { 질문: 텍스트(p.본문), 문단번호: [], 문단본문: [], 인용: 인용뽑기(p.본문) });
     순서.push(pid);
   }
   if (!그룹.size) throw new Error('기사 구조를 찾을 수 없다 — 질문 문단이 하나도 없다');
@@ -109,10 +45,12 @@ export function parseArticle(html) {
     const pid들 = rel.replace(/[[\]]/g, '').split(',').map(s => s.trim()).filter(Boolean);
     const pnum = 파라넘(p.본문);
     const 인용 = 인용뽑기(p.본문);
+    const 본문텍스트 = 텍스트(p.본문).replace(/^\d+\s+/, '');
     for (const pid of pid들) {
       const 대상 = 그룹.get(pid);
       if (!대상) continue;
       if (pnum) 대상.문단번호.push(Number(pnum));
+      if (본문텍스트) 대상.문단본문.push(본문텍스트);
       대상.인용.push(...인용);
     }
   }

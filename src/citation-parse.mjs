@@ -6,6 +6,69 @@ import { toVerseId } from './verse-address.mjs';
 export const 별칭 = {
   '계시록': '요한 계시록',   // 접미가 아니라 접두를 잘라 쓰므로 규칙으로 안 풀린다
   '요한': '요한복음',        // 요한 1·2·3서·계시록과 겹치므로 접두 유일 일치가 안 된다
+  '창': '창세기',
+  '출': '출애굽기',
+  '레': '레위기',
+  '민': '민수기',
+  '신': '신명기',
+  '수': '여호수아',
+  '삿': '사사기',
+  '삼상': '사무엘상',
+  '삼하': '사무엘하',
+  '왕상': '열왕기상',
+  '왕하': '열왕기하',
+  '대상': '역대기상',
+  '대하': '역대기하',
+  '스': '에스라',
+  '느': '느헤미야',
+  '에': '에스더',
+  '잠': '잠언',
+  '전': '전도서',
+  '아': '솔로몬의 노래',
+  '사': '이사야',
+  '렘': '예레미야',
+  '애': '예레미야 애가',
+  '겔': '에스겔',
+  '단': '다니엘',
+  '호': '호세아',
+  '욜': '요엘',
+  '암': '아모스',
+  '옵': '오바댜',
+  '욘': '요나',
+  '미': '미가',
+  '나': '나훔',
+  '합': '하박국',
+  '습': '스바냐',
+  '학': '학개',
+  '슥': '스가랴',
+  '말': '말라기',
+  '마': '마태복음',
+  '막': '마가복음',
+  '눅': '누가복음',
+  '요': '요한복음',
+  '행': '사도행전',
+  '롬': '로마서',
+  '고전': '고린도 전서',
+  '고후': '고린도 후서',
+  '갈': '갈라디아서',
+  '엡': '에베소서',
+  '빌': '빌립보서',
+  '골': '골로새서',
+  '살전': '데살로니가 전서',
+  '살후': '데살로니가 후서',
+  '딤전': '디모데 전서',
+  '딤후': '디모데 후서',
+  '딛': '디도서',
+  '몬': '빌레몬서',
+  '히': '히브리서',
+  '약': '야고보서',
+  '벧전': '베드로 전서',
+  '벧후': '베드로 후서',
+  '요1': '요한 1서',
+  '요2': '요한 2서',
+  '요3': '요한 3서',
+  '유': '유다서',
+  '계': '요한 계시록',
 };
 
 const 압축 = s => String(s).replace(/\s+/g, '');
@@ -44,10 +107,12 @@ function 정규화(라벨) {
 
 export function parseCitation(index, 라벨, 직전권 = null) {
   const t = 정규화(라벨);
+  const 문맥 = typeof 직전권 === 'object' && 직전권 ? 직전권 : { 권: 직전권, 장: null };
   const m = t.match(/^(.*?)\s*(\d+):([\d,\s-]+)$/);
-  if (!m) return { 성공: false, 사유: `성구 형식을 해석할 수 없다: ${라벨}` };
+  const 장없는절목록 = !m ? t.match(/^([\d,\s-]+)$/) : null;
+  if (!m && !장없는절목록) return { 성공: false, 사유: `성구 형식을 해석할 수 없다: ${라벨}` };
 
-  const 책이름 = m[1].trim();
+  const 책이름 = m ? m[1].trim() : '';
   let book, title;
   if (책이름) {
     const r = resolveBook(index, 책이름);
@@ -55,16 +120,20 @@ export function parseCitation(index, 라벨, 직전권 = null) {
     book = r.book;
     title = r.title;
   } else {
-    if (직전권 == null) {
+    if (문맥.권 == null) {
       return { 성공: false, 사유: `권 이름이 없는데 이어받을 앞선 권이 없다: ${라벨}` };
     }
-    book = 직전권;
+    book = 문맥.권;
     title = index.books.find(b => b.num === book)?.title ?? String(book);
   }
 
-  const chapter = Number(m[2]);
+  const chapter = m ? Number(m[2]) : 문맥.장;
+  if (chapter == null) {
+    return { 성공: false, 사유: `장 번호가 없는데 이어받을 앞선 장이 없다: ${라벨}` };
+  }
   const 절들 = [];
-  for (const 조각 of m[3].split(',')) {
+  const 절본문 = m ? m[3] : 장없는절목록[1];
+  for (const 조각 of 절본문.split(',')) {
     const s = 조각.trim();
     if (!s) continue;
     const 범위 = s.match(/^(\d+)\s*-\s*(\d+)$/);
@@ -90,22 +159,22 @@ export function parseCitation(index, 라벨, 직전권 = null) {
     }
     주소들.push({ book, chapter, verse, verseId });
   }
-  return { 성공: true, 권: book, title, 주소들 };
+  return { 성공: true, 권: book, 장: chapter, title, 주소들 };
 }
 
 // 같은 괄호 안의 참조는 data-bid 의 그룹 번호가 같다.
 // 권 이름 생략은 그 그룹 안에서만 직전 항목으로부터 이어받는다.
 export function resolveAll(index, 인용들) {
   let 현재그룹 = null;
-  let 직전권 = null;
+  let 직전문맥 = null;
   return 인용들.map(c => {
     const 그룹 = String(c.bid ?? '').split('-')[0];
     if (그룹 !== 현재그룹) {
       현재그룹 = 그룹;
-      직전권 = null;
+      직전문맥 = null;
     }
-    const 해석 = parseCitation(index, c.라벨, 직전권);
-    if (해석.성공) 직전권 = 해석.권;
+    const 해석 = parseCitation(index, c.라벨, 직전문맥);
+    if (해석.성공) 직전문맥 = { 권: 해석.권, 장: 해석.장 };
     return { ...c, 해석 };
   });
 }

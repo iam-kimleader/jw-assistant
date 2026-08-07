@@ -1,0 +1,105 @@
+<!-- 성경 연구 도움 웹앱의 단일 페이지 화면 -->
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JW Assistant</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">JW</span>
+        <span>성경 연구 도우미</span>
+      </div>
+      <nav class="topnav" aria-label="주요 화면">
+        <button class="nav-button active" data-view="home" type="button">홈</button>
+        <button class="nav-button" data-view="life-ministry" type="button">생활과 봉사</button>
+        <button class="nav-button" data-view="watchtower" type="button">파수대 연구</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="view active" aria-labelledby="home-title">
+        <div class="home-head">
+          <p class="eyebrow">JW Assistant</p>
+          <h1 id="home-title">어떤 연구를 준비할까요?</h1>
+        </div>
+        <div class="service-grid">
+          <button class="service-card active-card" data-view="life-ministry" type="button">
+            <span class="service-kicker">주중 집회</span>
+            <strong>생활과 봉사</strong>
+            <span>영적 보물 찾기와 회중 성서 연구를 준비합니다.</span>
+          </button>
+          <button class="service-card active-card" data-view="watchtower" type="button">
+            <span class="service-kicker">주말 집회</span>
+            <strong>파수대 연구</strong>
+            <span>항별 질문에 대한 답변 초안을 준비합니다.</span>
+          </button>
+          <button class="service-card" disabled type="button">
+            <span class="service-kicker">준비 중</span>
+            <strong>개인 연구</strong>
+            <span>추후 추가 예정입니다.</span>
+          </button>
+          <button class="service-card" disabled type="button">
+            <span class="service-kicker">준비 중</span>
+            <strong>봉사인도</strong>
+            <span>추후 추가 예정입니다.</span>
+          </button>
+          <button class="service-card" disabled type="button">
+            <span class="service-kicker">준비 중</span>
+            <strong>연설</strong>
+            <span>추후 추가 예정입니다.</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="life-ministry" class="view" aria-labelledby="life-title">
+        <div class="workspace-head">
+          <div>
+            <p class="eyebrow">생활과 봉사</p>
+            <h1 id="life-title">주간 교재 준비</h1>
+          </div>
+          <div class="controls">
+            <label for="life-week">주간</label>
+            <select id="life-week"></select>
+            <button id="life-load" class="primary-button" type="button">준비</button>
+          </div>
+        </div>
+        <div id="life-result" class="result-panel"></div>
+      </section>
+
+      <section id="watchtower" class="view" aria-labelledby="watchtower-title">
+        <div class="workspace-head">
+          <div>
+            <p class="eyebrow">파수대 연구</p>
+            <h1 id="watchtower-title">항별 답변 준비</h1>
+          </div>
+          <div class="controls">
+            <label for="watchtower-week">주간</label>
+            <select id="watchtower-week"></select>
+            <button id="watchtower-load" class="primary-button" type="button">준비</button>
+          </div>
+        </div>
+        <div id="watchtower-result" class="result-panel"></div>
+      </section>
+    </main>
+
+    <template id="answer-template">
+      <article class="answer-card">
+        <div class="answer-head">
+          <div>
+            <span class="answer-number"></span>
+            <h3></h3>
+          </div>
+          <button class="copy-button" type="button" title="답변 복사">복사</button>
+        </div>
+        <p class="answer-text"></p>
+        <div class="scriptures"></div>
+      </article>
+    </template>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -15,6 +15,7 @@
     "집회준비": "node --no-warnings scripts/prepare-meeting.mjs",
     "meeting": "node --no-warnings scripts/prepare-meeting.mjs",
     "성구": "node --no-warnings scripts/lookup.mjs",
-    "lookup": "node --no-warnings scripts/lookup.mjs"
+    "lookup": "node --no-warnings scripts/lookup.mjs",
+    "web": "node --no-warnings src/web-server.mjs"
   }
 }
