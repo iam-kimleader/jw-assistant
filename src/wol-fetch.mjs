@@ -1,16 +1,78 @@
 // WOL 문서를 캐시하며 받아오는 모듈
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { setDefaultResultOrder } from 'node:dns';
+import { get } from 'node:https';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 const 캐시디렉토리 = process.env.VERCEL ? join(tmpdir(), 'jw-assistant-wol') : '.cache/wol';
+const 요청헤더 = {
+  'User-Agent': 'Mozilla/5.0',
+  'Accept-Encoding': 'identity',
+};
+
+try {
+  setDefaultResultOrder('ipv4first');
+} catch {
+  // DNS 순서 제어를 지원하지 않는 런타임에서도 기본 fetch 흐름은 계속 사용할 수 있다.
+}
+
+function 오류요약(e) {
+  return [e?.message, e?.cause?.code, e?.cause?.message].filter(Boolean).join(' / ');
+}
+
+async function 기본Fetch(url) {
+  const r = await fetch(url, { headers: 요청헤더 });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return await r.text();
+}
+
+function httpsFetch(url, redirectCount = 0) {
+  return new Promise((resolve, reject) => {
+    const req = get(url, { headers: 요청헤더, timeout: 30000 }, res => {
+      const status = res.statusCode ?? 0;
+      const location = res.headers.location;
+      if ([301, 302, 303, 307, 308].includes(status) && location && redirectCount < 5) {
+        res.resume();
+        resolve(httpsFetch(new URL(location, url).toString(), redirectCount + 1));
+        return;
+      }
+
+      if (status < 200 || status >= 300) {
+        res.resume();
+        reject(new Error(`HTTP ${status}`));
+        return;
+      }
+
+      res.setEncoding('utf8');
+      let html = '';
+      res.on('data', chunk => {
+        html += chunk;
+      });
+      res.on('end', () => resolve(html));
+    });
+
+    req.on('timeout', () => req.destroy(new Error(`요청 시간이 초과되었다: ${url}`)));
+    req.on('error', reject);
+  });
+}
+
+async function 원격문서(url) {
+  try {
+    return await 기본Fetch(url);
+  } catch (fetchError) {
+    try {
+      return await httpsFetch(url);
+    } catch (httpsError) {
+      throw new Error(`${url} 를 받지 못했다 — fetch ${오류요약(fetchError)}; https ${오류요약(httpsError)}`);
+    }
+  }
+}
 
 export async function fetchCached(url, cacheName, cacheDir = 캐시디렉토리) {
   const 경로 = join(cacheDir, cacheName);
   if (existsSync(경로)) return readFileSync(경로, 'utf8');
-  const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-  if (!r.ok) throw new Error(`${url} 를 받지 못했다 — HTTP ${r.status}`);
-  const html = await r.text();
+  const html = await 원격문서(url);
   try {
     mkdirSync(cacheDir, { recursive: true });
     writeFileSync(경로, html, 'utf8');
