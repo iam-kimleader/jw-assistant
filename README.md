@@ -92,3 +92,7 @@ npm run web
 
 Vercel 프로덕션 주소는 `https://jw-assistant-seven.vercel.app`이다. 배포 환경에서는
 Vercel 프로젝트의 `OPENAI_API_KEY` 환경 변수를 사용한다.
+
+## Vercel 자동 배포 검증 기록
+
+2026-08-09에 Vercel GitHub 앱을 `iam-kimleader/jw-assistant` 저장소에만 허용하고, Vercel 프로젝트의 Git 연결을 `main` 브랜치 자동 프로덕션 배포 검증용으로 다시 확인했다.

@@ -122,3 +122,11 @@
 - [x] Task 3 AI가 범위 안에서 고른 특정 성구를 검증하고 화면에 표시하기.
 - [x] Task 4 범위 밖 선택과 AI 실패 시 로컬 본문 기반 폴백 유지하기.
 - [x] Task 5 단위 테스트, 실제 주간 API, GitHub 푸시와 Vercel 배포.
+
+## Vercel GitHub 자동 배포 검증 - 2026-08-09
+
+- [x] GitHub Login Connection을 Chrome에서 확인한다.
+- [x] Vercel GitHub 앱을 `iam-kimleader/jw-assistant` 저장소에만 설치한다.
+- [x] Vercel 프로젝트를 GitHub 저장소에 연결한다.
+- [ ] 검증용 문서 변경을 커밋하고 `main`에 푸시한다.
+- [ ] Vercel 프로덕션 배포가 자동으로 생성되고 `READY`가 되는지 확인한다.

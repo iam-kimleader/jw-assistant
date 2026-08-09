@@ -301,3 +301,10 @@ Vercel 프로덕션 배포 `dpl_FSFpANk7nuK8JbQQxS2B3LbtFjjU`에서 2026년 8월
 AI가 선택 성구를 `예레미야 22:3-4` 같은 범위로 쓰거나 `selectedVerse`를 비워도 답변 본문에 정확한 주소를 쓰는 경우가 있어 두 표기를 모두 검사한다. 어떤 경우든 서버는 로컬 주간 범위에 실제로 포함된 첫 절만 채택하고 다른 책이나 불완전한 주소는 거부한다.
 
 전체 테스트는 172개 중 170개 통과, 기존 2개 스킵, 실패 0개다. 기능 커밋 `2bd33c3`, 검증 보강 커밋 `04fded3`, AI 응답 호환 커밋 `7c01797`을 GitHub `main`에 푸시했다. 최종 Vercel 프로덕션 배포는 `dpl_D5mHjGdWm9W6R4nzGbDDbpf6B5m3`이다. 운영 API의 2026년 8월 3일 주간 응답은 116.9초에 완료됐고 `gpt-5.4-mini`가 영적 보물 2에 예레미야 23:3을 골라 답했다. 노아·홍수·방주 내용은 없었고 주간 읽기 전체 본문도 공개 응답에 남지 않았다.
+
+## 2026-08-09 Vercel GitHub 자동 배포 연결 검증
+
+- Chrome에서 Vercel Authentication 페이지를 확인했으며 GitHub Login Connection이 `iam-kimleader`로 연결되어 있었다.
+- GitHub 앱 설치는 `Only select repositories`를 선택하고 `iam-kimleader/jw-assistant` 저장소 1개만 허용했다.
+- `npx.cmd --yes vercel git connect https://github.com/iam-kimleader/jw-assistant.git` 명령이 `Connected`로 완료되어 Vercel 프로젝트와 GitHub 저장소 연결이 성립했다.
+- 검증 커밋은 기능 동작을 바꾸지 않는 문서 변경으로 만든다.
