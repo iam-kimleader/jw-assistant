@@ -308,3 +308,4 @@ AI가 선택 성구를 `예레미야 22:3-4` 같은 범위로 쓰거나 `selecte
 - GitHub 앱 설치는 `Only select repositories`를 선택하고 `iam-kimleader/jw-assistant` 저장소 1개만 허용했다.
 - `npx.cmd --yes vercel git connect https://github.com/iam-kimleader/jw-assistant.git` 명령이 `Connected`로 완료되어 Vercel 프로젝트와 GitHub 저장소 연결이 성립했다.
 - 검증 커밋은 기능 동작을 바꾸지 않는 문서 변경으로 만든다.
+- 검증 커밋 `c5a2740` 푸시 후 Vercel 프로젝트 API에서 `link.productionBranch`가 `main`이고 최신 프로덕션 배포 `dpl_HBaXgMrm7xJaEJfezPJ3N7Y2dWTd`가 `READY`와 `PROMOTED` 상태임을 확인했다.

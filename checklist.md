@@ -128,5 +128,5 @@
 - [x] GitHub Login Connection을 Chrome에서 확인한다.
 - [x] Vercel GitHub 앱을 `iam-kimleader/jw-assistant` 저장소에만 설치한다.
 - [x] Vercel 프로젝트를 GitHub 저장소에 연결한다.
-- [ ] 검증용 문서 변경을 커밋하고 `main`에 푸시한다.
-- [ ] Vercel 프로덕션 배포가 자동으로 생성되고 `READY`가 되는지 확인한다.
+- [x] 검증용 문서 변경을 커밋하고 `main`에 푸시한다.
+- [x] Vercel 프로덕션 배포가 자동으로 생성되고 `READY`가 되는지 확인한다.
