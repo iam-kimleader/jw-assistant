@@ -58,7 +58,7 @@
 - [x] Task 4 테스트 후 커밋과 GitHub 푸시.
 - [x] Task 5 Vercel 프로젝트 생성과 프로덕션 배포.
 - [x] Task 6 Vercel 함수의 WOL fetch 폴백 추가와 배포 API 검증.
-- [ ] Task 7 Vercel 계정에 GitHub Login Connection을 추가한 뒤 자동 배포 연결.
+- [x] Task 7 Vercel 계정의 GitHub Login Connection과 자동 배포 연결 검증.
 
 ## 회중 성서 연구 서책 수정 — 2026-08-07
 
