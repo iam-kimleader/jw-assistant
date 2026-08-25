@@ -1,5 +1,5 @@
 // 원고 구조체의 성구를 로컬 본문으로만 채우고 모델의 성구 서술을 막는 모듈
-import { parseReference } from './verse-address.mjs';
+import { parseCitation } from './citation-parse.mjs';
 import { createTools } from './prep-service.mjs';
 
 const 자리표시자 = /\{\{성구:([^}]+)\}\}/g;
@@ -62,16 +62,22 @@ export function 모델성구검사(구조체) {
   return { 통과: 위반.length === 0, 위반 };
 }
 
-// parseReference 는 index 를 첫 인자로 받는다 (src/verse-address.mjs:38).
-// createTools 가 만들어 주는 text 는 함수가 아니라 { verse(bookNum, chapter, verse) } 객체다
-// (src/prep-service.mjs:18, src/bible-text.mjs:6). scripts/lookup.mjs 가 text.verse(...) 로 부르는
-// 모양을 그대로 따른다. verse() 는 이미 문자열|null 을 주므로 따로 합칠 것이 없다.
+// 교재가 주는 성구는 「렘 29:12, 13」처럼 약칭·범위·쉼표 목록이다. verse-address.mjs 의
+// parseReference 는 정식 권 이름과 단일 절만 받아 교재 값을 대부분 못 푼다(직접 실측 확인).
+// citation-parse.mjs 의 parseCitation 이 이미 집회 준비 파이프라인에서 이 형태를 풀고 있으므로
+// 그것을 쓴다. createTools 가 만들어 주는 text 는 함수가 아니라 { verse(bookNum, chapter, verse) }
+// 객체다(src/prep-service.mjs:18, src/bible-text.mjs). scripts/lookup.mjs 가 text.verse(...) 로
+// 부르는 모양을 그대로 따른다. 여러 절이면 본문을 이어 붙인다.
 export function 성구읽기만들기(루트) {
   const { index, text } = createTools(루트);
   return 주소 => {
     try {
-      const 참조 = parseReference(index, 주소);
-      return text.verse(참조.book, 참조.chapter, 참조.verse);
+      const 해석 = parseCitation(index, 주소);
+      if (!해석?.성공) return null;
+      const 본문들 = (해석.주소들 ?? [])
+        .map(a => text.verse(a.book, a.chapter, a.verse))
+        .filter(Boolean);
+      return 본문들.length ? 본문들.join(' ') : null;
     } catch {
       return null;
     }
