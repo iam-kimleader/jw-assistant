@@ -86,7 +86,8 @@ npm run web
 
 기본 주소는 `http://localhost:3000`이다. 서버에서 AI 답변을 생성하려면
 `.env.example`에 적힌 `OPENAI_API_KEY`를 실행 환경에 설정한다. 기본 모델은
-`gpt-5.4-mini`이며 `OPENAI_MODEL`로 바꿀 수 있다. 비밀 키는 브라우저 코드나 Git에
+`gpt-5.6-terra`이며 `OPENAI_MODEL`로 바꿀 수 있다. 추론 강도는 `high`이며
+`OPENAI_REASONING_EFFORT`로 바꾼다. 값은 `none`·`minimal`·`low`·`medium`·`high`·`xhigh`·`max` 다. 비밀 키는 브라우저 코드나 Git에
 넣지 않는다. 키가 없거나 API 호출이 실패하면 공식 자료와 로컬 성경 본문으로 만든
 초안을 표시한다.
 

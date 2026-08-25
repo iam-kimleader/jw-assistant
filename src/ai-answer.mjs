@@ -2,7 +2,14 @@
 import { fetchBinary } from './wol-fetch.mjs';
 import { findWeeklyReadingVerse } from './weekly-reading.mjs';
 
-const 기본모델 = 'gpt-5.4-mini';
+const 기본모델 = 'gpt-5.6-terra';
+const 기본강도 = 'high';
+
+// 추론 강도는 요청마다 환경에서 읽는다. 모델 이름을 읽는 방식과 같다.
+// 값은 none·minimal·low·medium·high·xhigh·max 이며 생략하면 API 기본값은 medium 이다.
+function 추론강도() {
+  return process.env.OPENAI_REASONING_EFFORT || 기본강도;
+}
 
 function 폴백(answers, warning) {
   return {
@@ -85,7 +92,7 @@ async function 요청본문(answers, context, model, imageFetchImpl, logger) {
   return {
     model,
     store: false,
-    reasoning: { effort: 'low' },
+    reasoning: { effort: 추론강도() },
     input: [
       {
         role: 'system',

@@ -1,7 +1,7 @@
 // 자유 형식 구조화 출력 OpenAI 호출을 검증하는 테스트
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { 구조화생성 } from './openai-text.mjs';
+import { 구조화생성, 기본모델, 기본강도 } from './openai-text.mjs';
 
 const 스키마 = {
   type: 'object',
@@ -59,6 +59,7 @@ test('요청 본문에 지시와 자료와 스키마가 들어간다', async () 
   assert.match(통째, /둘째 지시/);
   assert.equal(본문.text.format.name, '연설뼈대');
   assert.equal(본문.text.format.strict, true);
+  assert.deepEqual(본문.reasoning, { effort: 'high' });
   assert.deepEqual(본문.text.format.schema, 스키마);
 });
 
@@ -124,4 +125,32 @@ test('예외 메시지에 섞인 키도 가린다', async () => {
 
   assert.ok(!결과.생성.warning.includes('sk-live-secret123'));
   assert.match(결과.생성.warning, /sk-\*\*\*/);
+});
+
+test('추론 강도를 환경 변수로 덮을 수 있다', async () => {
+  const 이전 = process.env.OPENAI_REASONING_EFFORT;
+  process.env.OPENAI_REASONING_EFFORT = 'xhigh';
+  let 본문 = null;
+  try {
+    await 구조화생성({
+      지시: ['가'], 자료: {}, 스키마, 스키마이름: 'x',
+      설정: {
+        apiKey: 'k',
+        fetchImpl: async (url, options) => {
+          본문 = JSON.parse(options.body);
+          return { ok: true, status: 200, json: async () => ({ output: [{ content: [{ type: 'output_text', text: '{"제목":"값"}' }] }] }) };
+        },
+      },
+    });
+  } finally {
+    if (이전 === undefined) delete process.env.OPENAI_REASONING_EFFORT;
+    else process.env.OPENAI_REASONING_EFFORT = 이전;
+  }
+
+  assert.equal(본문.reasoning.effort, 'xhigh');
+});
+
+test('기본 모델은 gpt-5.6-terra 이고 기본 강도는 high 다', () => {
+  assert.equal(기본모델, 'gpt-5.6-terra');
+  assert.equal(기본강도, 'high');
 });

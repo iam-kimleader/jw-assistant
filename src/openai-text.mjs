@@ -1,5 +1,6 @@
 // 자유 형식 구조화 출력을 받는 최소 OpenAI Responses API 호출 모듈
-export const 기본모델 = 'gpt-5.4-mini';
+export const 기본모델 = 'gpt-5.6-terra';
+export const 기본강도 = 'high';
 
 function 출력텍스트(response) {
   for (const item of response.output ?? []) {
@@ -21,10 +22,13 @@ function 폴백(warning) {
 
 export async function 구조화생성({ 지시, 자료, 스키마, 스키마이름, 설정 = {} }) {
   const { apiKey, model = 기본모델, fetchImpl = fetch } = 설정;
+  // 값은 none·minimal·low·medium·high·xhigh·max 다. 생략하면 API 기본값이 medium 이므로 반드시 보낸다.
+  const effort = 설정.effort ?? process.env.OPENAI_REASONING_EFFORT ?? 기본강도;
   if (!apiKey) return 폴백('OpenAI 키가 없어 규칙으로 만들었습니다.');
 
   const body = {
     model,
+    reasoning: { effort },
     input: [
       { role: 'system', content: [{ type: 'input_text', text: 지시.join('\n') }] },
       { role: 'user', content: [{ type: 'input_text', text: JSON.stringify(자료) }] },
