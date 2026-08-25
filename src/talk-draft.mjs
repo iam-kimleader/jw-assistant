@@ -2,6 +2,16 @@
 import { 구조화생성 } from './openai-text.mjs';
 import { 성구채우기, 모델성구검사 } from './talk-verses.mjs';
 
+// 원고 생성은 대사와 단락을 한꺼번에 만들어 뼈대 생성보다 출력이 훨씬 크다.
+// 배포판(Vercel Hobby, 함수 상한 약 37.5초)에서 high 로는 제한 안에 못 끝난다.
+// 뼈대는 high 로 두고 이 호출만 낮춘다. TALK_DRAFT_EFFORT 로 환경마다 맞춘다.
+const 기본원고강도 = 'medium';
+function 원고강도() {
+  // 전역 OPENAI_REASONING_EFFORT 를 일부러 보지 않는다. 그것을 high 로 두면
+  // 이 호출이 다시 함수 제한을 넘어 원고가 통째로 폴백이 된다.
+  return process.env.TALK_DRAFT_EFFORT || 기본원고강도;
+}
+
 const 스키마 = {
   type: 'object',
   properties: {
@@ -79,7 +89,7 @@ export async function 살채우기({ 뼈대, 프로필, 읽기, 설정 = {} }) {
   // 첫 호출이 실패(결과 null)했을 때는 다시 부르지 않는다. 규칙 위반일 때만 한 번 더 부른다.
   for (const 되풀이 of [false, true]) {
     const { 결과, 생성 } = await 구조화생성({
-      지시: 지시만들기(뼈대, 되풀이), 자료, 스키마, 스키마이름: 'talk_draft', 설정,
+      지시: 지시만들기(뼈대, 되풀이), 자료, 스키마, 스키마이름: 'talk_draft', 설정: { ...설정, effort: 원고강도() },
     });
     마지막경고 = 생성.warning;
     if (!결과) break;
