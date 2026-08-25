@@ -98,3 +98,30 @@ test('네트워크 예외를 폴백으로 바꾼다', async () => {
   assert.equal(결과.결과, null);
   assert.match(결과.생성.warning, /ETIMEDOUT/);
 });
+
+test('오류 메시지에 섞인 키는 가려서 돌려준다', async () => {
+  const 결과 = await 구조화생성({
+    지시: ['가'], 자료: {}, 스키마, 스키마이름: 'x',
+    설정: {
+      apiKey: 'k',
+      fetchImpl: async () => ({
+        ok: false, status: 401,
+        json: async () => ({ error: { message: 'Incorrect API key provided: sk-abcDEF123_456-*** at sk-proj-xyz789' } }),
+      }),
+    },
+  });
+
+  assert.ok(!결과.생성.warning.includes('sk-abcDEF123_456'));
+  assert.ok(!결과.생성.warning.includes('sk-proj-xyz789'));
+  assert.match(결과.생성.warning, /sk-\*\*\*/);
+});
+
+test('예외 메시지에 섞인 키도 가린다', async () => {
+  const 결과 = await 구조화생성({
+    지시: ['가'], 자료: {}, 스키마, 스키마이름: 'x',
+    설정: { apiKey: 'k', fetchImpl: async () => { throw new Error('연결 실패 — sk-live-secret123'); } },
+  });
+
+  assert.ok(!결과.생성.warning.includes('sk-live-secret123'));
+  assert.match(결과.생성.warning, /sk-\*\*\*/);
+});

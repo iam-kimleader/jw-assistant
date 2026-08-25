@@ -10,8 +10,13 @@ function 출력텍스트(response) {
   return '';
 }
 
+// 마스킹된 키 조각(sk-***)이라도 오류 메시지에 실려 브라우저까지 가면 안 된다.
+function 키가리기(문장) {
+  return String(문장 ?? '').replace(/sk-[A-Za-z0-9*_-]+/g, 'sk-***');
+}
+
 function 폴백(warning) {
-  return { 결과: null, 생성: { mode: 'fallback', warning } };
+  return { 결과: null, 생성: { mode: 'fallback', warning: 키가리기(warning) } };
 }
 
 export async function 구조화생성({ 지시, 자료, 스키마, 스키마이름, 설정 = {} }) {

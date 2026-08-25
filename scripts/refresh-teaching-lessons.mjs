@@ -40,8 +40,6 @@ for (const 책 of ['읽가', '랑제']) {
   매니페스트[책] = { 제목: 책이름[책], 조회일: 오늘(), 과: await 책수집(책) };
 }
 
-writeFileSync(산출경로, `${JSON.stringify(매니페스트, null, 2)}\n`, 'utf8');
-
 let 미달 = false;
 for (const [책, 최소] of Object.entries(기준선)) {
   const 수 = 매니페스트[책].과.length;
@@ -52,5 +50,14 @@ for (const [책, 최소] of Object.entries(기준선)) {
   }
 }
 
-console.log(`${산출경로} 에 썼다.`);
+// 기준선 검사를 통과했을 때만 쓴다. 먼저 쓰면 망 오류로 일부만 받아도 잘린 파일이
+// 저장소의 정상 매니페스트를 덮어쓴 뒤에야 exit 1 이 나서, 파서가 조용히 얇아지는
+// 것을 막는다는 원칙이 무색해진다.
+if (미달) {
+  console.error('기준선에 못 미쳐 매니페스트를 쓰지 않았다. 기존 파일을 그대로 둔다.');
+} else {
+  writeFileSync(산출경로, `${JSON.stringify(매니페스트, null, 2)}\n`, 'utf8');
+  console.log(`${산출경로} 에 썼다.`);
+}
+
 process.exit(미달 ? 1 : 0);

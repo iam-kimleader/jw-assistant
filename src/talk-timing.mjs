@@ -9,6 +9,23 @@ function 초로(수, 분당글자수) {
   return 수 / (분당글자수 / 60);
 }
 
+const 공백제거 = s => String(s ?? '').replace(/\s/g, '');
+
+// 성구채우기(talk-verses.mjs)가 {{성구:…}} 자리표시자를 대사.말 이나 단락 산문에
+// 이미 로컬 본문으로 바꿔 넣었으면, 그 본문은 대사/단락 글자 수를 셀 때 이미
+// 포함됐다. 성구 배열에서 또 세면 같은 낭독을 두 번 계산한다(렘 29:11 기준 실측
+// 약 22초, 4분 배정의 9%).
+export function 이미포함됨(성구본문, 구조체) {
+  const 대상 = 공백제거(성구본문);
+  if (!대상) return false;
+  for (const 대사 of 구조체.대사 ?? []) if (공백제거(대사.말).includes(대상)) return true;
+  for (const 단락 of 구조체.단락 ?? []) {
+    if (공백제거(단락.예화).includes(대상) || 공백제거(단락.적용).includes(대상)) return true;
+    for (const 요점 of 단락.요점 ?? []) if (공백제거(요점).includes(대상)) return true;
+  }
+  return false;
+}
+
 function 축약된대상(구조체, 순위) {
   const 지울것 = new Set(
     (구조체.축약순서 ?? []).filter(x => x.순위 <= 순위).map(x => x.대상),
@@ -37,6 +54,7 @@ export function 추정초(구조체, 설정 = 기본설정) {
   }
 
   for (const 성구 of 구조체.성구 ?? []) {
+    if (이미포함됨(성구.본문, 구조체)) continue;
     초 += 초로(글자수(성구.본문), 분당글자수 * 성구계수);
   }
 
