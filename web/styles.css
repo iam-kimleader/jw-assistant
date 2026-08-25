@@ -496,7 +496,7 @@ select {
   border-color: #b03030 !important;
 }
 
-.card-reason {
+.service-card span.card-reason {
   color: var(--maroon);
   font-size: 13px;
 }

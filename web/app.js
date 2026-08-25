@@ -267,7 +267,6 @@ const talkState = {
   공개강연카드: null,
   선택배정: null,
   뼈대: null,
-  뼈대생성: null,
   구조체: null,
   산출물: null,
   시간: null,
@@ -284,7 +283,12 @@ function 프로필읽기() {
 }
 
 function 프로필쓰기(프로필) {
-  localStorage.setItem(프로필키, JSON.stringify(프로필));
+  // 사생활 보호 모드 등 저장소가 막힌 브라우저에서도 화면은 계속 돌아야 한다. 저장은 편의 기능이지 필수가 아니다.
+  try {
+    localStorage.setItem(프로필키, JSON.stringify(프로필));
+  } catch {
+    // 저장 실패는 조용히 넘어간다. 프로필은 이번 방문 동안 메모리에 남아 화면 동작에는 지장이 없다.
+  }
 }
 
 function 내려받기(이름, 본문) {
@@ -543,7 +547,6 @@ async function buildTalkOutline() {
     const data = await response.json();
     if (!response.ok || data.error) throw new Error(data.error || '뼈대 생성에 실패했습니다.');
     talkState.뼈대 = data.뼈대;
-    talkState.뼈대생성 = data.생성;
     document.querySelector('#talk-outline-area').hidden = false;
     document.querySelector('#talk-output').hidden = true;
     showTalkError('#talk-outline-warning', data.생성?.warning);

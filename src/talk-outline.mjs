@@ -95,6 +95,8 @@ function 결정론적뼈대(배정, 매니페스트) {
 
 export async function 뼈대만들기({ 배정, 프로필, 매니페스트, 공개강연입력 = null, 설정 = {} }) {
   if (배정.종류 === '공개강연') {
+    const { 통과, 위반 } = 공개강연입력검증(공개강연입력);
+    if (!통과) throw new Error(`공개강연 입력이 부족합니다 — ${위반.join(' ')}`);
     return { 뼈대: 공개강연뼈대(공개강연입력 ?? {}, 매니페스트), 생성: { mode: 'deterministic', warning: '' } };
   }
   if (배정.종류 === '보물연설') {
