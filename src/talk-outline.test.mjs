@@ -66,6 +66,9 @@ test('보물 연설의 출판물 참조가 출처에 남는다', async () => {
   const { 뼈대 } = await 뼈대만들기({ 배정: 보물배정, 프로필, 매니페스트, 설정: 던지는가짜 });
 
   assert.ok(뼈대.출처.some(x => x.제목.includes('「예레」 114면 3항')));
+  // 교재를 받은 날을 모르므로 오늘 날짜를 지어내지 않고 미상으로 남긴다.
+  const 출판물출처 = 뼈대.출처.find(x => x.제목.includes('「예레」 114면 3항'));
+  assert.equal(출판물출처.조회일, '조회일 미상');
 });
 
 test('공개강연은 입력한 소제목을 그대로 옮기고 AI를 부르지 않는다', async () => {
@@ -128,6 +131,10 @@ test('시연은 키가 없으면 결정론적 뼈대를 돌려주고 비어 있�
   assert.equal(생성.mode, 'fallback');
   assert.ok(뼈대.구간.length > 0);
   assert.equal(뼈대.종류, '시연');
+  // 보물연설이 아니어도 지정 요점이 있으면 근거 링크와 조회일을 출처에 남긴다.
+  assert.ok(뼈대.출처.some(x => x.제목 === '「랑제」 3과 친절'));
+  assert.equal(뼈대.출처[0].url, 'https://wol.jw.org/ko/wol/d/r8/lp-ko/1102023303');
+  assert.equal(뼈대.출처[0].조회일, '2026-08-25');
 });
 
 test('시연은 키가 있으면 AI 응답의 구간을 쓴다', async () => {
@@ -148,6 +155,7 @@ test('시연은 키가 있으면 AI 응답의 구간을 쓴다', async () => {
   assert.equal(생성.mode, 'ai');
   assert.equal(뼈대.구간[0].이름, '여는 인사');
   assert.equal(뼈대.설정.상황, '현관');
+  assert.ok(뼈대.출처.some(x => x.제목 === '「랑제」 3과 친절'));
 });
 
 test('공개강연 입력을 검증한다', () => {
