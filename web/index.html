@@ -36,6 +36,7 @@
         <button class="nav-button active" data-view="home" type="button">홈</button>
         <button class="nav-button" data-view="life-ministry" type="button">생활과 봉사</button>
         <button class="nav-button" data-view="watchtower" type="button">파수대 연구</button>
+        <button class="nav-button" data-view="talk" type="button">연설</button>
       </nav>
     </header>
 
@@ -66,10 +67,10 @@
             <strong>봉사인도</strong>
             <span>추후 추가 예정입니다.</span>
           </button>
-          <button class="service-card" disabled type="button">
-            <span class="service-kicker">준비 중</span>
+          <button class="service-card active-card" data-view="talk" type="button">
+            <span class="service-kicker">연설 준비</span>
             <strong>연설</strong>
-            <span>추후 추가 예정입니다.</span>
+            <span>그 주 배정과 공개강연 개요로 원고를 준비합니다.</span>
           </button>
         </div>
       </section>
@@ -102,6 +103,88 @@
           </div>
         </div>
         <div id="watchtower-result" class="result-panel"></div>
+      </section>
+
+      <section id="talk" class="view" aria-labelledby="talk-title">
+        <div class="workspace-head">
+          <div>
+            <p class="eyebrow">연설 준비</p>
+            <h1 id="talk-title">어떤 배정을 준비할까요?</h1>
+          </div>
+          <div class="controls">
+            <label for="talk-week">주간</label>
+            <select id="talk-week"></select>
+          </div>
+        </div>
+
+        <details id="talk-speaker" open>
+          <summary>화자 정보</summary>
+          <div class="speaker-panel">
+            <label>성별
+              <select id="talk-gender">
+                <option>형제</option>
+                <option>자매</option>
+              </select>
+            </label>
+            <label>연령 <input id="talk-age" type="number" min="10" max="110" value="35"></label>
+            <label>임명 <select id="talk-role"></select></label>
+            <label class="checkbox-field"><input id="talk-pioneer" type="checkbox"> 파이오니아</label>
+            <label>스타일 <select id="talk-style"></select></label>
+            <label>분당 글자수 <input id="talk-cpm" type="number" min="150" max="600" value="320"></label>
+            <label class="span-all">문체 견본
+              <textarea id="talk-sample" rows="4" placeholder="잘 된 지난 원고를 붙여넣으십시오."></textarea>
+            </label>
+          </div>
+        </details>
+
+        <div id="talk-assignments" class="service-grid" aria-live="polite"></div>
+
+        <form id="talk-public" hidden>
+          <h2>일요일 공개강연 개요</h2>
+          <div class="speaker-panel">
+            <label>제목 <input id="talk-public-title" required></label>
+            <label>주제 성구 <input id="talk-public-verse" placeholder="마태 6:10"></label>
+            <label>배정 시간(분) <input id="talk-public-minutes" type="number" min="5" max="60" value="30"></label>
+          </div>
+          <div id="talk-public-points" class="speaker-panel"></div>
+          <button id="talk-public-add" class="copy-button" type="button">소제목 칸 추가</button>
+          <p id="talk-public-error" class="status-box warning" hidden></p>
+        </form>
+
+        <div class="controls">
+          <button id="talk-build-outline" class="primary-button" type="button" disabled>뼈대 만들기</button>
+        </div>
+        <p id="talk-error" class="status-box warning" hidden></p>
+
+        <div id="talk-outline-area" class="result-panel" hidden>
+          <h2>뼈대</h2>
+          <p id="talk-outline-warning" class="status-box warning" hidden></p>
+          <table id="talk-outline">
+            <thead><tr><th>구간</th><th>시작(초)</th><th>끝(초)</th><th>목적</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p id="talk-outline-time"></p>
+          <div class="controls">
+            <button id="talk-build-draft" class="primary-button" type="button">원고 만들기</button>
+          </div>
+          <p id="talk-draft-error" class="status-box warning" hidden></p>
+        </div>
+
+        <div id="talk-output" class="result-panel" hidden>
+          <div class="tab-bar" role="tablist">
+            <button class="tab-button active" data-tab="준비원고" type="button">준비용 원고</button>
+            <button class="tab-button" data-tab="낭독대본" type="button">낭독용 대본</button>
+            <button class="tab-button" data-tab="큐카드" type="button">연단 큐카드</button>
+            <button class="tab-button" data-tab="점검표" type="button">자기 점검표</button>
+          </div>
+          <p id="talk-warnings" class="status-box warning" hidden></p>
+          <p id="talk-time-summary" class="status-box" hidden></p>
+          <pre id="talk-text"></pre>
+          <div class="controls">
+            <button id="talk-copy" class="copy-button" type="button">복사</button>
+            <button id="talk-download" class="copy-button" type="button">내려받기</button>
+          </div>
+        </div>
       </section>
     </main>
 

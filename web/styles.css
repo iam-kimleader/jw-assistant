@@ -444,6 +444,122 @@ select {
   border-left: 4px solid var(--gold);
 }
 
+/* 연설 화면 전용 스타일 */
+.speaker-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.speaker-panel label {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.speaker-panel label.checkbox-field {
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.speaker-panel label.span-all {
+  grid-column: 1 / -1;
+}
+
+.speaker-panel input,
+.speaker-panel select,
+.speaker-panel textarea {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+  color: var(--text);
+}
+
+.speaker-panel textarea {
+  min-height: 90px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.field-invalid {
+  border-color: #b03030 !important;
+}
+
+.card-reason {
+  color: var(--maroon);
+  font-size: 13px;
+}
+
+.service-card.selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--blue) inset;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tab-button.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+}
+
+#talk-outline {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#talk-outline th,
+#talk-outline td {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+#talk-outline input {
+  width: 100%;
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+
+#talk-text {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+
 @media (max-width: 960px) {
   .service-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
