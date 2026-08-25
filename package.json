@@ -13,6 +13,7 @@
     "verify": "node --no-warnings scripts/verify-bible.mjs",
     "verify:refs": "node --no-warnings scripts/verify-refs.mjs",
     "refresh:references": "node --no-warnings scripts/refresh-wol-references.mjs",
+    "refresh:teaching-lessons": "node --no-warnings scripts/refresh-teaching-lessons.mjs",
     "집회준비": "node --no-warnings scripts/prepare-meeting.mjs",
     "meeting": "node --no-warnings scripts/prepare-meeting.mjs",
     "성구": "node --no-warnings scripts/lookup.mjs",

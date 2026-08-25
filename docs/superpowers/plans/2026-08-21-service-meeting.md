@@ -53,7 +53,7 @@
 
 - [ ] **Step 1: 픽스처를 만든다**
 
-`tests/fixtures/wol-야외봉사-색인.html` 에 실물 마크업의 함정을 심어 둔다. 소제목 세 개, 하위 항목 하나, 링크 없는 소제목 하나다.
+`tests/fixtures/wol-야외봉사-색인.html` 에 실물 마크업의 함정을 심어 둔다. 소제목 네 개, 하위 항목 하나, 링크 없는 소제목 하나다. 넷째 소제목은 실물의 함정을 담는다. 라벨 안에 성구 표기가 있고 그 성구가 그 자체로 앵커다. 색인 777개 중 28개가 이 형태다.
 
 ```html
 <article class="article" id="article">
@@ -62,6 +62,7 @@
 <p id="p27" data-pid="27" class="su">관심이 자라게 함: <a href="/ko/wol/pc/r8/lp-ko/1200272149/23/0">파19.07 15-16;</a><a href="/ko/wol/pc/r8/lp-ko/1200272149/23/2"> 파16.08 27-28</a></p>
 <p id="p31" data-pid="31" class="su">개인적 목표: <a href="/ko/wol/pc/r8/lp-ko/1200272149/12/0">파21.08 24-25</a></p>
 <p id="p32" data-pid="32" class="sv">도달하기 위해 받을 수 있는 도움: <a href="/ko/wol/pc/r8/lp-ko/1200272149/12/4">파94 9/15 14-15</a></p>
+<p id="p35" data-pid="35" class="su">구원을 위한 “공개적 선언” (<a href="/ko/wol/bible/nwtsty/books/45/10#v45-10-10">롬 10:10</a>): <a href="/ko/wol/pc/r8/lp-ko/1200272149/30/0">감 209</a></p>
 <p id="p40" data-pid="40" class="su">게을리하지 않음: 통-1 98-99</p>
 </article>
 ```
@@ -82,11 +83,23 @@ const html = readFileSync('tests/fixtures/wol-야외봉사-색인.html', 'utf8')
 test('소제목과 하위 항목을 모두 주제로 뽑는다', () => {
   const { 주제들, 통계 } = parseTopicIndex(html);
 
-  assert.equal(통계.소제목, 3);
+  assert.equal(통계.소제목, 4);
   assert.equal(통계.하위, 1);
-  assert.equal(통계.링크, 4);
+  assert.equal(통계.링크, 5);
   assert.deepEqual(Object.keys(주제들).sort(), [
-    '개인적 목표', '게을리하지 않음', '관심이 자라게 함', '도달하기 위해 받을 수 있는 도움',
+    '개인적 목표', '게을리하지 않음', '관심이 자라게 함', '구원을 위한 “공개적 선언” (롬 10:10)',
+    '도달하기 위해 받을 수 있는 도움',
+  ]);
+});
+
+test('라벨 안의 성구 표기를 잘라먹지 않는다', () => {
+  const { 주제들 } = parseTopicIndex(html);
+
+  // 콜론으로 자르면 「구원을 위한 “공개적 선언” (롬 10」이 되고
+  // 첫 <a> 로 자르면 「구원을 위한 “공개적 선언” (」이 된다. 둘 다 라벨을 망가뜨린다.
+  assert.ok(주제들['구원을 위한 “공개적 선언” (롬 10:10)']);
+  assert.deepEqual(주제들['구원을 위한 “공개적 선언” (롬 10:10)'].참고, [
+    { 표시: '감 209', pc: '/ko/wol/pc/r8/lp-ko/1200272149/30/0' },
   ]);
 });
 
@@ -142,6 +155,17 @@ function 링크들(본문) {
   return 결과;
 }
 
+// 라벨은 첫 pc 앵커 앞까지다.
+// 콜론으로 자르면 「… (롬 10:10)」 같은 라벨이 「… (롬 10」에서 잘리고,
+// 첫 <a> 로 자르면 그 성구 자체가 앵커라 「… (」에서 잘린다.
+// pc 링크가 없는 항목만 첫 콜론으로 자른다.
+function 라벨뽑기(본문) {
+  const pc = 본문.search(/<a\b[^>]*href="[^"]*\/wol\/pc\//);
+  const 앞 = pc >= 0 ? 본문.slice(0, pc) : 본문;
+  const 글 = htmlToText(앞).trim().replace(/:\s*$/, '').trim();
+  return pc >= 0 ? 글 : 글.split(':')[0].trim();
+}
+
 export function parseTopicIndex(html) {
   const 주제들 = {};
   let 소제목 = 0;
@@ -155,8 +179,7 @@ export function parseTopicIndex(html) {
     const 하 = classes.includes('sv');
     if (!소 && !하) continue;
 
-    const 전체 = htmlToText(m[2]);
-    const 라벨 = 전체.split(':')[0].trim();
+    const 라벨 = 라벨뽑기(m[2]);
     if (!라벨) continue;
 
     const 참고 = 링크들(m[2]);
@@ -177,7 +200,7 @@ export function parseTopicIndex(html) {
 - [ ] **Step 5: 테스트가 통과하는지 확인한다**
 
 Run: `npm test -- src/service-topics.test.mjs`
-Expected: PASS 4개.
+Expected: PASS 5개.
 
 - [ ] **Step 6: 커밋한다**
 
@@ -301,7 +324,7 @@ Expected: `소제목 295개, 하위 482개, 링크 2591개를 뽑았다.` 와 �
 - [ ] **Step 7: 테스트가 통과하는지 확인한다**
 
 Run: `npm test -- src/service-topics.test.mjs`
-Expected: PASS 6개.
+Expected: PASS 7개.
 
 - [ ] **Step 8: 커밋한다**
 

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "web/styles.css"
+        ],
+        "createdAt": "2026-08-25T07:10:51.829Z",
+        "reason": "user confirmed: 브랜치 이전부터 있던 기존 화면 스타일이고 형제님이 그대로 두라고 지시함. 색이 의미별로 나뉨 (금색=출판물, 파랑=성구)"
+      }
+    ]
+  }
+}

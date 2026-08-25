@@ -1,0 +1,55 @@
+// 자유 형식 구조화 출력을 받는 최소 OpenAI Responses API 호출 모듈
+export const 기본모델 = 'gpt-5.6-terra';
+export const 기본강도 = 'high';
+
+function 출력텍스트(response) {
+  for (const item of response.output ?? []) {
+    for (const content of item.content ?? []) {
+      if (content.type === 'output_text' && content.text) return content.text;
+    }
+  }
+  return '';
+}
+
+// 마스킹된 키 조각(sk-***)이라도 오류 메시지에 실려 브라우저까지 가면 안 된다.
+function 키가리기(문장) {
+  return String(문장 ?? '').replace(/sk-[A-Za-z0-9*_-]+/g, 'sk-***');
+}
+
+function 폴백(warning) {
+  return { 결과: null, 생성: { mode: 'fallback', warning: 키가리기(warning) } };
+}
+
+export async function 구조화생성({ 지시, 자료, 스키마, 스키마이름, 설정 = {} }) {
+  const { apiKey, model = 기본모델, fetchImpl = fetch } = 설정;
+  // 값은 none·minimal·low·medium·high·xhigh·max 다. 생략하면 API 기본값이 medium 이므로 반드시 보낸다.
+  const effort = 설정.effort ?? process.env.OPENAI_REASONING_EFFORT ?? 기본강도;
+  if (!apiKey) return 폴백('OpenAI 키가 없어 규칙으로 만들었습니다.');
+
+  const body = {
+    model,
+    reasoning: { effort },
+    input: [
+      { role: 'system', content: [{ type: 'input_text', text: 지시.join('\n') }] },
+      { role: 'user', content: [{ type: 'input_text', text: JSON.stringify(자료) }] },
+    ],
+    text: { format: { type: 'json_schema', name: 스키마이름, strict: true, schema: 스키마 } },
+  };
+
+  try {
+    const response = await fetchImpl('https://api.openai.com/v1/responses', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(120_000),
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      const detail = String(payload.error?.message ?? '').slice(0, 200);
+      return 폴백(`OpenAI API ${response.status}${detail ? ` (${detail})` : ''}`);
+    }
+    return { 결과: JSON.parse(출력텍스트(payload)), 생성: { mode: 'ai', warning: '' } };
+  } catch (e) {
+    return 폴백(`OpenAI 호출 실패 — ${e.message}`);
+  }
+}
