@@ -25,8 +25,10 @@ function 폴백(warning) {
 const 이름규칙 = /^[a-zA-Z0-9_-]+$/;
 
 // 서버리스 함수가 먼저 죽으면 폴백조차 못 돌려주고 연결이 끊긴다. 실제로 배포판에서 겪었다.
-// 그래서 요청 제한을 함수 제한보다 짧게 잡는다. OPENAI_TIMEOUT_MS 로 환경마다 맞춘다.
-const 기본제한 = 30_000;
+// 그래서 요청 제한을 함수 제한보다 짧게 잡는다. Vercel Hobby 플랜의 함수 상한이 60초이고
+// vercel.json 이 maxDuration 을 60으로 잡았으므로, 응답을 정리할 여유 5초를 빼고 55초로 둔다.
+// 로컬은 제한이 없으므로 OPENAI_TIMEOUT_MS 로 더 길게 잡아도 된다.
+const 기본제한 = 55_000;
 function 제한시간() {
   const 값 = Number(process.env.OPENAI_TIMEOUT_MS);
   return Number.isFinite(값) && 값 > 0 ? 값 : 기본제한;
