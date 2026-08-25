@@ -3,12 +3,10 @@ import { 구조화생성 } from './openai-text.mjs';
 import { 성구채우기, 모델성구검사 } from './talk-verses.mjs';
 
 // 원고 생성은 대사와 단락을 한꺼번에 만들어 뼈대 생성보다 출력이 훨씬 크다.
-// 배포판(Vercel Hobby, 함수 상한 약 37.5초)에서 high 로는 제한 안에 못 끝난다.
-// 뼈대는 high 로 두고 이 호출만 낮춘다. TALK_DRAFT_EFFORT 로 환경마다 맞춘다.
-const 기본원고강도 = 'medium';
+// Vercel 함수 상한이 60초였을 때는 high 로 제한 안에 못 끝나 medium 으로 낮췄었다.
+// 프로젝트 설정을 300초로 올린 뒤 high 로 되돌렸다. TALK_DRAFT_EFFORT 로 환경마다 맞춘다.
+const 기본원고강도 = 'high';
 function 원고강도() {
-  // 전역 OPENAI_REASONING_EFFORT 를 일부러 보지 않는다. 그것을 high 로 두면
-  // 이 호출이 다시 함수 제한을 넘어 원고가 통째로 폴백이 된다.
   return process.env.TALK_DRAFT_EFFORT || 기본원고강도;
 }
 
