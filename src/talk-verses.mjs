@@ -54,13 +54,30 @@ export function 성구채우기(구조체, 읽기) {
 
 export function 모델성구검사(구조체) {
   const 위반 = [];
-  for (const 대사 of 구조체.대사 ?? []) {
-    const 말 = String(대사.말 ?? '');
-    for (const m of 말.matchAll(긴인용)) {
-      위반.push(`모델이 성구 문장을 직접 썼다 — ${m[1].slice(0, 40)}`);
+  const 단락위반 = new Set();
+
+  (구조체.대사 ?? []).forEach((대사, i) => {
+    for (const m of String(대사.말 ?? '').matchAll(긴인용)) {
+      위반.push(`대사 ${i + 1} — 모델이 성구 문장을 직접 썼다 — ${m[1].slice(0, 40)}`);
     }
-  }
-  return { 통과: 위반.length === 0, 위반 };
+  });
+
+  // 단락.소제목 은 교재·개요에서 온 원문이라 모델이 쓴 게 아니므로 검사하지 않는다.
+  (구조체.단락 ?? []).forEach((단락, i) => {
+    const 자리들 = [
+      ...(단락.요점 ?? []).map(문장 => ['요점', 문장]),
+      ['예화', 단락.예화 ?? ''],
+      ['적용', 단락.적용 ?? ''],
+    ];
+    for (const [자리, 문장] of 자리들) {
+      for (const m of String(문장).matchAll(긴인용)) {
+        위반.push(`단락 ${i + 1} ${자리} — 모델이 성구 문장을 직접 썼다 — ${m[1].slice(0, 40)}`);
+        단락위반.add(i);
+      }
+    }
+  });
+
+  return { 통과: 위반.length === 0, 위반, 단락위반: [...단락위반] };
 }
 
 // 교재가 주는 성구는 「렘 29:12, 13」처럼 약칭·범위·쉼표 목록이다. verse-address.mjs 의
