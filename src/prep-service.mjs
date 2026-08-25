@@ -38,7 +38,7 @@ function 날짜객체(dateText) {
   return d;
 }
 
-async function weekDocuments(dateText) {
+export async function weekDocuments(dateText) {
   const date = 날짜객체(dateText);
   const { year, week } = isoWeek(date);
   const 주페이지URL = weekPageUrl(year, week);
