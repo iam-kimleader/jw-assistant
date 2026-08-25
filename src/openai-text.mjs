@@ -20,7 +20,14 @@ function 폴백(warning) {
   return { 결과: null, 생성: { mode: 'fallback', warning: 키가리기(warning) } };
 }
 
+// OpenAI 는 text.format.name 을 ^[a-zA-Z0-9_-]+$ 로만 받는다. 한국어 이름을 주면 400 이다.
+// 실제 배포판에서 겪은 일이라 여기서 막는다. 테스트는 가짜 fetch 를 쓰므로 이 검사가 없으면 안 드러난다.
+const 이름규칙 = /^[a-zA-Z0-9_-]+$/;
+
 export async function 구조화생성({ 지시, 자료, 스키마, 스키마이름, 설정 = {} }) {
+  if (!이름규칙.test(String(스키마이름 ?? ''))) {
+    return 폴백(`스키마 이름은 영문·숫자·밑줄·붙임표만 쓴다 — ${스키마이름}`);
+  }
   const { apiKey, model = 기본모델, fetchImpl = fetch } = 설정;
   // 값은 none·minimal·low·medium·high·xhigh·max 다. 생략하면 API 기본값이 medium 이므로 반드시 보낸다.
   const effort = 설정.effort ?? process.env.OPENAI_REASONING_EFFORT ?? 기본강도;

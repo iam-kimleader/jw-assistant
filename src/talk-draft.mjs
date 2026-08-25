@@ -77,7 +77,7 @@ export async function 살채우기({ 뼈대, 프로필, 읽기, 설정 = {} }) {
   let 마지막경고 = '';
   for (const 되풀이 of [false, true]) {
     const { 결과, 생성 } = await 구조화생성({
-      지시: 지시만들기(뼈대, 되풀이), 자료, 스키마, 스키마이름: '연설원고', 설정,
+      지시: 지시만들기(뼈대, 되풀이), 자료, 스키마, 스키마이름: 'talk_draft', 설정,
     });
     마지막경고 = 생성.warning;
     if (!결과) break;

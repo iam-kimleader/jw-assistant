@@ -174,7 +174,7 @@ export async function 뼈대만들기({ 배정, 프로필, 매니페스트, 공�
     additionalProperties: false,
   };
 
-  const { 결과, 생성 } = await 구조화생성({ 지시, 자료, 스키마, 스키마이름: '연설뼈대', 설정 });
+  const { 결과, 생성 } = await 구조화생성({ 지시, 자료, 스키마, 스키마이름: 'talk_outline', 설정 });
   if (!결과 || !(결과.구간 ?? []).length) {
     const 뼈대 = 결정론적뼈대(배정, 매니페스트);
     return { 뼈대, 생성: { mode: 'fallback', warning: 생성.warning || '구간을 받지 못했습니다.' } };

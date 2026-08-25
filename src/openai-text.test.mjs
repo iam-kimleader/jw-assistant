@@ -44,7 +44,7 @@ test('성공하면 파싱된 객체를 돌려준다', async () => {
 test('요청 본문에 지시와 자료와 스키마가 들어간다', async () => {
   let 본문 = null;
   await 구조화생성({
-    지시: ['첫 지시', '둘째 지시'], 자료: { 나: 1 }, 스키마, 스키마이름: '연설뼈대',
+    지시: ['첫 지시', '둘째 지시'], 자료: { 나: 1 }, 스키마, 스키마이름: 'talk_outline',
     설정: {
       apiKey: 'k',
       fetchImpl: async (url, options) => {
@@ -57,7 +57,7 @@ test('요청 본문에 지시와 자료와 스키마가 들어간다', async () 
   const 통째 = JSON.stringify(본문);
   assert.match(통째, /첫 지시/);
   assert.match(통째, /둘째 지시/);
-  assert.equal(본문.text.format.name, '연설뼈대');
+  assert.equal(본문.text.format.name, 'talk_outline');
   assert.equal(본문.text.format.strict, true);
   assert.deepEqual(본문.reasoning, { effort: 'high' });
   assert.deepEqual(본문.text.format.schema, 스키마);
@@ -153,4 +153,17 @@ test('추론 강도를 환경 변수로 덮을 수 있다', async () => {
 test('기본 모델은 gpt-5.6-terra 이고 기본 강도는 high 다', () => {
   assert.equal(기본모델, 'gpt-5.6-terra');
   assert.equal(기본강도, 'high');
+});
+
+test('한국어 스키마 이름은 호출 전에 막는다', async () => {
+  let 불렸다 = false;
+  const 결과 = await 구조화생성({
+    지시: ['가'], 자료: {}, 스키마, 스키마이름: '연설뼈대',
+    설정: { apiKey: 'k', fetchImpl: async () => { 불렸다 = true; } },
+  });
+
+  // OpenAI 는 text.format.name 을 ^[a-zA-Z0-9_-]+$ 로만 받는다. 배포판에서 400 을 겪었다.
+  assert.equal(불렸다, false);
+  assert.equal(결과.결과, null);
+  assert.match(결과.생성.warning, /영문/);
 });
