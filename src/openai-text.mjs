@@ -24,6 +24,14 @@ function 폴백(warning) {
 // 실제 배포판에서 겪은 일이라 여기서 막는다. 테스트는 가짜 fetch 를 쓰므로 이 검사가 없으면 안 드러난다.
 const 이름규칙 = /^[a-zA-Z0-9_-]+$/;
 
+// 서버리스 함수가 먼저 죽으면 폴백조차 못 돌려주고 연결이 끊긴다. 실제로 배포판에서 겪었다.
+// 그래서 요청 제한을 함수 제한보다 짧게 잡는다. OPENAI_TIMEOUT_MS 로 환경마다 맞춘다.
+const 기본제한 = 30_000;
+function 제한시간() {
+  const 값 = Number(process.env.OPENAI_TIMEOUT_MS);
+  return Number.isFinite(값) && 값 > 0 ? 값 : 기본제한;
+}
+
 export async function 구조화생성({ 지시, 자료, 스키마, 스키마이름, 설정 = {} }) {
   if (!이름규칙.test(String(스키마이름 ?? ''))) {
     return 폴백(`스키마 이름은 영문·숫자·밑줄·붙임표만 쓴다 — ${스키마이름}`);
@@ -48,7 +56,7 @@ export async function 구조화생성({ 지시, 자료, 스키마, 스키마이�
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(120_000),
+      signal: AbortSignal.timeout(제한시간()),
     });
     const payload = await response.json();
     if (!response.ok) {
