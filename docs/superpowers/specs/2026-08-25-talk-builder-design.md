@@ -137,7 +137,7 @@
 ### ① 배정 고르기
 
 ```
-GET /api/talk/assignments?date=YYYY-MM-DD
+GET /api/talk-assignments?date=YYYY-MM-DD
 ```
 
 그 주 교재를 받아 배정 항목을 카드로 돌려준다. 각 카드는 번호, 제목, 시간, 봉사 형태,
@@ -176,7 +176,7 @@ GET /api/talk/assignments?date=YYYY-MM-DD
 ### ③ 뼈대 확인
 
 ```
-POST /api/talk/outline
+POST /api/talk-outline
 ```
 
 구성만 돌려준다. 대사는 아직 쓰지 않는다. 1번 보물 연설과 공개강연은 소제목이 이미
@@ -193,7 +193,7 @@ POST /api/talk/outline
 ### ④ 살 채우기
 
 ```
-POST /api/talk/draft
+POST /api/talk-draft
 ```
 
 확정된 뼈대를 받아 대사를 채우고 원고 구조체 하나를 돌려준다. 화면은 그 구조체에서
@@ -230,7 +230,12 @@ POST /api/talk/draft
 매니페스트에서 오고 매니페스트는 저장소에 커밋된다. 지정 요점의 `/pc/` 해석이
 실패해도 매니페스트의 과 단위 요점으로 대신할 수 있다. 전체 실패로 번지지 않는다.
 
-따라서 `api/*.js` 어댑터를 만들고 `vercel.json`에 경로를 더한다.
+따라서 `api/*.js` 어댑터를 만들고 `vercel.json`에 `/talk` 화면 경로를 더한다.
+
+API 경로는 평평하게 둔다. Vercel은 `api/<이름>.js`를 `/api/<이름>`으로 자동 연결하는데,
+`/api/talk/assignments`처럼 중첩하려면 `api/talk/assignments.js`가 되어야 하고 그러면
+`vercel.json`의 `"api/*.js"` 글로브가 그 파일을 놓쳐 `core/bible/**`가 함수에 실리지
+않는다. 성구를 읽지 못하게 된다.
 
 ## 6. 산출물 네 개를 한 번에 만든다
 
@@ -408,6 +413,7 @@ AI에게 시간을 묻지 않는다. 대사와 단락의 글자 수를 세어 �
 | `src/talk-draft.mjs` | 대사 생성과 성구 치환 |
 | `src/talk-render.mjs` | 구조체에서 산출물 네 개를 만든다 |
 | `src/talk-timing.mjs` | 낭독 시간 계산과 축약 제안 |
+| `src/openai-text.mjs` | 자유 형식 구조화 출력 전용 최소 OpenAI 호출 |
 | `api/talk-assignments.js` | Vercel 어댑터 |
 | `api/talk-outline.js` | Vercel 어댑터 |
 | `api/talk-draft.js` | Vercel 어댑터 |
@@ -420,7 +426,15 @@ AI에게 시간을 묻지 않는다. 대사와 단락의 글자 수를 세어 �
 - `src/verse-address.mjs`의 `loadIndex`와 `parseReference`.
 - `src/bible-text.mjs`의 `createTextReader`.
 - `src/wol-week.mjs`의 주 계산.
-- `src/openai-text.mjs`의 자유 형식 호출. 봉사인도가 만든 것을 두 번째로 쓴다.
+### 봉사인도 설계가 예고했으나 아직 없는 것
+
+`src/openai-text.mjs`는 2026-08-21 봉사인도 설계가 만들기로 한 파일이지만 아직
+존재하지 않는다. 봉사인도는 색인 파서까지만 구현되었다. 따라서 이 기능이 그 파일을
+처음 만든다. 봉사인도가 나중에 이어서 쓸 수 있도록 특정 기능에 묶이지 않은
+자유 형식 구조화 출력 호출로 만든다.
+
+`src/ai-answer.mjs`의 OpenAI 호출은 답변 배열 전용이라 그대로 쓸 수 없다. 그 파일은
+건드리지 않는다. 15개 답변 생성이라는 검증된 운영 경로이기 때문이다.
 
 ### 손대는 기존 파일
 
