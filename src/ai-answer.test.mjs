@@ -48,11 +48,11 @@ test('질문과 삽화를 구조화된 Responses API 요청으로 보낸다', as
     },
   });
 
-  assert.equal(request.model, 'gpt-5.4-mini');
+  assert.equal(request.model, 'gpt-5.6-terra');
   assert.equal(request.text.format.type, 'json_schema');
   assert.equal(request.text.format.strict, true);
   assert.deepEqual(request.text.format.schema.properties.answers.items.required, ['id', 'answer', 'selectedVerse']);
-  assert.equal(request.reasoning.effort, 'low');
+  assert.equal(request.reasoning.effort, 'high');
   const textInput = request.input[1].content.find(item => item.type === 'input_text').text;
   assert.match(textInput, /홍수 전의 문명은 발달했지만 사회는 폭력과 악으로 가득했습니다/);
   assert.match(textInput, /https:\/\/wol\.jw\.org\/ko\/wol\/d\/r8\/lp-ko\/2002161#p4/);
@@ -114,7 +114,7 @@ test('답변이 많으면 작은 묶음으로 나눠 병렬 생성한다', async
   assert.equal(calls, 3);
   assert.equal(result.answers.length, 7);
   assert.equal(result.answers[6].답변, 'q-7 생성 답변입니다.');
-  assert.deepEqual(result.generation, { mode: 'ai', model: 'gpt-5.4-mini', batches: 3 });
+  assert.deepEqual(result.generation, { mode: 'ai', model: 'gpt-5.6-terra', batches: 3 });
 });
 
 test('영적 보물 질문은 주간 범위 본문을 보내고 범위 안의 선택 성구를 표시한다', async () => {
