@@ -1,10 +1,11 @@
 // 연설 세 API가 공통으로 부르는 조립 계층
-import { join } from 'node:path';
 import { fetchCached } from './wol-fetch.mjs';
 import { parseTalkAssignments } from './talk-assignments.mjs';
 import { parseMinistryMeeting } from './ministry-meeting.mjs';
 import { 배정에게이트적용, 자격판정, 기본프로필 } from './talk-profile.mjs';
-import { loadTeachingLessons } from './teaching-lessons.mjs';
+// 매니페스트를 실행 시점에 경로로 읽으면 Vercel 번들러가 그 파일을 못 보고 빼먹는다.
+// 실제로 배포판에서 ENOENT 가 났다. 정적 import 는 번들러가 추적하므로 로컬과 배포판이 같게 돈다.
+import 교본매니페스트 from './teaching-lessons.json' with { type: 'json' };
 import { 뼈대만들기 } from './talk-outline.mjs';
 import { 살채우기 } from './talk-draft.mjs';
 import { renderTalk } from './talk-render.mjs';
@@ -16,7 +17,7 @@ import { articleUrl } from './wol-week.mjs';
 export function 환경만들기(루트) {
   return {
     루트,
-    매니페스트: loadTeachingLessons(join(루트, 'src', 'teaching-lessons.json')),
+    매니페스트: 교본매니페스트,
     읽기: 성구읽기만들기(루트),
     설정: { apiKey: process.env.OPENAI_API_KEY ?? '', model: process.env.OPENAI_MODEL || undefined },
   };
