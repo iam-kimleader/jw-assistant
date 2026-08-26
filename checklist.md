@@ -130,3 +130,32 @@
 - [x] Vercel 프로젝트를 GitHub 저장소에 연결한다.
 - [x] 검증용 문서 변경을 커밋하고 `main`에 푸시한다.
 - [x] Vercel 프로덕션 배포가 자동으로 생성되고 `READY`가 되는지 확인한다.
+
+## 웹 화면 React + Tailwind + shadcn/ui 이전 — 2026-08-26
+
+계획 문서는 `docs/superpowers/plans/2026-08-26-web-react-migration.md` 에 있다.
+
+- [x] Task 0 바닐라 CSS 의 간격·글자 계단을 토큰으로 정리 (이전 작업에 그대로 얹기 위함)
+- [x] Task 1 Vite + React + TypeScript 골조, Tailwind v4, shadcn/ui 초기화
+- [x] Task 2 색·글자·줄간격 토큰을 Tailwind `@theme` 로 옮기고 shadcn 의미 토큰을 앱 팔레트에 맞춤
+- [x] Task 3 껍데기(상단 막대·내비·react-router)와 홈 화면
+- [x] Task 4 `web-server.mjs` 를 `web/dist` 기준으로 바꾸고 SPA 폴백 추가
+- [x] Task 5 생활과 봉사 · 파수대 연구 화면 (답변 카드, 성구 상자, 참고 출판물, 진행률 게이지)
+  - 두 화면은 부르는 API 만 달라 `StudyPrep` 하나로 그린다.
+  - 소제목·상위질문 머리말 규칙은 `answer-grouping.mjs` 로 떼어 내 시험 7개를 붙였다.
+  - `web-reference.test.mjs` 를 `AnswerCard.tsx` 대상으로 고쳐 다시 통과시켰다.
+- [x] Task 6 연설 화면 (화자 정보, 배정 카드, 공개강연 입력, 뼈대 표, 산출물 탭)
+  - `공개강연입력검증` 을 `talk-input-check.mjs` 로 떼어 서버·브라우저가 한 벌만 쓰게 했다.
+  - 기본프로필·스타일목록·임명목록도 `talk-profile.mjs` 를 직접 가져다 쓴다. 베낀 값이 없다.
+  - 시간·파일이름 규칙은 `talk-format.mjs` 로 떼어 내 시험 9개를 붙였다.
+- [x] Task 7 낡은 바닐라 파일 제거 (`app.js`, `styles.css`). `progress.js` 는 순수 함수라 남겼다.
+- [x] Task 8 `vercel.json` 을 빌드 산출물 기준으로 고치기
+  - `buildCommand` · `outputDirectory`(`web/dist`) 추가, 번들된 파일의 rewrite 제거.
+  - `asset/` 을 Vite public 폴더로 삼아 OG 이미지가 산출물 루트로 복사된다. rewrite 가 필요 없다.
+- [~] Task 9 `web-reference.test.mjs` · `web-progress.test.mjs` · `web-og.test.mjs` 를 새 구조에 맞춰 고쳤다.
+  - 다만 **아직 문자열 대조다.** 진짜 컴포넌트 시험은 vitest + testing-library 를 들여야 한다.
+  - 순수 함수 쪽은 제대로 덮었다 — `answer-grouping` 7개, `talk-format` 9개.
+- [x] Task 10 전체 시험·빌드·타입 검사, 화면 검증
+  - `npm run smoke:web` 을 만들었다. Vite SSR 로 다섯 화면을 실제로 마운트해 본다.
+  - 라우트를 `React.lazy` 로 쪼갰다. 첫 화면이 gzip 153KB → 93KB 로 줄었다.
+  - **브라우저 육안 확인은 여전히 못 했다.** 확장이 localhost 에 못 붙는다.
