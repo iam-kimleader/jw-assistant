@@ -159,8 +159,8 @@ export default function Talk() {
 
   return (
     <section aria-labelledby="talk-title">
-      <div className="mb-6 flex flex-col items-stretch justify-between gap-6 md:flex-row md:items-end">
-        <div>
+      <div className="mb-6 flex flex-col flex-wrap items-stretch justify-between gap-6 md:flex-row md:items-end">
+        <div className="min-w-0">
           <p className="mb-2 text-xs font-bold text-brand-dark uppercase">연설 준비</p>
           <h1 id="talk-title" className="text-3xl leading-tight">
             어떤 배정을 준비할까요?
@@ -169,7 +169,7 @@ export default function Talk() {
         <div
           className={cn(
             판넬,
-            'flex flex-col items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
+            'flex min-w-0 flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
           )}
         >
           <WeekPicker id="talk-week" 주간들={주간들} 값={고른주} 변경={set고른주} />

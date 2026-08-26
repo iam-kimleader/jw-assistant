@@ -22,11 +22,11 @@ export default function WeekPicker({
 }) {
   return (
     <>
-      <Label htmlFor={id} className="text-sm font-bold text-ink-muted">
+      <Label htmlFor={id} className="shrink-0 text-sm font-bold text-ink-muted">
         주간
       </Label>
       <Select value={값} onValueChange={다음 => 변경(다음 ?? '')}>
-        <SelectTrigger id={id} className="min-h-11 w-full min-w-[min(250px,100%)] sm:w-auto">
+        <SelectTrigger id={id} className="min-h-11 w-full min-w-0 sm:w-[280px]">
           <SelectValue placeholder="주간을 고르세요" />
         </SelectTrigger>
         <SelectContent>

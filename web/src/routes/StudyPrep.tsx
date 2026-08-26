@@ -58,8 +58,8 @@ export default function StudyPrep({
 
   return (
     <section aria-labelledby={`${종류}-title`}>
-      <div className="mb-6 flex flex-col items-stretch justify-between gap-6 md:flex-row md:items-end">
-        <div>
+      <div className="mb-6 flex flex-col flex-wrap items-stretch justify-between gap-6 md:flex-row md:items-end">
+        <div className="min-w-0">
           <p className="mb-2 text-xs font-bold text-brand-dark uppercase">{머리말}</p>
           <h1 id={`${종류}-title`} className="text-3xl leading-tight">
             {제목}
@@ -68,7 +68,7 @@ export default function StudyPrep({
         <div
           className={cn(
             판넬,
-            'flex flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
+            'flex min-w-0 flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
           )}
         >
           <WeekPicker id={`${종류}-week`} 주간들={주간들} 값={고른주} 변경={set고른주} />
