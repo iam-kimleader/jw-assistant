@@ -3,6 +3,8 @@
   "regions": [
     "icn1"
   ],
+  "buildCommand": "npm run build:web",
+  "outputDirectory": "web/dist",
   "functions": {
     "api/*.js": {
       "includeFiles": "core/bible/**"
@@ -10,36 +12,16 @@
   },
   "rewrites": [
     {
-      "source": "/styles.css",
-      "destination": "/web/styles.css"
-    },
-    {
-      "source": "/app.js",
-      "destination": "/web/app.js"
-    },
-    {
-      "source": "/progress.js",
-      "destination": "/web/progress.js"
-    },
-    {
-      "source": "/og-image-jw-assistant.png",
-      "destination": "/asset/og-image-jw-assistant.png"
-    },
-    {
-      "source": "/",
-      "destination": "/web/index.html"
-    },
-    {
       "source": "/life-ministry",
-      "destination": "/web/index.html"
+      "destination": "/index.html"
     },
     {
       "source": "/watchtower",
-      "destination": "/web/index.html"
+      "destination": "/index.html"
     },
     {
       "source": "/talk",
-      "destination": "/web/index.html"
+      "destination": "/index.html"
     }
   ]
 }
