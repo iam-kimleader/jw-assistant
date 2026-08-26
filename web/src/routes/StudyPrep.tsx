@@ -1,0 +1,100 @@
+// 생활과 봉사와 파수대 연구는 화면이 같고 부르는 API 만 다르다. 한 컴포넌트로 둘 다 그린다.
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import PreparationProgress from '@/components/PreparationProgress';
+import StatusBox, { 판넬 } from '@/components/StatusBox';
+import StudyResult from '@/components/StudyResult';
+import WeekPicker from '@/components/WeekPicker';
+import { 준비자료, type 준비결과, type 준비종류 } from '@/lib/api';
+import { use주간목록 } from '@/lib/use-weeks';
+import { cn } from '@/lib/utils';
+
+type 진행상태 = '대기' | '준비중' | '마무리' | '완료' | '실패';
+
+export default function StudyPrep({
+  종류,
+  머리말,
+  제목,
+}: {
+  종류: 준비종류;
+  머리말: string;
+  제목: string;
+}) {
+  const { 주간들, 현재주, 오류: 주간오류 } = use주간목록();
+  const [고른주, set고른주] = useState('');
+  const [상태, set상태] = useState<진행상태>('대기');
+  const [자료, set자료] = useState<준비결과 | null>(null);
+  const [오류, set오류] = useState('');
+
+  useEffect(() => {
+    if (현재주 && !고른주) set고른주(현재주);
+  }, [현재주, 고른주]);
+
+  // 화면을 옮겨 다녀도 이전 결과가 남지 않도록 종류가 바뀌면 비운다.
+  useEffect(() => {
+    set상태('대기');
+    set자료(null);
+    set오류('');
+  }, [종류]);
+
+  async function 준비하기() {
+    set상태('준비중');
+    set자료(null);
+    set오류('');
+    try {
+      const 받은자료 = await 준비자료(종류, 고른주);
+      // 게이지를 100 까지 올린 뒤 잠깐 두고 결과로 넘어간다.
+      set상태('마무리');
+      await new Promise(resolve => setTimeout(resolve, 300));
+      set자료(받은자료);
+      set상태('완료');
+    } catch (실패) {
+      set오류(실패 instanceof Error ? 실패.message : '요청에 실패했습니다.');
+      set상태('실패');
+    }
+  }
+
+  const 준비중 = 상태 === '준비중' || 상태 === '마무리';
+
+  return (
+    <section aria-labelledby={`${종류}-title`}>
+      <div className="mb-6 flex flex-col items-stretch justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p className="mb-2 text-xs font-bold text-brand-dark uppercase">{머리말}</p>
+          <h1 id={`${종류}-title`} className="text-3xl leading-tight">
+            {제목}
+          </h1>
+        </div>
+        <div
+          className={cn(
+            판넬,
+            'flex flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
+          )}
+        >
+          <WeekPicker id={`${종류}-week`} 주간들={주간들} 값={고른주} 변경={set고른주} />
+          <Button
+            type="button"
+            onClick={준비하기}
+            disabled={준비중 || !고른주}
+            aria-busy={준비중}
+            className="min-h-11 px-5 font-bold"
+          >
+            준비
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid gap-4">
+        {주간오류 && <StatusBox 경고 역할="alert">{주간오류}</StatusBox>}
+        {상태 === '대기' && !주간오류 && <StatusBox>주간을 선택한 뒤 준비를 누르세요.</StatusBox>}
+        {준비중 && <PreparationProgress 완료됨={상태 === '마무리'} />}
+        {상태 === '실패' && (
+          <StatusBox 경고 역할="alert">
+            {오류}
+          </StatusBox>
+        )}
+        {상태 === '완료' && 자료 && <StudyResult 자료={자료} />}
+      </div>
+    </section>
+  );
+}
