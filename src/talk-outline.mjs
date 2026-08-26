@@ -1,6 +1,10 @@
 // 연설 종류에 따라 뼈대를 만드는 모듈. 소제목이 확정된 종류는 AI를 부르지 않는다
 import { 구조화생성 } from './openai-text.mjs';
 import { 찾기 } from './teaching-lessons.mjs';
+import { 공개강연입력검증 } from './talk-input-check.mjs';
+
+// 규칙 본체는 talk-input-check.mjs 에 있다. 브라우저도 같은 규칙을 쓰기 때문이다.
+export { 공개강연입력검증 };
 
 const 확정종류 = new Set(['보물연설', '공개강연']);
 
@@ -8,14 +12,6 @@ export function 소제목확정인가(종류) {
   return 확정종류.has(종류);
 }
 
-export function 공개강연입력검증(입력) {
-  const 위반 = [];
-  if (!String(입력?.제목 ?? '').trim()) 위반.push('제목이 비어 있습니다.');
-  const 소제목 = (입력?.소제목 ?? []).filter(x => String(x?.문장 ?? '').trim());
-  if (소제목.length < 2) 위반.push('소제목이 둘 이상 필요합니다.');
-  if ((입력?.소제목 ?? []).length !== 소제목.length) 위반.push('빈 소제목 칸이 있습니다.');
-  return { 통과: 위반.length === 0, 위반 };
-}
 
 export function 구간나누기(소제목수, 배정시간, 목적 = '소제목 하나를 다룬다') {
   const 서론 = Math.round(배정시간 * 0.1);

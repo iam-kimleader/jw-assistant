@@ -8,7 +8,7 @@ import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
 
 const root = normalize(join(fileURLToPath(new URL('..', import.meta.url))));
-const webRoot = join(root, 'web');
+const webRoot = join(root, 'web', 'dist');
 const ogImage = join(root, 'asset', 'og-image-jw-assistant.png');
 const port = Number(process.env.PORT || 3000);
 
@@ -41,8 +41,10 @@ function 환경가져오기() {
 
 function staticFile(res, pathname) {
   const clean = pathname === '/' ? '/index.html' : pathname;
-  const target = pathname === '/og-image-jw-assistant.png' ? ogImage : normalize(join(webRoot, clean));
+  let target = pathname === '/og-image-jw-assistant.png' ? ogImage : normalize(join(webRoot, clean));
   const 공개파일 = target === ogImage || target.startsWith(`${webRoot}${sep}`);
+  // 화면 경로는 파일이 아니다. React 라우터가 받도록 index.html 을 돌려준다.
+  if (공개파일 && !existsSync(target) && !extname(target)) target = join(webRoot, 'index.html');
   if (!공개파일 || !existsSync(target)) {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('찾을 수 없습니다.');

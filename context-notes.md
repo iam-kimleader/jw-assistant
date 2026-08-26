@@ -315,3 +315,144 @@ AI가 선택 성구를 `예레미야 22:3-4` 같은 범위로 쓰거나 `selecte
 - `npx.cmd --yes vercel git connect https://github.com/iam-kimleader/jw-assistant.git` 명령이 `Connected`로 완료되어 Vercel 프로젝트와 GitHub 저장소 연결이 성립했다.
 - 검증 커밋은 기능 동작을 바꾸지 않는 문서 변경으로 만든다.
 - 검증 커밋 `c5a2740` 푸시 후 Vercel 프로젝트 API에서 `link.productionBranch`가 `main`이고 최신 프로덕션 배포 `dpl_HBaXgMrm7xJaEJfezPJ3N7Y2dWTd`가 `READY`와 `PROMOTED` 상태임을 확인했다.
+
+## 2026-08-26 — shadcn CLI 가 서버 소스 폴더에 컴포넌트를 심었다
+
+`npx shadcn init -d` 가 별칭을 `@/*` 가 아니라 `#src/*` 로 골랐다. `#src` 는 내가
+`tsconfig.json` 에 넣어 둔 **서버** 소스 별칭(`./src`)이었고, 그 결과 `button.tsx` 와
+`utils.ts` 가 `src/components/ui/` 와 `src/lib/` 에 생겼다. 준비 로직이 들어 있는
+폴더다. 둘 다 새 파일이라 덮어쓴 것은 없었지만, 기존 파일과 이름이 겹쳤다면
+조용히 뭉갰을 것이다.
+
+서버 별칭을 `~server` 로 바꾸고 `components.json` 의 aliases 를 `@/...` 로 직접 고쳤다.
+**CLI 가 고른 경로를 확인하지 않고 넘어가면 안 된다.** `-d -y` 로 돌릴 때는 특히 그렇다.
+
+## 2026-08-26 — 간격 계단이 Tailwind 기본값과 그대로 맞았다
+
+바닐라 CSS 에 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 32, 34, 64px 가 규칙 없이 섞여
+있던 것을 4px 배수 계단(`--space-1` ~ `--space-16`)으로 접었다. 나중에 Tailwind v4 를
+얹고 보니 기본 `--spacing` 이 4px 이라 `p-1`=4px, `p-5`=20px, `p-16`=64px 로 계단이
+1:1 로 옮겨졌다. 값을 다시 정할 필요가 없었다.
+
+글자는 10종을 7단계로, 줄간격은 9종을 3단계로 접었다. 금색 `#b0832c` 는 13px 본문에서
+대비가 3.43:1 로 AA 미달이라 본문용 `--gold-text: #8a6415` (5.36:1) 를 따로 뒀다.
+테두리용 금색은 원래 값을 그대로 쓴다.
+
+## 2026-08-26 — 웹 시험 세 개가 구현 문자열에 묶여 있다
+
+`web-og.test.mjs` · `web-progress.test.mjs` · `web-reference.test.mjs` 는
+`web/app.js` 와 `web/styles.css` 를 **문자열로 읽어** 정규식으로 맞춘다.
+(`assert.match(app, /link\.target = '_blank'/)` 같은 식이다.)
+
+React 로 옮기면 셋 다 깨진다. 지금은 `web-reference.test.mjs` 의 답변 템플릿 검사
+하나만 깨진 상태다(305/306). 지킬 값이 있는 것과 없는 것을 갈라야 한다.
+
+- **지킨다.** `estimatePreparationProgress` 산수, OG 메타 태그, OG 이미지 실제 크기,
+  Vercel 리전, 참고 출판물 링크의 `rel="noopener noreferrer"`, 복사는 답변 본문만.
+- **버린다.** `.progress-gauge` 의 `conic-gradient` 같은 구현 문자열, `/progress.js`
+  rewrite(번들에 들어가므로 경로가 사라진다).
+
+`web/progress.js` 는 순수 함수라 자리를 옮기지 않았다. 그래야 산수 시험이 그대로 산다.
+
+## 2026-08-26 — 브라우저 육안 확인이 세 번 다 막혔다
+
+Chrome 확장이 `localhost:3111` 과 `127.0.0.1:3111` 둘 다 "Frame is showing error page" 로
+실패한다. 같은 주소를 `curl` 로 부르면 전부 200 이다. 서버가 아니라 확장 권한 쪽 문제로 보인다.
+
+**그래서 지금까지 이전한 화면을 한 번도 눈으로 보지 못했다.** 대신 확인한 것은 이렇다.
+
+- `tsc --noEmit` 통과, `vite build` 통과, 라우트 4개와 번들 자산 모두 200, 없는 파일은 404.
+- 한글 컴포넌트 이름(`카드내용`, `답변들` 등)이 JSX 에서 문자열 태그로 새지 않는지 확인했다.
+  번들에 `"카드내용"` 같은 문자열이 하나도 없다. 문자열 태그였다면 minify 후에도 남는다.
+  즉 변환기가 컴포넌트 참조로 다뤘다.
+
+이건 빌드가 깨지지 않았다는 확인이지 화면이 제대로 보인다는 확인이 아니다.
+연설 화면(Task 6)은 상태가 훨씬 복잡해서 눈으로 못 보고 넘어가면 위험하다.
+확장 권한을 열든지 `npm run dev:web` 으로 직접 보든지, 그 전에 길을 뚫는 편이 낫다.
+
+## 2026-08-26 — 번들이 26KB 에서 390KB 로 늘었다
+
+바닐라 `app.js` 는 26KB 였다. 지금 번들은 389.52KB(gzip 128.78KB)다. React 19,
+react-router, Base UI Select, lucide 아이콘이 들어간 값이다. 회중에서 데이터 아껴 쓰는
+형제 자매가 쓸 수 있으니 Task 10 에서 한 번 재 볼 값이다. 아이콘을 개별 import 로
+바꾸고 라우트를 나누면(`React.lazy`) 줄어든다. 지금은 기능 파리티가 먼저다.
+
+## 2026-08-26 — web-progress 시험 두 개가 죽은 코드를 보고 있다
+
+`web-progress.test.mjs` 는 아직 `web/app.js` 와 `web/styles.css` 를 읽는다.
+두 파일이 아직 남아 있어서 통과하지만, 통과의 근거가 **이제 아무도 안 쓰는 코드**다.
+
+- `assert.match(app, /gauge\.setAttribute\('role', 'progressbar'\)/)`
+- `assert.match(css, /\.progress-gauge\s*\{[\s\S]*conic-gradient/)`
+
+Task 7 에서 바닐라 파일을 지우는 순간 빨개진다. 지울 때 같이 고쳐야 한다.
+`estimatePreparationProgress` 산수 시험과 96% 상한 시험은 그대로 살린다.
+
+## 2026-08-26 — 베낀 규칙 두 벌을 한 벌로 합쳤다
+
+바닐라 `app.js` 에는 "브라우저는 서버 모듈을 import 하지 못하므로 여기에 다시 적는다" 는
+주석과 함께 `공개강연입력검증` 과 `기본프로필값`·`스타일목록`·`임명목록` 이 베껴져 있었다.
+번들러가 생겼으니 이유가 사라졌다.
+
+- `talk-profile.mjs` 는 import 가 하나도 없어서 브라우저가 그대로 가져다 쓴다.
+- `공개강연입력검증` 은 `talk-outline.mjs` 안에 있었는데, 그 파일이 `openai-text.mjs` 를
+  부른다. 그대로 import 하면 OpenAI 클라이언트가 브라우저 번들로 딸려 온다.
+  규칙만 `talk-input-check.mjs` 로 떼어 내고 `talk-outline.mjs` 에서 다시 내보냈다.
+  기존 import 와 시험은 그대로 산다.
+
+번들에 `openai` · `node:fs` · `readFileSync` · `구조화생성` 이 0건이고
+`봉사의 종` · `소제목이 둘 이상` 은 1건씩 있는 것으로 확인했다.
+
+## 2026-08-26 — 프로필이 바뀔 때마다 배정을 다시 받지 않는다
+
+바닐라는 화자 정보 **일곱 칸 전부**의 change 에 `loadTalkAssignments` 를 걸어 뒀다.
+React 는 제어 입력이라 onChange 가 글자마다 터진다. 그대로 옮겼으면 문체 견본에
+한 글자 칠 때마다 API 를 두드렸을 것이다.
+
+`자격판정(프로필, 종류)` 을 보면 실제로 보는 값은 **성별과 임명뿐**이다.
+연령·파이오니아·스타일·분당글자수·문체견본은 배정 목록을 바꾸지 않는다.
+그래서 다시 받는 조건을 `[고른주, 성별, 임명]` 으로 좁혔다. 저장은 바뀔 때마다 한다.
+
+## 2026-08-26 — Base UI 는 Radix 가 아니다
+
+shadcn 의 `base-nova` 스타일은 Radix 가 아니라 `@base-ui/react` 를 쓴다. API 가 다르다.
+
+- `Select` 의 `onValueChange` 는 `string` 이 아니라 `string | null` 을 준다.
+- `Accordion` 에 `type="single"` · `collapsible` 이 없다. `defaultValue` 가 **배열**이고
+  여러 개 열림은 `openMultiple` 로 끈다.
+
+문서를 보고 Radix 문법을 그대로 쓰면 타입 검사에서 걸린다. 걸려서 다행이었다.
+
+## 2026-08-26 — 브라우저가 막혀서 SSR 로 화면을 확인했다
+
+Chrome 확장이 끝내 `localhost` 에 못 붙었다. 대신 Vite 의 SSR 빌드로 다섯 화면을
+Node 에서 실제로 마운트해 보고 그려진 HTML 을 들여다봤다. `npm run smoke:web` 이다.
+
+이걸로 확인한 것.
+
+- 다섯 화면 전부 예외 없이 렌더된다. 타입 검사가 못 잡는 마운트 시점 오류를 잡는다.
+- 그려진 표시에 `aria-current="page"`, `nav aria-label`, `aria-labelledby`,
+  `aria-disabled`, 라벨-입력 `for`/`id` 짝(연설 화면 8쌍), 화면당 `h1` 하나,
+  `min-h-11`(44px 터치 목표)이 다 들어 있다.
+
+**이건 화면이 안 깨졌다는 확인이지 예쁘다는 확인이 아니다.** 색 대비와 배치는
+여전히 사람 눈이 봐야 한다. 다만 컴포넌트 시험이 하나도 없는 지금 상태에서
+"마운트하다 터진다" 는 회귀는 이걸로 막힌다.
+
+만들다가 내 실수도 하나 잡혔다. 화면 이름 `'껍데기'` 를 그대로 라우터 경로로 넘겨
+`No routes matched location "껍데기"` 가 났다. 이름과 경로를 갈랐다.
+
+## 2026-08-26 — 첫 화면 번들을 93KB 로 줄였다
+
+`React.lazy` 로 라우트를 쪼갰다. 홈은 Base UI 의 Select·Accordion·Table·Tabs 를
+쓰지 않는데 한 덩이로 묶여 있었다.
+
+| | 전 | 후 |
+|---|---|---|
+| 첫 화면(홈) | 437KB / gzip 143KB + CSS | 260KB / gzip 83KB + CSS 10KB |
+| 생활과 봉사·파수대 | (같이 옴) | +47KB gzip |
+| 연설 | (같이 옴) | +60KB gzip |
+
+첫 화면 기준 gzip 153KB → 93KB 다. 바닐라 시절 26KB 에는 여전히 한참 못 미친다.
+더 줄이려면 Base UI Select 를 네이티브 `<select>` 로 되돌리는 선택지가 있다.
+접근성은 네이티브가 오히려 낫다. 지금은 그대로 두고 필요하면 그때 판단한다.

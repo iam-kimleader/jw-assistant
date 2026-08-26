@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/*
+  ---break---
+*/
+@custom-variant dark (&:is(.dark *));
+
+/*
+  색·글자·줄간격 토큰. 값은 바닐라 CSS 시절 계단을 그대로 옮긴 것이다.
+  간격은 Tailwind 기본 --spacing 이 4px 이라 p-1=4px, p-4=16px 로 계단과 그대로 맞는다.
+*/
+@theme {
+  --color-bg: #f4f5f6;
+  --color-surface: #ffffff;
+  --color-ink: #1f2328;
+  --color-ink-muted: #5d666f;
+  --color-line: #d8dee4;
+  --color-brand: #4a6da7;
+  --color-brand-dark: #36527f;
+  --color-gold: #b0832c;
+  --color-gold-text: #8a6415;
+  --color-maroon: #8b3f48;
+  --color-answer-bg: #edf6ed;
+  --color-answer-line: #6f9568;
+  --color-topbar: #2f3742;
+
+  --text-xs: 13px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: clamp(26px, 5vw, 32px);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --shadow-panel: 0 10px 30px rgb(31 35 40 / 0.08);
+}
+
+@layer base {
+  body {
+    /* 한글은 Arial 에 없어 OS 기본 한글 글꼴로 떨어진다. 순서를 명시해 기기 간 차이를 줄인다. */
+    font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo",
+      "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
+    line-height: var(--leading-normal);
+    @apply bg-background text-foreground;
+  }
+
+  /* 키보드 사용자를 위한 초점 표시. 어두운 상단 막대 위에서는 흰색으로 바꾼다. */
+  :focus-visible {
+    outline: 3px solid var(--color-brand-dark);
+    outline-offset: 2px;
+  }
+
+  [data-topbar] :focus-visible {
+    outline-color: #ffffff;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+/*
+  ---break---
+*/
+@theme inline {
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+/*
+  ---break---
+*/
+:root {
+  --background: #f4f5f6;
+  --foreground: #1f2328;
+  --card: #ffffff;
+  --card-foreground: #1f2328;
+  --popover: #ffffff;
+  --popover-foreground: #1f2328;
+  --primary: #4a6da7;
+  --primary-foreground: #ffffff;
+  --secondary: #e9eef5;
+  --secondary-foreground: #36527f;
+  --muted: #eef1f4;
+  --muted-foreground: #5d666f;
+  --accent: #e9eef5;
+  --accent-foreground: #36527f;
+  --destructive: #b03030;
+  --border: #d8dee4;
+  --input: #d8dee4;
+  --ring: #36527f;
+  --chart-1: #4a6da7;
+  --chart-2: #6f9568;
+  --chart-3: #b0832c;
+  --chart-4: #8b3f48;
+  --chart-5: #5d666f;
+  --radius: 6px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2328;
+  --sidebar-primary: #4a6da7;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9eef5;
+  --sidebar-accent-foreground: #36527f;
+  --sidebar-border: #d8dee4;
+  --sidebar-ring: #36527f;
+}
+/*
+  ---break---
+*/
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
