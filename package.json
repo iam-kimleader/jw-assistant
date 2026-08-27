@@ -24,7 +24,7 @@
     "dev:web": "vite",
     "build:web": "node -e \"const{execSync}=require('node:child_process');const fs=require('node:fs');if(fs.existsSync('web/dist')){execSync(process.platform==='win32'?'rmdir /s /q web\\\\dist':'rm -rf web/dist',{stdio:'inherit'})}\" && vite build",
     "typecheck": "tsc --noEmit",
-    "smoke:web": "vite build --ssr src/smoke.tsx --outDir dist-smoke && node web/dist-smoke/smoke.js"
+    "smoke:web": "node -e \"const{execSync}=require('node:child_process');const fs=require('node:fs');if(fs.existsSync('web/dist-smoke')){execSync(process.platform==='win32'?'rmdir /s /q web\\\\dist-smoke':'rm -rf web/dist-smoke',{stdio:'inherit'})}\" && vite build --ssr src/smoke.tsx --outDir dist-smoke && node web/dist-smoke/smoke.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
