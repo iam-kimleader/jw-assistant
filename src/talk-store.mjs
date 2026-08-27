@@ -1,6 +1,16 @@
 // 연설 자료를 사람별로 보관한다. 배정 번호가 가리키는 대상이 바뀌었으면 복원하지 않는다.
 import { 연설경로 } from './storage-paths.mjs';
 
+// 저장할 자리를 미리 확인한다. 만들고 나서 못 받는 일이 없도록 돈 쓰기 전에 걸러야 한다.
+export function 저장가능한가({ 회원번호, 주간, 배정번호 }) {
+  try {
+    연설경로(회원번호, 주간, 배정번호);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function 연설읽기({ 저장소, 회원번호, 주간, 배정번호, 배정제목 }) {
   const 경로 = 연설경로(회원번호, 주간, 배정번호);
   const 담긴것 = await 저장소.읽기(경로).catch(() => null);

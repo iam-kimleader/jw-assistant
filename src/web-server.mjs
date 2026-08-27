@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
-import { 연설읽기, 연설쓰기 } from './talk-store.mjs';
+import { 연설읽기, 연설쓰기, 저장가능한가 } from './talk-store.mjs';
 import {
   인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
@@ -172,6 +172,10 @@ async function handle(req, res) {
     }
     if (url.pathname === '/api/talk-outline' && req.method === 'POST') {
       const 몸 = await 본문읽기(req);
+      if (!저장가능한가({ 회원번호: req.사용자.회원번호, 주간: 몸.주간, 배정번호: 몸.배정번호 })) {
+        json(res, 400, { error: '연설을 저장할 자리를 정할 수 없습니다. 화면을 새로 고친 뒤 다시 시도해 주십시오.' });
+        return;
+      }
       const 결과 = await 뼈대준비(몸, 환경가져오기());
       await 연설쓰기({
         저장소: 저장소가져오기(),
@@ -186,6 +190,10 @@ async function handle(req, res) {
     }
     if (url.pathname === '/api/talk-draft' && req.method === 'POST') {
       const 몸 = await 본문읽기(req);
+      if (!저장가능한가({ 회원번호: req.사용자.회원번호, 주간: 몸.주간, 배정번호: 몸.배정번호 })) {
+        json(res, 400, { error: '연설을 저장할 자리를 정할 수 없습니다. 화면을 새로 고친 뒤 다시 시도해 주십시오.' });
+        return;
+      }
       const 결과 = await 원고준비(몸, 환경가져오기());
       await 연설쓰기({
         저장소: 저장소가져오기(),

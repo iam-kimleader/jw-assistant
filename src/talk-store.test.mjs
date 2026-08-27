@@ -1,7 +1,7 @@
 // 연설 자료의 저장과 복원을 검증하는 테스트
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { 연설읽기, 연설쓰기 } from './talk-store.mjs';
+import { 연설읽기, 연설쓰기, 저장가능한가 } from './talk-store.mjs';
 
 function 가짜저장소(초기 = {}) {
   const 담긴것 = new Map(Object.entries(초기));
@@ -86,4 +86,24 @@ test('읽기가 실패하면 null 이다', async () => {
     throw new Error('저장소가 없다');
   };
   assert.equal(await 연설읽기({ ...기본, 저장소 }), null);
+});
+
+test('제대로 된 입력이면 저장 가능하다', () => {
+  assert.equal(저장가능한가(기본), true);
+});
+
+test('indexOf 가 못 찾아 -1 을 주면 저장 불가능하다', () => {
+  assert.equal(저장가능한가({ ...기본, 배정번호: -1 }), false);
+});
+
+test('배정번호가 정수가 아니면 저장 불가능하다', () => {
+  assert.equal(저장가능한가({ ...기본, 배정번호: 1.5 }), false);
+});
+
+test('회원번호가 숫자 모양이 아니면 저장 불가능하다', () => {
+  assert.equal(저장가능한가({ ...기본, 회원번호: '../etc' }), false);
+});
+
+test('주간이 모양에 안 맞으면 저장 불가능하다', () => {
+  assert.equal(저장가능한가({ ...기본, 주간: '아무날' }), false);
 });
