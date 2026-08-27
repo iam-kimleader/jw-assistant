@@ -3,7 +3,6 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './routes/Home';
 import Login from './routes/Login';
-import Invite from './routes/Invite';
 import { 로그인필요오류 } from '@/lib/api';
 import { 한번만가져오기 } from '@/lib/use-weeks';
 import { cn } from '@/lib/utils';
@@ -98,7 +97,7 @@ export default function App() {
     };
   }, []);
 
-  const 열린화면 = 위치.pathname === '/login' || 위치.pathname === '/invite';
+  const 열린화면 = 위치.pathname === '/login';
   if (확인중) return <p role="status" className="p-8">확인하는 중입니다.</p>;
   if (!사용자 && !열린화면) return <Navigate to="/login" replace />;
 
@@ -120,7 +119,6 @@ export default function App() {
             />
             <Route path="/talk" element={<Talk />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/invite" element={<Invite />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>

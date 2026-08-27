@@ -7,9 +7,9 @@ import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
 import {
-  인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 신원쿠키이름, 짧은쿠키수명초, 요청사용자,
+  인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
-import { 세션만들기, 세션읽기, 쿠키만들기, 쿠키지우기, 쿠키읽기 } from './session.mjs';
+import { 세션만들기, 쿠키만들기, 쿠키지우기, 쿠키읽기 } from './session.mjs';
 
 const root = normalize(join(fileURLToPath(new URL('..', import.meta.url))));
 const webRoot = join(root, 'web', 'dist');
@@ -83,47 +83,10 @@ async function 로그인완료처리(req, res, url) {
     return;
   }
 
-  if (결과.결과 === '초대필요') {
-    // 초대 화면으로 넘길 신원만 짧게 들고 간다. 용도가 '신원'이라 세션으로 읽히지 않는다.
-    const 신원 = 세션만들기(결과.신원, 설정.세션비밀, Date.now(), 짧은쿠키수명초, '신원');
-    res.writeHead(302, {
-      Location: '/invite',
-      'Set-Cookie': [지울상태, 쿠키만들기(신원쿠키이름, 신원, 짧은쿠키수명초, 설정)],
-    }).end();
-    return;
-  }
-
   res.writeHead(302, {
     Location: `/login?오류=${encodeURIComponent(결과.사유 ?? '')}`,
     'Set-Cookie': 지울상태,
   }).end();
-}
-
-// api/auth-invite.js 와 같은 내용을 node:http 의 res 로 옮겨 적은 것이다.
-async function 초대처리(req, res) {
-  const 설정 = 설정읽기();
-  const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀, Date.now(), '신원');
-  if (!신원) {
-    json(res, 401, { error: '로그인부터 다시 해 주십시오.' });
-    return;
-  }
-
-  const 몸 = await 본문읽기(req);
-  const 결과 = await 인증가져오기().초대확인({ 코드: 몸?.코드 ?? '', 신원 });
-  if (결과.저장소오류) {
-    json(res, 500, { error: '저장소에 연결하지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
-    return;
-  }
-  if (!결과.통과) {
-    json(res, 400, { error: '초대 코드가 맞지 않습니다.' });
-    return;
-  }
-
-  const 세션 = 세션만들기(결과.사용자, 설정.세션비밀);
-  res.writeHead(200, {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Set-Cookie': [쿠키지우기(신원쿠키이름, 설정), 쿠키만들기(세션쿠키이름, 세션, 서른일, 설정)],
-  }).end(JSON.stringify({ 닉네임: 결과.사용자.닉네임 }));
 }
 
 async function handle(req, res) {
@@ -139,10 +102,6 @@ async function handle(req, res) {
     }
     if (url.pathname === '/api/auth-callback') {
       await 로그인완료처리(req, res, url);
-      return;
-    }
-    if (url.pathname === '/api/auth-invite' && req.method === 'POST') {
-      await 초대처리(req, res);
       return;
     }
     if (url.pathname === '/api/auth-logout' && req.method === 'POST') {

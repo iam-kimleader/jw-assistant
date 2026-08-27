@@ -29,7 +29,6 @@ test('환경 변수에서 설정을 읽는다', () => {
       KAKAO_REST_API_KEY: 'KEY',
       KAKAO_CLIENT_SECRET: 'SECRET',
       SESSION_SECRET: 유효한비밀,
-      INVITE_CODE: '열려라',
       APP_BASE_URL: 'https://example.com',
     },
     설정읽기,
@@ -37,7 +36,6 @@ test('환경 변수에서 설정을 읽는다', () => {
   assert.equal(설정.restApiKey, 'KEY');
   assert.equal(설정.clientSecret, 'SECRET');
   assert.equal(설정.세션비밀, 유효한비밀);
-  assert.equal(설정.초대코드, '열려라');
   assert.equal(설정.redirectUri, 'https://example.com/api/auth-callback');
 });
 

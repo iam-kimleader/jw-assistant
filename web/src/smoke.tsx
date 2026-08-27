@@ -7,7 +7,6 @@ import Home from './routes/Home';
 import StudyPrep from './routes/StudyPrep';
 import Talk from './routes/Talk';
 import Login from './routes/Login';
-import Invite from './routes/Invite';
 
 // App 은 라우트를 lazy 로 받으므로 화면 본체를 직접 그려야 진짜로 마운트된다.
 // 이름은 보고용이고 경로는 라우터에 넘기는 값이다. 둘을 섞으면 MemoryRouter 가 못 알아본다.
@@ -30,7 +29,6 @@ const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
   },
   { 이름: '연설', 경로: '/talk', 화면: <Talk /> },
   { 이름: '로그인', 경로: '/login', 화면: <Login /> },
-  { 이름: '초대', 경로: '/invite', 화면: <Invite /> },
 ];
 
 let 실패 = 0;

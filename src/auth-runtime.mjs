@@ -8,7 +8,6 @@ import { 세션읽기, 쿠키읽기 } from './session.mjs';
 
 export const 세션쿠키이름 = 'jw_session';
 export const 상태쿠키이름 = 'jw_state';
-export const 신원쿠키이름 = 'jw_pending';
 export const 짧은쿠키수명초 = 600;
 
 export function 설정읽기() {
@@ -24,7 +23,6 @@ export function 설정읽기() {
     restApiKey,
     clientSecret: process.env.KAKAO_CLIENT_SECRET ?? '',
     redirectUri: `${기본주소}/api/auth-callback`,
-    초대코드: process.env.INVITE_CODE ?? '',
     세션비밀,
     // 로컬은 http 라 Secure 를 붙이면 브라우저가 쿠키를 돌려주지 않는다.
     보안: Boolean(process.env.VERCEL),
