@@ -41,16 +41,24 @@ export type 주간 = { value: string; label: string; current: boolean };
 
 export type 준비종류 = 'life-ministry' | 'watchtower';
 
+export class 로그인필요오류 extends Error {
+  constructor() {
+    super('로그인이 필요합니다.');
+    this.name = '로그인필요오류';
+  }
+}
+
 // 서버는 실패를 200 + { error } 로도 돌려준다. 두 경우를 같은 자리에서 잡는다.
 async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
   const response = await fetch(url, 설정);
+  if (response.status === 401) throw new 로그인필요오류();
   const data = await response.json();
   if (!response.ok || data?.error) throw new Error(data?.error || '요청에 실패했습니다.');
   return data as T;
 }
 
 export function 주간목록() {
-  return 요청<{ today: string; weeks: 주간[] }>('/api/options');
+  return 요청<{ today: string; weeks: 주간[]; 사용자: { 닉네임: string } }>('/api/options');
 }
 
 export function 준비자료(종류: 준비종류, 날짜: string) {

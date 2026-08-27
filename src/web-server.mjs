@@ -6,11 +6,16 @@ import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
+import {
+  인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
+} from './auth-runtime.mjs';
+import { 세션만들기, 쿠키만들기, 쿠키지우기, 쿠키읽기 } from './session.mjs';
 
 const root = normalize(join(fileURLToPath(new URL('..', import.meta.url))));
 const webRoot = join(root, 'web', 'dist');
 const ogImage = join(root, 'asset', 'og-image-jw-assistant.png');
 const port = Number(process.env.PORT || 3000);
+const 서른일 = 30 * 24 * 60 * 60;
 
 const types = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -56,11 +61,70 @@ function staticFile(res, pathname) {
   res.end(readFileSync(target));
 }
 
+// api/auth-callback.js 와 같은 내용을 node:http 의 res 로 옮겨 적은 것이다.
+async function 로그인완료처리(req, res, url) {
+  const 설정 = 설정읽기();
+  const 결과 = await 인증가져오기().로그인완료({
+    code: url.searchParams.get('code'),
+    state: url.searchParams.get('state'),
+    저장된state: 쿠키읽기(req.headers.cookie, 상태쿠키이름),
+    오류: url.searchParams.get('error'),
+    오류설명: url.searchParams.get('error_description'),
+  });
+
+  const 지울상태 = 쿠키지우기(상태쿠키이름, 설정);
+
+  if (결과.결과 === '승인') {
+    const 세션 = 세션만들기(결과.사용자, 설정.세션비밀);
+    res.writeHead(302, {
+      Location: '/',
+      'Set-Cookie': [지울상태, 쿠키만들기(세션쿠키이름, 세션, 서른일, 설정)],
+    }).end();
+    return;
+  }
+
+  res.writeHead(302, {
+    Location: `/login?오류=${encodeURIComponent(결과.사유 ?? '')}`,
+    'Set-Cookie': 지울상태,
+  }).end();
+}
+
 async function handle(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   try {
+    if (url.pathname === '/api/auth-start') {
+      const { 위치, state } = 인증가져오기().로그인시작();
+      res.writeHead(302, {
+        Location: 위치,
+        'Set-Cookie': 쿠키만들기(상태쿠키이름, state, 짧은쿠키수명초, 설정읽기()),
+      }).end();
+      return;
+    }
+    if (url.pathname === '/api/auth-callback') {
+      await 로그인완료처리(req, res, url);
+      return;
+    }
+    if (url.pathname === '/api/auth-logout' && req.method === 'POST') {
+      res.writeHead(200, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Set-Cookie': 쿠키지우기(세션쿠키이름, 설정읽기()),
+      }).end(JSON.stringify({ 나감: true }));
+      return;
+    }
+    if (url.pathname.startsWith('/api/')) {
+      const 사용자 = 요청사용자(req.headers.cookie);
+      if (!사용자) {
+        json(res, 401, { error: '로그인이 필요합니다.' });
+        return;
+      }
+      req.사용자 = 사용자;
+    }
     if (url.pathname === '/api/options') {
-      json(res, 200, { today: localToday().toISOString().slice(0, 10), weeks: buildWeekOptions() });
+      json(res, 200, {
+        today: localToday().toISOString().slice(0, 10),
+        weeks: buildWeekOptions(),
+        사용자: { 닉네임: req.사용자.닉네임 },
+      });
       return;
     }
     if (url.pathname === '/api/watchtower') {

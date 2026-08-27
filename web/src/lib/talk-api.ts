@@ -1,4 +1,5 @@
 // 연설 화면이 쓰는 API 의 응답 모양과 호출을 모은다.
+import { 로그인필요오류 } from './api';
 
 export type 프로필 = {
   성별: string;
@@ -50,6 +51,7 @@ export type 공개강연입력 = {
 
 async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
   const response = await fetch(url, 설정);
+  if (response.status === 401) throw new 로그인필요오류();
   const data = await response.json();
   if (!response.ok || data?.error) throw new Error(data?.error || '요청에 실패했습니다.');
   return data as T;

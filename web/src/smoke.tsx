@@ -2,15 +2,20 @@
 import type { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router';
-import App from './App';
+import App, { 상단바 } from './App';
 import Home from './routes/Home';
 import StudyPrep from './routes/StudyPrep';
 import Talk from './routes/Talk';
+import Login from './routes/Login';
 
 // App 은 라우트를 lazy 로 받으므로 화면 본체를 직접 그려야 진짜로 마운트된다.
 // 이름은 보고용이고 경로는 라우터에 넘기는 값이다. 둘을 섞으면 MemoryRouter 가 못 알아본다.
+// App 은 로그인 확인이 끝나기 전엔 "확인하는 중입니다" 한 줄만 그린다(useEffect 는
+// renderToString 에서 돌지 않는다). 그래서 상단 막대·내비는 App 이 아니라 상단바를
+// 직접 그려야 실제로 마운트되는지 확인할 수 있다.
 const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
-  { 이름: '껍데기(상단 막대·내비)', 경로: '/', 화면: <App /> },
+  { 이름: '껍데기(로그인 확인 중)', 경로: '/', 화면: <App /> },
+  { 이름: '껍데기(상단 막대·내비)', 경로: '/', 화면: <상단바 사용자={{ 닉네임: '스모크' }} /> },
   { 이름: '홈', 경로: '/', 화면: <Home /> },
   {
     이름: '생활과 봉사',
@@ -23,6 +28,7 @@ const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
     화면: <StudyPrep 종류="watchtower" 머리말="파수대 연구" 제목="항별 답변 준비" />,
   },
   { 이름: '연설', 경로: '/talk', 화면: <Talk /> },
+  { 이름: '로그인', 경로: '/login', 화면: <Login /> },
 ];
 
 let 실패 = 0;
