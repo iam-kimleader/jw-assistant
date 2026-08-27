@@ -1,7 +1,8 @@
 // Vercel 서버리스에서 연설 배정 목록을 돌려주는 어댑터
 import { 배정목록 } from '../src/talk-service.mjs';
+import { 가드 } from '../src/api-guard.mjs';
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const 프로필 = JSON.parse(url.searchParams.get('profile') ?? 'null');
@@ -11,3 +12,5 @@ export default async function handler(req, res) {
     res.status(500).json({ error: e.message });
   }
 }
+
+export default 가드(handler);

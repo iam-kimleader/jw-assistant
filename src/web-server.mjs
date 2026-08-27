@@ -7,7 +7,7 @@ import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
 import {
-  인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 신원쿠키이름, 짧은쿠키수명초,
+  인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 신원쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
 import { 세션만들기, 세션읽기, 쿠키만들기, 쿠키지우기, 쿠키읽기 } from './session.mjs';
 
@@ -146,8 +146,20 @@ async function handle(req, res) {
       }).end(JSON.stringify({ 나감: true }));
       return;
     }
+    if (url.pathname.startsWith('/api/')) {
+      const 사용자 = 요청사용자(req.headers.cookie);
+      if (!사용자) {
+        json(res, 401, { error: '로그인이 필요합니다.' });
+        return;
+      }
+      req.사용자 = 사용자;
+    }
     if (url.pathname === '/api/options') {
-      json(res, 200, { today: localToday().toISOString().slice(0, 10), weeks: buildWeekOptions() });
+      json(res, 200, {
+        today: localToday().toISOString().slice(0, 10),
+        weeks: buildWeekOptions(),
+        사용자: { 닉네임: req.사용자.닉네임 },
+      });
       return;
     }
     if (url.pathname === '/api/watchtower') {
