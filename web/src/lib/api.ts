@@ -35,6 +35,7 @@ export type 준비결과 = {
   generation?: { warning?: string };
   answers?: 답변[];
   sections?: 구역[];
+  보관?: { 만든때: string | null; 새로만듦: boolean };
 };
 
 export type 주간 = { value: string; label: string; current: boolean };
@@ -63,4 +64,9 @@ export function 주간목록() {
 
 export function 준비자료(종류: 준비종류, 날짜: string) {
   return 요청<준비결과>(`/api/${종류}?date=${encodeURIComponent(날짜)}`);
+}
+
+export function 다시만들기(종류: 준비종류, 날짜: string) {
+  // 돈 드는 동작이라 POST 다. GET 에 두면 새로고침만으로도 호출이 나간다.
+  return 요청<준비결과>(`/api/${종류}?date=${encodeURIComponent(날짜)}`, { method: 'POST' });
 }
