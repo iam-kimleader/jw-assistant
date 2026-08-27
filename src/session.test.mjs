@@ -41,9 +41,15 @@ test('만료는 발급 시점 기준이고 읽어도 늘지 않는다', () => {
 });
 
 test('모양이 아닌 값은 조용히 거부한다', () => {
-  for (const 값 of [null, undefined, '', '점없음', '.', 'a.b', 'a.b.c', 'ÿ'.repeat(43)]) {
+  for (const 값 of [null, undefined, '', '점없음', '.', 'a.b', 'a.b.c']) {
     assert.equal(세션읽기(값, 비밀, 지금), null);
   }
+});
+
+test('본문은 멀쩡한데 서명에 비ASCII 바이트가 섞이면 던지지 않고 조용히 거부한다', () => {
+  const 값 = 세션만들기(사용자, 비밀, 지금);
+  const [본문] = 값.split('.');
+  assert.equal(세션읽기(`${본문}.${'ÿ'.repeat(43)}`, 비밀, 지금), null);
 });
 
 test('신원 토큰을 세션으로 읽으면 거부한다', () => {
