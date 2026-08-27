@@ -36,7 +36,7 @@ export function 상단바({ 사용자 }: { 사용자: { 닉네임: string } | nu
         </span>
         <span>성경 연구 도우미</span>
       </div>
-      <nav aria-label="주요 화면" className="flex flex-wrap items-center gap-2">
+      <nav aria-label="주요 화면" className="flex flex-wrap gap-2">
         {화면.map(({ 경로, 이름 }) => (
           <NavLink
             key={경로}
