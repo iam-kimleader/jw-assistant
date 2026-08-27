@@ -133,7 +133,18 @@ async function handle(req, res) {
         today: localToday().toISOString().slice(0, 10),
         weeks: buildWeekOptions(),
         사용자: { 닉네임: req.사용자.닉네임 },
+        설정: await 인증가져오기().설정읽기(req.사용자.회원번호),
       });
+      return;
+    }
+    if (url.pathname === '/api/my-profile' && req.method === 'POST') {
+      const 몸 = await 본문읽기(req);
+      try {
+        await 인증가져오기().설정쓰기(req.사용자.회원번호, 몸?.설정 ?? {});
+        json(res, 200, { 저장됨: true });
+      } catch {
+        json(res, 500, { error: '설정을 저장하지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+      }
       return;
     }
     if (url.pathname === '/api/watchtower' || url.pathname === '/api/life-ministry') {
