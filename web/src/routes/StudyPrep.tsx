@@ -27,6 +27,7 @@ export default function StudyPrep({
   const [자료, set자료] = useState<준비결과 | null>(null);
   const [오류, set오류] = useState('');
   const [다시만드는중, set다시만드는중] = useState(false);
+  const [다시만들기오류, set다시만들기오류] = useState('');
 
   useEffect(() => {
     if (현재주 && !고른주) set고른주(현재주);
@@ -38,6 +39,7 @@ export default function StudyPrep({
     set자료(null);
     set오류('');
     set다시만드는중(false);
+    set다시만들기오류('');
   }, [종류]);
 
   async function 준비하기() {
@@ -59,11 +61,12 @@ export default function StudyPrep({
 
   async function 다시만들어보기() {
     set다시만드는중(true);
-    set오류('');
+    set다시만들기오류('');
     try {
       set자료(await 다시만들기호출(종류, 고른주));
     } catch (실패) {
-      set오류(실패 instanceof Error ? 실패.message : '요청에 실패했습니다.');
+      // 기존 답변은 그대로 둔다. 다시 만들지 못한 것이지 있던 것이 사라진 것은 아니다.
+      set다시만들기오류(실패 instanceof Error ? 실패.message : '다시 만들지 못했습니다.');
     } finally {
       set다시만드는중(false);
     }
@@ -116,6 +119,11 @@ export default function StudyPrep({
                 다시만드는중={다시만드는중}
                 다시만들기={다시만들어보기}
               />
+            )}
+            {다시만들기오류 && (
+              <StatusBox 경고 역할="alert">
+                {다시만들기오류} 기존 답변은 그대로 있습니다.
+              </StatusBox>
             )}
             <StudyResult 자료={자료} />
           </>
