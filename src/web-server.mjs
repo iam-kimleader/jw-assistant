@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
+import { 연설읽기, 연설쓰기 } from './talk-store.mjs';
 import {
   인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
@@ -170,11 +171,47 @@ async function handle(req, res) {
       return;
     }
     if (url.pathname === '/api/talk-outline' && req.method === 'POST') {
-      json(res, 200, await 뼈대준비(await 본문읽기(req), 환경가져오기()));
+      const 몸 = await 본문읽기(req);
+      const 결과 = await 뼈대준비(몸, 환경가져오기());
+      await 연설쓰기({
+        저장소: 저장소가져오기(),
+        회원번호: req.사용자.회원번호,
+        주간: 몸.주간,
+        배정번호: 몸.배정번호,
+        배정제목: 몸.배정제목,
+        내용: { 뼈대: 결과.뼈대 },
+      });
+      json(res, 200, 결과);
       return;
     }
     if (url.pathname === '/api/talk-draft' && req.method === 'POST') {
-      json(res, 200, await 원고준비(await 본문읽기(req), 환경가져오기()));
+      const 몸 = await 본문읽기(req);
+      const 결과 = await 원고준비(몸, 환경가져오기());
+      await 연설쓰기({
+        저장소: 저장소가져오기(),
+        회원번호: req.사용자.회원번호,
+        주간: 몸.주간,
+        배정번호: 몸.배정번호,
+        배정제목: 몸.배정제목,
+        내용: { 뼈대: 몸.뼈대, 원고: 결과 },
+      });
+      json(res, 200, 결과);
+      return;
+    }
+    if (url.pathname === '/api/my-talk') {
+      try {
+        json(res, 200, {
+          자료: await 연설읽기({
+            저장소: 저장소가져오기(),
+            회원번호: req.사용자.회원번호,
+            주간: url.searchParams.get('주간'),
+            배정번호: Number(url.searchParams.get('배정번호')),
+            배정제목: url.searchParams.get('제목'),
+          }),
+        });
+      } catch {
+        json(res, 200, { 자료: null });
+      }
       return;
     }
     staticFile(res, url.pathname);
