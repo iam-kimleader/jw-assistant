@@ -20,7 +20,7 @@
     "meeting": "node --no-warnings scripts/prepare-meeting.mjs",
     "성구": "node --no-warnings scripts/lookup.mjs",
     "lookup": "node --no-warnings scripts/lookup.mjs",
-    "web": "npm run build:web && node --no-warnings src/web-server.mjs",
+    "web": "npm run build:web && node --env-file-if-exists=.env --no-warnings src/web-server.mjs",
     "dev:web": "vite",
     "build:web": "node -e \"const{execSync}=require('node:child_process');const fs=require('node:fs');if(fs.existsSync('web/dist')){execSync(process.platform==='win32'?'rmdir /s /q web\\\\dist':'rm -rf web/dist',{stdio:'inherit'})}\" && vite build",
     "typecheck": "tsc --noEmit",
