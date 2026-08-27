@@ -12,13 +12,20 @@ export const 신원쿠키이름 = 'jw_pending';
 export const 짧은쿠키수명초 = 600;
 
 export function 설정읽기() {
+  const 세션비밀 = process.env.SESSION_SECRET ?? '';
+  // 빈 비밀로도 HMAC 서명이 조용히 만들어져 누구나 세션을 위조할 수 있게 된다.
+  // 없거나 짧으면 요청마다 크게 실패시킨다. 그래야 바로 눈에 띈다.
+  if (세션비밀.length < 32) throw new Error('SESSION_SECRET 이 없거나 너무 짧습니다.');
+  const restApiKey = process.env.KAKAO_REST_API_KEY ?? '';
+  if (!restApiKey) throw new Error('KAKAO_REST_API_KEY 가 없습니다.');
+
   const 기본주소 = String(process.env.APP_BASE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
   return {
-    restApiKey: process.env.KAKAO_REST_API_KEY ?? '',
+    restApiKey,
     clientSecret: process.env.KAKAO_CLIENT_SECRET ?? '',
     redirectUri: `${기본주소}/api/auth-callback`,
     초대코드: process.env.INVITE_CODE ?? '',
-    세션비밀: process.env.SESSION_SECRET ?? '',
+    세션비밀,
     // 로컬은 http 라 Secure 를 붙이면 브라우저가 쿠키를 돌려주지 않는다.
     보안: Boolean(process.env.VERCEL),
   };

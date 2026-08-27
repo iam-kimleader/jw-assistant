@@ -7,8 +7,9 @@ function 서명(본문, 비밀) {
   return createHmac('sha256', 비밀).update(본문).digest('base64url');
 }
 
-export function 세션만들기(사용자, 비밀, 지금 = Date.now(), 유효기간초 = 기본유효기간초) {
+export function 세션만들기(사용자, 비밀, 지금 = Date.now(), 유효기간초 = 기본유효기간초, 용도 = '세션') {
   const 담긴것 = {
+    용도,
     회원번호: String(사용자.회원번호),
     닉네임: String(사용자.닉네임 ?? ''),
     만료: 지금 + 유효기간초 * 1_000,
@@ -17,17 +18,20 @@ export function 세션만들기(사용자, 비밀, 지금 = Date.now(), 유효�
   return `${본문}.${서명(본문, 비밀)}`;
 }
 
-export function 세션읽기(값, 비밀, 지금 = Date.now()) {
+export function 세션읽기(값, 비밀, 지금 = Date.now(), 용도 = '세션') {
   if (typeof 값 !== 'string') return null;
   const 조각 = 값.split('.');
   if (조각.length !== 2) return null;
   const [본문, 받은서명] = 조각;
   if (!본문 || !받은서명) return null;
 
-  const 바른서명 = 서명(본문, 비밀);
-  // 길이가 다르면 timingSafeEqual 이 던지므로 먼저 본다.
-  if (받은서명.length !== 바른서명.length) return null;
-  if (!timingSafeEqual(Buffer.from(받은서명), Buffer.from(바른서명))) return null;
+  // 브라우저가 보내는 쿠키 헤더는 latin1 로 디코딩되므로 서명에 0x80 이상
+  // 바이트가 섞이면 JS 문자열 길이는 같아도 utf8 바이트 길이가 달라진다.
+  // 바이트 길이로 먼저 걸러야 timingSafeEqual 이 던지지 않는다.
+  const 받은 = Buffer.from(받은서명, 'utf8');
+  const 바른 = Buffer.from(서명(본문, 비밀), 'utf8');
+  if (받은.length !== 바른.length) return null;
+  if (!timingSafeEqual(받은, 바른)) return null;
 
   let 담긴것;
   try {
@@ -35,6 +39,7 @@ export function 세션읽기(값, 비밀, 지금 = Date.now()) {
   } catch {
     return null;
   }
+  if (담긴것?.용도 !== 용도) return null;
   if (!담긴것?.만료 || 담긴것.만료 <= 지금) return null;
   return { 회원번호: String(담긴것.회원번호), 닉네임: String(담긴것.닉네임 ?? '') };
 }

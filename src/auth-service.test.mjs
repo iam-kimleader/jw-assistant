@@ -70,6 +70,16 @@ test('처음 온 사람은 초대가 필요하다', async () => {
   assert.deepEqual(결과.신원, { 회원번호: '777', 닉네임: '동언' });
 });
 
+test('카카오가 로그인을 거절하면 그 사유를 그대로 담는다', async () => {
+  const 결과 = await 만들기().로그인완료({
+    code: null, state: 'STATE123', 저장된state: 'STATE123',
+    오류: 'access_denied', 오류설명: '사용자가 취소했습니다',
+  });
+  assert.equal(결과.결과, '거부');
+  assert.match(결과.사유, /access_denied/);
+  assert.match(결과.사유, /사용자가 취소했습니다/);
+});
+
 test('카카오가 실패하면 사유를 담아 거부한다', async () => {
   const 카카오 = { ...가짜카카오, 토큰받기: async () => { throw new Error('KOE006'); } };
   const 결과 = await 만들기(가짜저장소(), 카카오).로그인완료({
@@ -106,6 +116,20 @@ test('신원이 없으면 초대를 통과시키지 않는다', async () => {
   assert.equal(결과.통과, false);
 });
 
+test('승인 기록 쓰기가 실패하면 저장소오류로 알린다', async () => {
+  const 저장소 = 가짜저장소();
+  저장소.쓰기 = async () => { throw new Error('망가짐'); };
+  const 결과 = await 만들기(저장소).초대확인({
+    코드: '열려라', 신원: { 회원번호: '777', 닉네임: '동언' },
+  });
+  assert.equal(결과.통과, false);
+  assert.equal(결과.저장소오류, true);
+});
+
 test('사용자 경로를 만든다', () => {
   assert.equal(만들기().사용자경로('777'), 'users/777/profile.json');
+});
+
+test('회원번호가 숫자 모양이 아니면 사용자경로가 거부한다', () => {
+  assert.throws(() => 만들기().사용자경로('777/../etc'));
 });

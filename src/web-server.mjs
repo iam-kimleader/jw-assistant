@@ -68,6 +68,8 @@ async function 로그인완료처리(req, res, url) {
     code: url.searchParams.get('code'),
     state: url.searchParams.get('state'),
     저장된state: 쿠키읽기(req.headers.cookie, 상태쿠키이름),
+    오류: url.searchParams.get('error'),
+    오류설명: url.searchParams.get('error_description'),
   });
 
   const 지울상태 = 쿠키지우기(상태쿠키이름, 설정);
@@ -82,8 +84,8 @@ async function 로그인완료처리(req, res, url) {
   }
 
   if (결과.결과 === '초대필요') {
-    // 초대 화면으로 넘길 신원만 짧게 들고 간다. 세션이 아니다.
-    const 신원 = 세션만들기(결과.신원, 설정.세션비밀, Date.now(), 짧은쿠키수명초);
+    // 초대 화면으로 넘길 신원만 짧게 들고 간다. 용도가 '신원'이라 세션으로 읽히지 않는다.
+    const 신원 = 세션만들기(결과.신원, 설정.세션비밀, Date.now(), 짧은쿠키수명초, '신원');
     res.writeHead(302, {
       Location: '/invite',
       'Set-Cookie': [지울상태, 쿠키만들기(신원쿠키이름, 신원, 짧은쿠키수명초, 설정)],
@@ -100,7 +102,7 @@ async function 로그인완료처리(req, res, url) {
 // api/auth-invite.js 와 같은 내용을 node:http 의 res 로 옮겨 적은 것이다.
 async function 초대처리(req, res) {
   const 설정 = 설정읽기();
-  const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀);
+  const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀, Date.now(), '신원');
   if (!신원) {
     json(res, 401, { error: '로그인부터 다시 해 주십시오.' });
     return;
@@ -108,6 +110,10 @@ async function 초대처리(req, res) {
 
   const 몸 = await 본문읽기(req);
   const 결과 = await 인증가져오기().초대확인({ 코드: 몸?.코드 ?? '', 신원 });
+  if (결과.저장소오류) {
+    json(res, 500, { error: '저장소에 연결하지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+    return;
+  }
   if (!결과.통과) {
     json(res, 400, { error: '초대 코드가 맞지 않습니다.' });
     return;

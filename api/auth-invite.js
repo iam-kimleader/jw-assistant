@@ -14,13 +14,17 @@ export default async function handler(req, res) {
   }
 
   const 설정 = 설정읽기();
-  const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀);
+  const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀, Date.now(), '신원');
   if (!신원) {
     res.status(401).json({ error: '로그인부터 다시 해 주십시오.' });
     return;
   }
 
   const 결과 = await 인증가져오기().초대확인({ 코드: req.body?.코드 ?? '', 신원 });
+  if (결과.저장소오류) {
+    res.status(500).json({ error: '저장소에 연결하지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+    return;
+  }
   if (!결과.통과) {
     res.status(400).json({ error: '초대 코드가 맞지 않습니다.' });
     return;
