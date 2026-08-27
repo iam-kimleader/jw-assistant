@@ -6,7 +6,12 @@ import { 세션만들기, 쿠키만들기 } from './session.mjs';
 
 function 환경으로(값들, 할일) {
   const 이전 = { ...process.env };
-  Object.assign(process.env, 값들);
+  // 값이 undefined 면 그 변수를 시험 동안 지운다. 없애야 할 것을 빈 문자열
+  // "undefined" 로 덮어쓰지 않기 위해서다.
+  for (const [k, v] of Object.entries(값들)) {
+    if (v === undefined) delete process.env[k];
+    else process.env[k] = v;
+  }
   try {
     return 할일();
   } finally {
@@ -40,7 +45,7 @@ test('APP_BASE_URL 끝의 빗금을 지운다', () => {
 
 test('Vercel 에서만 Secure 쿠키를 쓴다', () => {
   assert.equal(환경으로({ VERCEL: '1' }, 설정읽기).보안, true);
-  assert.equal(환경으로({}, () => 설정읽기()).보안, false);
+  assert.equal(환경으로({ VERCEL: undefined }, () => 설정읽기()).보안, false);
 });
 
 test('세션 쿠키에서 사용자를 꺼낸다', () => {

@@ -7,6 +7,12 @@ import { 세션만들기, 세션읽기, 쿠키만들기, 쿠키지우기, 쿠키
 const 서른일 = 30 * 24 * 60 * 60;
 
 export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    res.status(405).json({ error: '허용되지 않는 방식입니다.' });
+    return;
+  }
+
   const 설정 = 설정읽기();
   const 신원 = 세션읽기(쿠키읽기(req.headers.cookie, 신원쿠키이름), 설정.세션비밀);
   if (!신원) {
