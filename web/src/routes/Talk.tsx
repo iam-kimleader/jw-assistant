@@ -61,6 +61,9 @@ export default function Talk() {
   const [원고, set원고] = useState<원고결과 | null>(null);
   const [원고오류, set원고오류] = useState('');
   const [원고만드는중, set원고만드는중] = useState(false);
+  // 복원 응답이 뼈대 생성 도중이나 완성 이후에 와도 방금 만든/만들고 있는 걸 덮어쓰지 않는다.
+  const 뼈대준비됨 = useRef(false);
+  뼈대준비됨.current = Boolean(뼈대) || 뼈대만드는중;
 
   useEffect(() => {
     if (현재주 && !고른주) set고른주(현재주);
@@ -122,8 +125,9 @@ export default function Talk() {
     보관된연설가져오기(고른주, 번호, 값.제목).then(
       ({ 자료 }) => {
         // 응답이 오는 사이 다른 배정을 골랐으면 이 응답은 버린다. 그새 고른 화면을
-        // 예전 배정의 자료로 덮어쓰면 안 된다.
-        if (최근배정선택.current !== 값 || !자료) return;
+        // 예전 배정의 자료로 덮어쓰면 안 된다. 뼈대를 만들고 있거나 이미 만들어졌으면
+        // 방금 돈 들여 만든 것을 예전 저장분으로 덮어쓰면 안 되니 통째로 건너뛴다.
+        if (최근배정선택.current !== 값 || !자료 || 뼈대준비됨.current) return;
         if (자료.뼈대) set뼈대(자료.뼈대);
         // 서버는 API 응답을 그대로 저장한다. 화면 상태는 모양이 달라 여기서 맞춘다.
         if (자료.원고) {
