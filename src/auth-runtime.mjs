@@ -17,11 +17,15 @@ export function 설정읽기() {
   if (세션비밀.length < 32) throw new Error('SESSION_SECRET 이 없거나 너무 짧습니다.');
   const restApiKey = process.env.KAKAO_REST_API_KEY ?? '';
   if (!restApiKey) throw new Error('KAKAO_REST_API_KEY 가 없습니다.');
+  const clientSecret = process.env.KAKAO_CLIENT_SECRET ?? '';
+  // 이것만 빠지면 카카오 동의까지 다 하고 돌아온 뒤에야 토큰 교환이 실패한다.
+  // 여기서 막아야 설정이 틀렸다는 것을 바로 안다.
+  if (!clientSecret) throw new Error('KAKAO_CLIENT_SECRET 이 없습니다.');
 
   const 기본주소 = String(process.env.APP_BASE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
   return {
     restApiKey,
-    clientSecret: process.env.KAKAO_CLIENT_SECRET ?? '',
+    clientSecret,
     redirectUri: `${기본주소}/api/auth-callback`,
     세션비밀,
     // 로컬은 http 라 Secure 를 붙이면 브라우저가 쿠키를 돌려주지 않는다.
