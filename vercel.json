@@ -22,6 +22,14 @@
     {
       "source": "/talk",
       "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/invite",
+      "destination": "/index.html"
     }
   ]
 }

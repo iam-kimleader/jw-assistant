@@ -31,7 +31,7 @@ test('OG 이미지는 빌드 산출물 루트로 복사되어 공개 경로에�
 });
 
 test('Vercel이 화면 경로를 index.html 로 넘겨 라우터가 받게 한다', () => {
-  for (const 경로 of ['/life-ministry', '/watchtower', '/talk']) {
+  for (const 경로 of ['/life-ministry', '/watchtower', '/talk', '/login', '/invite']) {
     assert.ok(
       vercel.rewrites.some(r => r.source === 경로 && r.destination === '/index.html'),
       `${경로} rewrite 가 없다`);
