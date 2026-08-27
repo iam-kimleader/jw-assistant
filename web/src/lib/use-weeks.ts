@@ -1,6 +1,7 @@
 // 주간 목록은 화면마다 다시 받을 필요가 없다. 모듈에 한 번 담아 두고 나눠 쓴다.
 import { useEffect, useState } from 'react';
-import { 로그인필요오류, 주간목록, type 주간 } from './api';
+import { 로그인필요오류, 설정저장하기, 주간목록, type 주간 } from './api';
+import type { 프로필 } from './talk-api';
 
 let 캐시: ReturnType<typeof 주간목록> | null = null;
 
@@ -37,4 +38,28 @@ export function use주간목록() {
 
   const 현재주 = 주간들.find(주 => 주.current)?.value ?? 주간들[0]?.value ?? '';
   return { 주간들, 현재주, 오류 };
+}
+
+export function use설정() {
+  const [설정, set설정] = useState<프로필 | null>(null);
+
+  useEffect(() => {
+    let 살아있음 = true;
+    한번만가져오기().then(
+      자료 => 살아있음 && set설정(자료.설정),
+      () => {
+        // 로그인이 필요하면 App 이 로그인 화면으로 보낸다. 여기서 따로 알리지 않는다.
+      },
+    );
+    return () => {
+      살아있음 = false;
+    };
+  }, []);
+
+  async function 설정저장(다음: 프로필) {
+    set설정(다음);
+    await 설정저장하기(다음);
+  }
+
+  return { 설정, 불러옴: 설정 !== null, 설정저장 };
 }

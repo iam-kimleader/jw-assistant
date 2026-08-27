@@ -11,16 +11,17 @@ import WeekPicker from '@/components/WeekPicker';
 import { 공개강연입력검증 } from '~server/talk-input-check.mjs';
 import {
   배정가져오기,
+  보관된연설가져오기,
   뼈대만들기,
   원고만들기,
   type 공개강연입력,
   type 배정,
   type 산출물키,
   type 시간정보,
+  type 프로필 as 프로필형,
   type 뼈대 as 뼈대형,
 } from '@/lib/talk-api';
-import { 기본값, 프로필읽기, 프로필쓰기 } from '@/lib/talk-profile-store';
-import { use주간목록 } from '@/lib/use-weeks';
+import { use주간목록, use설정 } from '@/lib/use-weeks';
 import { cn } from '@/lib/utils';
 
 const 빈공개강연: 공개강연입력 = {
@@ -39,12 +40,14 @@ type 원고결과 = {
 export default function Talk() {
   const { 주간들, 현재주, 오류: 주간오류 } = use주간목록();
   const [고른주, set고른주] = useState('');
-  const [프로필, set프로필] = useState(기본값);
+  const { 설정: 프로필, 불러옴: 설정불러옴, 설정저장 } = use설정();
+  const [설정오류, set설정오류] = useState('');
 
   const [배정들, set배정들] = useState<배정[]>([]);
   const [배정안내, set배정안내] = useState('주간을 선택하세요.');
   const [배정오류, set배정오류] = useState('');
   const [선택배정, set선택배정] = useState<배정 | null>(null);
+  const [선택배정번호, set선택배정번호] = useState(-1);
 
   const [공개입력, set공개입력] = useState<공개강연입력>(빈공개강연);
 
@@ -56,10 +59,6 @@ export default function Talk() {
   const [원고, set원고] = useState<원고결과 | null>(null);
   const [원고오류, set원고오류] = useState('');
   const [원고만드는중, set원고만드는중] = useState(false);
-
-  useEffect(() => {
-    set프로필(프로필읽기());
-  }, []);
 
   useEffect(() => {
     if (현재주 && !고른주) set고른주(현재주);
@@ -74,17 +73,19 @@ export default function Talk() {
   }, []);
 
   // 자격판정은 성별과 임명만 본다. 나머지 항목까지 걸면 글자 하나 칠 때마다 API 를 두드리게 된다.
-  const { 성별, 임명 } = 프로필;
+  const 성별 = 프로필?.성별;
+  const 임명 = 프로필?.임명;
 
   useEffect(() => {
-    if (!고른주) return;
+    if (!고른주 || !프로필) return;
     let 살아있음 = true;
     set배정안내('배정을 불러오는 중입니다.');
     set배정오류('');
     set선택배정(null);
+    set선택배정번호(-1);
     산출물초기화();
 
-    배정가져오기(고른주, { ...프로필읽기(), 성별, 임명 }).then(
+    배정가져오기(고른주, 프로필).then(
       자료 => {
         if (!살아있음) return;
         set배정들([...자료.배정, 자료.공개강연카드].filter(Boolean) as 배정[]);
@@ -100,16 +101,40 @@ export default function Talk() {
     return () => {
       살아있음 = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [고른주, 성별, 임명, 산출물초기화]);
 
-  function 프로필고침(다음: typeof 프로필) {
-    set프로필(다음);
-    프로필쓰기(다음);
+  function 프로필고침(다음: 프로필형) {
+    설정저장(다음).catch(실패 => {
+      set설정오류(실패 instanceof Error ? 실패.message : '설정을 저장하지 못했습니다.');
+    });
   }
 
   function 배정고르기(값: 배정) {
     set선택배정(값);
     산출물초기화();
+    const 번호 = 배정들.indexOf(값);
+    set선택배정번호(번호);
+    if (번호 < 0 || !고른주) return;
+    보관된연설가져오기(고른주, 번호, 값.제목).then(
+      ({ 자료 }) => {
+        if (!자료) return;
+        if (자료.뼈대) set뼈대(자료.뼈대);
+        // 서버는 API 응답을 그대로 저장한다. 화면 상태는 모양이 달라 여기서 맞춘다.
+        if (자료.원고) {
+          set원고({
+            산출물: 자료.원고.산출물,
+            시간: 자료.원고.시간,
+            경고들: [...(자료.원고.구조체?.경고 ?? []), 자료.원고.생성?.warning].filter(
+              Boolean,
+            ) as string[],
+          });
+        }
+      },
+      () => {
+        // 복원 실패는 알리지 않는다. 없는 것과 같이 다루고 새로 만들면 된다.
+      },
+    );
   }
 
   const 공개강연인가 = 선택배정?.종류 === '공개강연';
@@ -120,7 +145,7 @@ export default function Talk() {
   const 뼈대가능 = Boolean(선택배정) && (!공개강연인가 || 검증.통과);
 
   async function 뼈대잡기() {
-    if (!선택배정) return;
+    if (!선택배정 || !프로필 || 선택배정번호 < 0) return;
     set뼈대만드는중(true);
     set뼈대오류('');
     try {
@@ -128,6 +153,9 @@ export default function Talk() {
         배정: 선택배정,
         프로필,
         ...(공개강연인가 ? { 공개강연입력: 공개입력 } : {}),
+        주간: 고른주,
+        배정번호: 선택배정번호,
+        배정제목: 선택배정.제목,
       });
       set뼈대(자료.뼈대);
       set뼈대경고(자료.생성?.warning ?? '');
@@ -140,11 +168,17 @@ export default function Talk() {
   }
 
   async function 원고쓰기() {
-    if (!뼈대) return;
+    if (!뼈대 || !선택배정 || !프로필 || 선택배정번호 < 0) return;
     set원고만드는중(true);
     set원고오류('');
     try {
-      const 자료 = await 원고만들기({ 뼈대, 프로필 });
+      const 자료 = await 원고만들기({
+        뼈대,
+        프로필,
+        주간: 고른주,
+        배정번호: 선택배정번호,
+        배정제목: 선택배정.제목,
+      });
       set원고({
         산출물: 자료.산출물,
         시간: 자료.시간,
@@ -176,7 +210,12 @@ export default function Talk() {
         </div>
       </div>
 
-      <SpeakerProfileForm 프로필={프로필} 변경={프로필고침} />
+      {설정불러옴 && 프로필 ? (
+        <SpeakerProfileForm 프로필={프로필} 변경={프로필고침} />
+      ) : (
+        <StatusBox>설정을 불러오는 중입니다.</StatusBox>
+      )}
+      {설정오류 && <StatusBox 경고 역할="alert">{설정오류}</StatusBox>}
 
       <div className="my-4 grid gap-4">
         {주간오류 && <StatusBox 경고 역할="alert">{주간오류}</StatusBox>}
