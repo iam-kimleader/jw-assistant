@@ -1,5 +1,5 @@
 // 주간 목록은 화면마다 다시 받을 필요가 없다. 모듈에 한 번 담아 두고 나눠 쓴다.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { 로그인필요오류, 설정저장하기, 주간목록, type 주간 } from './api';
 import type { 프로필 } from './talk-api';
 
@@ -42,6 +42,8 @@ export function use주간목록() {
 
 export function use설정() {
   const [설정, set설정] = useState<프로필 | null>(null);
+  // 타이핑마다 저장 요청을 보내지 않게 마지막 값과 타이머를 들고 있다가 묶어서 보낸다.
+  const 대기중 = useRef<{ 값: 프로필; 타이머: ReturnType<typeof setTimeout> } | null>(null);
 
   useEffect(() => {
     let 살아있음 = true;
@@ -56,9 +58,27 @@ export function use설정() {
     };
   }, []);
 
-  async function 설정저장(다음: 프로필) {
+  // 디바운스 도중 화면을 떠나면 마지막 입력이 사라진다. 언마운트 시 바로 흘려보낸다.
+  useEffect(() => {
+    return () => {
+      if (!대기중.current) return;
+      clearTimeout(대기중.current.타이머);
+      설정저장하기(대기중.current.값).catch(() => {
+        // 화면이 이미 사라진 뒤라 오류를 보여줄 곳이 없다. 그래도 시도는 한다.
+      });
+    };
+  }, []);
+
+  function 설정저장(다음: 프로필) {
     set설정(다음);
-    await 설정저장하기(다음);
+    if (대기중.current) clearTimeout(대기중.current.타이머);
+    return new Promise<void>((resolve, reject) => {
+      const 타이머 = setTimeout(() => {
+        대기중.current = null;
+        설정저장하기(다음).then(() => resolve(), reject);
+      }, 800);
+      대기중.current = { 값: 다음, 타이머 };
+    });
   }
 
   return { 설정, 불러옴: 설정 !== null, 설정저장 };

@@ -1,5 +1,5 @@
 // 배정을 고르고 뼈대를 잡아 원고까지 만드는 연설 준비 화면이다.
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import AssignmentCards from '@/components/AssignmentCards';
 import DraftOutput from '@/components/DraftOutput';
@@ -48,6 +48,8 @@ export default function Talk() {
   const [배정오류, set배정오류] = useState('');
   const [선택배정, set선택배정] = useState<배정 | null>(null);
   const [선택배정번호, set선택배정번호] = useState(-1);
+  // 복원 응답이 늦게 와도 그 사이 다른 배정을 골랐으면 무시하려고 최신 선택을 들고 있는다.
+  const 최근배정선택 = useRef<배정 | null>(null);
 
   const [공개입력, set공개입력] = useState<공개강연입력>(빈공개강연);
 
@@ -112,13 +114,16 @@ export default function Talk() {
 
   function 배정고르기(값: 배정) {
     set선택배정(값);
+    최근배정선택.current = 값;
     산출물초기화();
     const 번호 = 배정들.indexOf(값);
     set선택배정번호(번호);
     if (번호 < 0 || !고른주) return;
     보관된연설가져오기(고른주, 번호, 값.제목).then(
       ({ 자료 }) => {
-        if (!자료) return;
+        // 응답이 오는 사이 다른 배정을 골랐으면 이 응답은 버린다. 그새 고른 화면을
+        // 예전 배정의 자료로 덮어쓰면 안 된다.
+        if (최근배정선택.current !== 값 || !자료) return;
         if (자료.뼈대) set뼈대(자료.뼈대);
         // 서버는 API 응답을 그대로 저장한다. 화면 상태는 모양이 달라 여기서 맞춘다.
         if (자료.원고) {
@@ -133,6 +138,7 @@ export default function Talk() {
       },
       () => {
         // 복원 실패는 알리지 않는다. 없는 것과 같이 다루고 새로 만들면 된다.
+        // 상태를 바꾸지 않으므로 뒤늦게 와도 최신 선택을 건드리지 않는다.
       },
     );
   }
