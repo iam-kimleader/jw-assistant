@@ -1,10 +1,8 @@
 // 카카오 로그인 흐름을 엮는다. HTTP 를 모르므로 어댑터가 결과를 응답으로 옮긴다.
+import { 설정경로 } from './storage-paths.mjs';
+
 export function 인증만들기({ 설정, 카카오, 저장소, 무작위, 지금 = () => Date.now() }) {
-  const 사용자경로 = 회원번호 => {
-    // 회원번호는 카카오가 준 숫자 id 다. 저장 경로에 그대로 들어가므로 모양을 지킨다.
-    if (!/^[0-9]+$/.test(String(회원번호))) throw new Error('회원번호 모양이 이상합니다.');
-    return `users/${회원번호}/profile.json`;
-  };
+  const 사용자경로 = 설정경로;
 
   return {
     사용자경로,
