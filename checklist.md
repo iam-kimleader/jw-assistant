@@ -159,3 +159,51 @@
   - `npm run smoke:web` 을 만들었다. Vite SSR 로 다섯 화면을 실제로 마운트해 본다.
   - 라우트를 `React.lazy` 로 쪼갰다. 첫 화면이 gzip 153KB → 93KB 로 줄었다.
   - **브라우저 육안 확인은 여전히 못 했다.** 확장이 localhost 에 못 붙는다.
+
+## 카카오 로그인 — 2026-08-26
+
+계획 문서는 `docs/superpowers/plans/2026-08-26-kakao-login.md`, 설계는
+`docs/superpowers/specs/2026-08-26-kakao-login-storage-design.md` 에 있다. `main` 의 `0fa512d`.
+
+- [x] Task 1 세션 쿠키 서명·검증 (`src/session.mjs`). HMAC-SHA256, `node:crypto` 만 쓴다
+- [x] Task 2 카카오 인가 코드 흐름 (`src/kakao-auth.mjs`)
+- [x] Task 3 인증 서비스와 회원 기록 (`src/auth-service.mjs`)
+- [x] Task 4 비공개 Blob 저장소 감싸기 (`src/store.mjs`)
+- [x] Task 5 어댑터 넷 (`api/auth-start` · `auth-callback` · `auth-logout`, `src/api-guard.mjs`)
+- [x] Task 6 로그인 화면과 401 처리
+- [x] Task 7 환경 변수 설정과 배포 확인 (형제가 실제 로그인까지 확인함)
+- [x] 초대 코드 제거. 형제 요청으로 완전히 없앴다. 카카오 계정이 있으면 누구나 들어온다
+
+## 자료 보관 — 2026-08-27
+
+계획은 `docs/superpowers/plans/2026-08-27-storage.md`, 설계는
+`docs/superpowers/specs/2026-08-27-storage-and-mypage-design.md` 에 있다. `main` 의 `1ce14b7`.
+
+- [x] Task 1 저장 경로를 만들고 모양을 검사한다 (`src/storage-paths.mjs`, 시험 10개)
+- [x] Task 2 주간 자료를 한 번만 만들어 나눠 쓰는 캐시 (`src/week-cache.mjs`)
+- [x] Task 3 연설 자료를 사람별로 보관한다 (`src/talk-store.mjs`)
+- [x] Task 4 주간 답변을 회중이 나눠 쓰게 어댑터에 붙인다
+- [x] Task 5 화자 설정을 서버에 둔다. 기기가 바뀌어도 따라온다
+- [x] Task 6 연설 뼈대와 원고를 만들 때마다 서버에 남긴다
+- [x] Task 7 저장된 답변임을 알리고 다시 만들 수 있게 한다 (`SavedNotice`)
+- [x] Task 8 설정을 서버에서 받고 저장된 연설을 복원한다
+- [x] Task 9 README 에 보관 구조를 적는다
+
+## 마이페이지 — 2026-08-28
+
+계획은 `docs/superpowers/plans/2026-08-28-mypage.md`, 설계는
+`docs/superpowers/specs/2026-08-28-mypage-design.md` 에 있다. `main` 의 `30f0bef`.
+
+- [x] Task 1 보관함 목록을 만드는 순수 모듈 (`src/archive.mjs`, 시험 10개)
+- [x] Task 2 연설 자료를 지우는 함수 (`연설지우기`, 시험 3개)
+- [x] Task 3 `GET /api/my-archive` 와 `DELETE /api/my-talk` 를 두 면에 단다
+- [x] Task 4 화면이 쓸 호출과 내려받기를 나눠 쓰게 뺀다
+- [x] Task 5 연구 화면이 `?date=` 를 받는다
+- [x] Task 6 연설 화면이 `?주간=` · `?배정번호=` 를 받는다
+- [x] Task 7 마이페이지 화면 (`web/src/routes/MyPage.tsx`)
+- [x] Task 8 README 와 마무리 확인
+- [x] 최종 검토 고침 — `vercel.json` 에 `/me` 추가, 오류 안내가 보이도록 스크롤
+
+**남은 것.** 컴포넌트 시험은 여전히 없다. 화면 확인은 `npm run smoke:web` 의 SSR 마운트와
+형제의 육안 확인 두 층뿐이다. 이월한 사소한 항목들은 `context-notes.md` 의
+2026-08-28 항목에 적어 두었다.
