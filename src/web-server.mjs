@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
-import { 연설읽기, 연설쓰기, 저장가능한가 } from './talk-store.mjs';
+import { 연설읽기, 연설쓰기, 연설지우기, 저장가능한가 } from './talk-store.mjs';
+import { 보관목록 } from './archive.mjs';
 import {
   인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
@@ -148,6 +149,17 @@ async function handle(req, res) {
       }
       return;
     }
+    if (url.pathname === '/api/my-archive') {
+      try {
+        json(res, 200, await 보관목록({
+          저장소: 저장소가져오기(),
+          회원번호: req.사용자.회원번호,
+        }));
+      } catch {
+        json(res, 500, { error: '보관함을 불러오지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+      }
+      return;
+    }
     if (url.pathname === '/api/watchtower' || url.pathname === '/api/life-ministry') {
       const 종류 = url.pathname === '/api/watchtower' ? 'watchtower' : 'life-ministry';
       const 만들기 = 종류 === 'watchtower'
@@ -207,6 +219,20 @@ async function handle(req, res) {
       return;
     }
     if (url.pathname === '/api/my-talk') {
+      if (req.method === 'DELETE') {
+        try {
+          await 연설지우기({
+            저장소: 저장소가져오기(),
+            회원번호: req.사용자.회원번호,
+            주간: url.searchParams.get('주간'),
+            배정번호: Number(url.searchParams.get('배정번호')),
+          });
+          json(res, 200, { 지움: true });
+        } catch {
+          json(res, 500, { error: '연설 자료를 지우지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+        }
+        return;
+      }
       try {
         json(res, 200, {
           자료: await 연설읽기({
