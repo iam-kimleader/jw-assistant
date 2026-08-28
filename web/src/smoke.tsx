@@ -8,6 +8,7 @@ import SpeakerProfileForm from './components/SpeakerProfileForm';
 import Home from './routes/Home';
 import StudyPrep from './routes/StudyPrep';
 import Talk from './routes/Talk';
+import MyPage from './routes/MyPage';
 import Login from './routes/Login';
 import { 기본프로필 } from '~server/talk-profile.mjs';
 import type { 프로필 as 프로필형 } from './lib/talk-api';
@@ -44,6 +45,7 @@ const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
       <SavedNotice 만든때="2026-08-26T00:00:00.000Z" 다시만드는중={false} 다시만들기={() => {}} />
     ),
   },
+  { 이름: '마이페이지', 경로: '/me', 화면: <MyPage /> },
   { 이름: '로그인', 경로: '/login', 화면: <Login /> },
 ];
 
