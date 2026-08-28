@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { 로그인필요오류, 설정저장하기, 주간목록, type 주간 } from './api';
 import type { 프로필 } from './talk-api';
+import { weekEnd } from '~server/web-options.mjs';
 
 let 캐시: ReturnType<typeof 주간목록> | null = null;
 
@@ -95,4 +96,11 @@ export function use설정() {
   }
 
   return { 설정, 불러옴: 설정 !== null, 설정저장 };
+}
+
+// 선택 상자는 앞뒤 10주만 담는다. 보관함에서 그보다 오래된 주간으로 들어오면 고른 값이
+// 목록에 없어 선택 상자가 빈 칸으로 보인다. 그 한 줄만 맨 앞에 끼워 넣는다.
+export function 주간목록에끼워넣기(주간들: 주간[], 고른주: string): 주간[] {
+  if (!고른주 || 주간들.some(주 => 주.value === 고른주)) return 주간들;
+  return [{ value: 고른주, label: `${고른주} ~ ${weekEnd(고른주)}`, current: false }, ...주간들];
 }
