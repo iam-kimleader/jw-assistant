@@ -1,6 +1,6 @@
 // 상단 막대와 라우터를 얹는 앱 껍데기다.
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import { 로그인필요오류 } from '@/lib/api';
@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 // 홈만 처음에 받고 나머지는 그 화면에 들어갈 때 받는다. 첫 화면이 가벼워진다.
 const StudyPrep = lazy(() => import('./routes/StudyPrep'));
 const Talk = lazy(() => import('./routes/Talk'));
+const MyPage = lazy(() => import('./routes/MyPage'));
 
 const 화면 = [
   { 경로: '/', 이름: '홈' },
@@ -54,7 +55,12 @@ export function 상단바({ 사용자 }: { 사용자: { 닉네임: string } | nu
       </nav>
       {사용자 && (
         <div className="flex items-center gap-3">
-          <span className="text-sm">{사용자.닉네임 || '형제'}</span>
+          <Link
+            to="/me"
+            className="flex min-h-11 items-center rounded px-2 text-sm text-white/80 transition-colors hover:bg-white/12 hover:text-white"
+          >
+            {사용자.닉네임 || '형제'}
+          </Link>
           <button
             type="button"
             className="min-h-11 rounded px-3 text-white/80 hover:bg-white/12 hover:text-white"
@@ -118,6 +124,7 @@ export default function App() {
               element={<StudyPrep 종류="watchtower" 머리말="파수대 연구" 제목="항별 답변 준비" />}
             />
             <Route path="/talk" element={<Talk />} />
+            <Route path="/me" element={<MyPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<Home />} />
           </Routes>

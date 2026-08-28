@@ -7,15 +7,7 @@ import { 클립보드에쓰기 } from '@/lib/clipboard';
 import { 파일이름, 시간요약 } from '@/lib/talk-format.mjs';
 import { 산출물목록, 산출물이름, type 산출물키, type 시간정보 } from '@/lib/talk-api';
 import { cn } from '@/lib/utils';
-
-function 내려받기(이름: string, 본문: string) {
-  const blob = new Blob([본문], { type: 'text/markdown;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 이름;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
+import { 내려받기 } from '@/lib/download';
 
 export default function DraftOutput({
   산출물,

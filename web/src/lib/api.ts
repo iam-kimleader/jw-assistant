@@ -51,7 +51,7 @@ export class 로그인필요오류 extends Error {
 }
 
 // 서버는 실패를 200 + { error } 로도 돌려준다. 두 경우를 같은 자리에서 잡는다.
-async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
+export async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
   const response = await fetch(url, 설정);
   if (response.status === 401) throw new 로그인필요오류();
   const data = await response.json();

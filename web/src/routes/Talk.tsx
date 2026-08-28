@@ -21,7 +21,8 @@ import {
   type 프로필 as 프로필형,
   type 뼈대 as 뼈대형,
 } from '@/lib/talk-api';
-import { use주간목록, use설정 } from '@/lib/use-weeks';
+import { useSearchParams } from 'react-router-dom';
+import { use주간목록, use설정, 주간목록에끼워넣기 } from '@/lib/use-weeks';
 import { cn } from '@/lib/utils';
 
 const 빈공개강연: 공개강연입력 = {
@@ -39,6 +40,12 @@ type 원고결과 = {
 
 export default function Talk() {
   const { 주간들, 현재주, 오류: 주간오류 } = use주간목록();
+  const [질의] = useSearchParams();
+  const 청한주 = 질의.get('주간') ?? '';
+  // 배정은 목록을 받은 뒤에야 고를 수 있다. 한 번 쓰고 비워서, 그다음 주간을 바꿔도
+  // 다시 튀어나오지 않게 한다. get 이 없을 때 주는 null 을 Number 가 0 으로 바꾸므로
+  // 그대로 두면 평범한 /talk 방문에서도 첫 배정이 저절로 열린다. NaN 으로 받는다.
+  const 청한배정 = useRef(Number(질의.get('배정번호') ?? NaN));
   const [고른주, set고른주] = useState('');
   const { 설정: 프로필, 불러옴: 설정불러옴, 설정저장 } = use설정();
   const [설정오류, set설정오류] = useState('');
@@ -65,9 +72,12 @@ export default function Talk() {
   const 뼈대준비됨 = useRef(false);
   뼈대준비됨.current = Boolean(뼈대) || 뼈대만드는중;
 
+  // 보관함에서 왔으면 그 주간으로 연다. 아니면 이번 주다.
   useEffect(() => {
-    if (현재주 && !고른주) set고른주(현재주);
-  }, [현재주, 고른주]);
+    if (고른주) return;
+    if (청한주) set고른주(청한주);
+    else if (현재주) set고른주(현재주);
+  }, [현재주, 청한주, 고른주]);
 
   const 산출물초기화 = useCallback(() => {
     set뼈대(null);
@@ -93,8 +103,13 @@ export default function Talk() {
     배정가져오기(고른주, 프로필).then(
       자료 => {
         if (!살아있음) return;
-        set배정들([...자료.배정, 자료.공개강연카드].filter(Boolean) as 배정[]);
+        const 목록 = [...자료.배정, 자료.공개강연카드].filter(Boolean) as 배정[];
+        set배정들(목록);
         set배정안내('');
+        // 보관함에서 배정까지 지정해 들어왔으면 그 자리를 눌러 준 것처럼 연다.
+        const 청한번호 = 청한배정.current;
+        청한배정.current = NaN;
+        if (Number.isInteger(청한번호) && 목록[청한번호]) 배정고르기(목록[청한번호], 청한번호);
       },
       실패 => {
         if (!살아있음) return;
@@ -115,11 +130,11 @@ export default function Talk() {
     });
   }
 
-  function 배정고르기(값: 배정) {
+  function 배정고르기(값: 배정, 미리받은번호?: number) {
     set선택배정(값);
     최근배정선택.current = 값;
     산출물초기화();
-    const 번호 = 배정들.indexOf(값);
+    const 번호 = 미리받은번호 ?? 배정들.indexOf(값);
     set선택배정번호(번호);
     if (번호 < 0 || !고른주) return;
     보관된연설가져오기(고른주, 번호, 값.제목).then(
@@ -216,7 +231,7 @@ export default function Talk() {
             'flex min-w-0 flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
           )}
         >
-          <WeekPicker id="talk-week" 주간들={주간들} 값={고른주} 변경={set고른주} />
+          <WeekPicker id="talk-week" 주간들={주간목록에끼워넣기(주간들, 고른주)} 값={고른주} 변경={set고른주} />
         </div>
       </div>
 

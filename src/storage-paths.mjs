@@ -31,6 +31,10 @@ export function 설정경로(회원번호) {
   return `users/${검사한회원번호(회원번호)}/profile.json`;
 }
 
+export function 연설접두사(회원번호) {
+  return `users/${검사한회원번호(회원번호)}/talks/`;
+}
+
 export function 연설경로(회원번호, 날짜, 배정번호) {
   if (!Number.isInteger(배정번호) || 배정번호 < 0 || 배정번호 > 배정번호상한) {
     throw new Error('배정번호가 올바르지 않습니다.');

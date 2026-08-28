@@ -7,7 +7,8 @@ import StatusBox, { 판넬 } from '@/components/StatusBox';
 import StudyResult from '@/components/StudyResult';
 import WeekPicker from '@/components/WeekPicker';
 import { 준비자료, 다시만들기 as 다시만들기호출, type 준비결과, type 준비종류 } from '@/lib/api';
-import { use주간목록 } from '@/lib/use-weeks';
+import { useSearchParams } from 'react-router-dom';
+import { use주간목록, 주간목록에끼워넣기 } from '@/lib/use-weeks';
 import { cn } from '@/lib/utils';
 
 type 진행상태 = '대기' | '준비중' | '마무리' | '완료' | '실패';
@@ -22,6 +23,8 @@ export default function StudyPrep({
   제목: string;
 }) {
   const { 주간들, 현재주, 오류: 주간오류 } = use주간목록();
+  const [질의] = useSearchParams();
+  const 청한주 = 질의.get('date') ?? '';
   const [고른주, set고른주] = useState('');
   const [상태, set상태] = useState<진행상태>('대기');
   const [자료, set자료] = useState<준비결과 | null>(null);
@@ -29,9 +32,12 @@ export default function StudyPrep({
   const [다시만드는중, set다시만드는중] = useState(false);
   const [다시만들기오류, set다시만들기오류] = useState('');
 
+  // 보관함에서 왔으면 그 주간으로 연다. 아니면 이번 주다.
   useEffect(() => {
-    if (현재주 && !고른주) set고른주(현재주);
-  }, [현재주, 고른주]);
+    if (고른주) return;
+    if (청한주) set고른주(청한주);
+    else if (현재주) set고른주(현재주);
+  }, [현재주, 청한주, 고른주]);
 
   // 화면을 옮겨 다녀도 이전 결과가 남지 않도록 종류가 바뀌면 비운다.
   useEffect(() => {
@@ -89,7 +95,7 @@ export default function StudyPrep({
             'flex min-w-0 flex-col flex-wrap items-stretch gap-3 p-3 shadow-none sm:flex-row sm:items-center',
           )}
         >
-          <WeekPicker id={`${종류}-week`} 주간들={주간들} 값={고른주} 변경={set고른주} />
+          <WeekPicker id={`${종류}-week`} 주간들={주간목록에끼워넣기(주간들, 고른주)} 값={고른주} 변경={set고른주} />
           <Button
             type="button"
             onClick={준비하기}
