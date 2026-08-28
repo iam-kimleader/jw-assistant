@@ -70,15 +70,45 @@ export function 배정가져오기(날짜: string, 프로필: 프로필) {
   return 요청<{ 배정: 배정[]; 공개강연카드: 배정 | null }>(`/api/talk-assignments?${질의}`);
 }
 
-export function 뼈대만들기(본문: { 배정: 배정; 프로필: 프로필; 공개강연입력?: 공개강연입력 }) {
+export function 뼈대만들기(본문: {
+  배정: 배정;
+  프로필: 프로필;
+  공개강연입력?: 공개강연입력;
+  주간: string;
+  배정번호: number;
+  배정제목: string;
+}) {
   return 보내기<{ 뼈대: 뼈대; 생성?: { warning?: string } }>('/api/talk-outline', 본문);
 }
 
-export function 원고만들기(본문: { 뼈대: 뼈대; 프로필: 프로필 }) {
+export function 원고만들기(본문: {
+  뼈대: 뼈대;
+  프로필: 프로필;
+  주간: string;
+  배정번호: number;
+  배정제목: string;
+}) {
   return 보내기<{
     구조체: { 경고?: string[] };
     산출물: Record<산출물키, string>;
     시간: 시간정보;
     생성?: { warning?: string };
   }>('/api/talk-draft', 본문);
+}
+
+export type 보관된연설 = {
+  배정제목: string;
+  만든때: string;
+  뼈대?: 뼈대;
+  원고?: {
+    구조체: { 경고?: string[] };
+    산출물: Record<산출물키, string>;
+    시간: 시간정보;
+    생성?: { warning?: string };
+  };
+};
+
+export function 보관된연설가져오기(주간: string, 배정번호: number, 제목: string) {
+  const 질의 = `주간=${encodeURIComponent(주간)}&배정번호=${배정번호}&제목=${encodeURIComponent(제목)}`;
+  return 요청<{ 자료: 보관된연설 | null }>(`/api/my-talk?${질의}`);
 }

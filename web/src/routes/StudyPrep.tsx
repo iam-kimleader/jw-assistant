@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import PreparationProgress from '@/components/PreparationProgress';
+import SavedNotice from '@/components/SavedNotice';
 import StatusBox, { 판넬 } from '@/components/StatusBox';
 import StudyResult from '@/components/StudyResult';
 import WeekPicker from '@/components/WeekPicker';
-import { 준비자료, type 준비결과, type 준비종류 } from '@/lib/api';
+import { 준비자료, 다시만들기 as 다시만들기호출, type 준비결과, type 준비종류 } from '@/lib/api';
 import { use주간목록 } from '@/lib/use-weeks';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +26,8 @@ export default function StudyPrep({
   const [상태, set상태] = useState<진행상태>('대기');
   const [자료, set자료] = useState<준비결과 | null>(null);
   const [오류, set오류] = useState('');
+  const [다시만드는중, set다시만드는중] = useState(false);
+  const [다시만들기오류, set다시만들기오류] = useState('');
 
   useEffect(() => {
     if (현재주 && !고른주) set고른주(현재주);
@@ -35,6 +38,8 @@ export default function StudyPrep({
     set상태('대기');
     set자료(null);
     set오류('');
+    set다시만드는중(false);
+    set다시만들기오류('');
   }, [종류]);
 
   async function 준비하기() {
@@ -51,6 +56,19 @@ export default function StudyPrep({
     } catch (실패) {
       set오류(실패 instanceof Error ? 실패.message : '요청에 실패했습니다.');
       set상태('실패');
+    }
+  }
+
+  async function 다시만들어보기() {
+    set다시만드는중(true);
+    set다시만들기오류('');
+    try {
+      set자료(await 다시만들기호출(종류, 고른주));
+    } catch (실패) {
+      // 기존 답변은 그대로 둔다. 다시 만들지 못한 것이지 있던 것이 사라진 것은 아니다.
+      set다시만들기오류(실패 instanceof Error ? 실패.message : '다시 만들지 못했습니다.');
+    } finally {
+      set다시만드는중(false);
     }
   }
 
@@ -93,7 +111,23 @@ export default function StudyPrep({
             {오류}
           </StatusBox>
         )}
-        {상태 === '완료' && 자료 && <StudyResult 자료={자료} />}
+        {상태 === '완료' && 자료 && (
+          <>
+            {자료.보관 && !자료.보관.새로만듦 && (
+              <SavedNotice
+                만든때={자료.보관.만든때}
+                다시만드는중={다시만드는중}
+                다시만들기={다시만들어보기}
+              />
+            )}
+            {다시만들기오류 && (
+              <StatusBox 경고 역할="alert">
+                {다시만들기오류} 기존 답변은 그대로 있습니다.
+              </StatusBox>
+            )}
+            <StudyResult 자료={자료} />
+          </>
+        )}
       </div>
     </section>
   );

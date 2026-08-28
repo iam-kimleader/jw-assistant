@@ -3,10 +3,14 @@ import type { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router';
 import App, { 상단바 } from './App';
+import SavedNotice from './components/SavedNotice';
+import SpeakerProfileForm from './components/SpeakerProfileForm';
 import Home from './routes/Home';
 import StudyPrep from './routes/StudyPrep';
 import Talk from './routes/Talk';
 import Login from './routes/Login';
+import { 기본프로필 } from '~server/talk-profile.mjs';
+import type { 프로필 as 프로필형 } from './lib/talk-api';
 
 // App 은 라우트를 lazy 로 받으므로 화면 본체를 직접 그려야 진짜로 마운트된다.
 // 이름은 보고용이고 경로는 라우터에 넘기는 값이다. 둘을 섞으면 MemoryRouter 가 못 알아본다.
@@ -28,6 +32,18 @@ const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
     화면: <StudyPrep 종류="watchtower" 머리말="파수대 연구" 제목="항별 답변 준비" />,
   },
   { 이름: '연설', 경로: '/talk', 화면: <Talk /> },
+  {
+    이름: '화자 설정 폼',
+    경로: '/talk',
+    화면: <SpeakerProfileForm 프로필={기본프로필() as 프로필형} 변경={() => {}} />,
+  },
+  {
+    이름: '저장 안내 띠',
+    경로: '/watchtower',
+    화면: (
+      <SavedNotice 만든때="2026-08-26T00:00:00.000Z" 다시만드는중={false} 다시만들기={() => {}} />
+    ),
+  },
   { 이름: '로그인', 경로: '/login', 화면: <Login /> },
 ];
 

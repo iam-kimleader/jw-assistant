@@ -1,4 +1,5 @@
 // 준비 자료 API 의 응답 모양과 호출을 한곳에 모은다.
+import type { 프로필 } from './talk-api';
 
 export type 성구묶음 = {
   라벨: string;
@@ -35,6 +36,7 @@ export type 준비결과 = {
   generation?: { warning?: string };
   answers?: 답변[];
   sections?: 구역[];
+  보관?: { 만든때: string | null; 새로만듦: boolean };
 };
 
 export type 주간 = { value: string; label: string; current: boolean };
@@ -58,9 +60,27 @@ async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
 }
 
 export function 주간목록() {
-  return 요청<{ today: string; weeks: 주간[]; 사용자: { 닉네임: string } }>('/api/options');
+  return 요청<{
+    today: string;
+    weeks: 주간[];
+    사용자: { 닉네임: string };
+    설정: 프로필;
+  }>('/api/options');
 }
 
 export function 준비자료(종류: 준비종류, 날짜: string) {
   return 요청<준비결과>(`/api/${종류}?date=${encodeURIComponent(날짜)}`);
+}
+
+export function 다시만들기(종류: 준비종류, 날짜: string) {
+  // 돈 드는 동작이라 POST 다. GET 에 두면 새로고침만으로도 호출이 나간다.
+  return 요청<준비결과>(`/api/${종류}?date=${encodeURIComponent(날짜)}`, { method: 'POST' });
+}
+
+export function 설정저장하기(설정: 프로필) {
+  return 요청<{ 저장됨: boolean }>('/api/my-profile', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 설정 }),
+  });
 }

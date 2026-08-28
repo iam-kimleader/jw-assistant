@@ -6,10 +6,14 @@ import { fileURLToPath } from 'node:url';
 import { buildWeekOptions, localToday } from './web-options.mjs';
 import { prepareLifeAndMinistry, prepareWatchtower } from './prep-service.mjs';
 import { 환경만들기, 배정목록, 뼈대준비, 원고준비 } from './talk-service.mjs';
+import { 연설읽기, 연설쓰기, 저장가능한가 } from './talk-store.mjs';
 import {
   인증가져오기, 설정읽기, 세션쿠키이름, 상태쿠키이름, 짧은쿠키수명초, 요청사용자,
 } from './auth-runtime.mjs';
 import { 세션만들기, 쿠키만들기, 쿠키지우기, 쿠키읽기 } from './session.mjs';
+import * as blob from '@vercel/blob';
+import { 저장소만들기 } from './store.mjs';
+import { 주간자료가져오기 } from './week-cache.mjs';
 
 const root = normalize(join(fileURLToPath(new URL('..', import.meta.url))));
 const webRoot = join(root, 'web', 'dist');
@@ -42,6 +46,12 @@ async function 본문읽기(req) {
 let 캐시된환경 = null;
 function 환경가져오기() {
   return 캐시된환경 ??= 환경만들기(root);
+}
+
+// 저장소는 상태가 없다. 요청마다 새로 만들 이유가 없다.
+let 캐시된저장소 = null;
+function 저장소가져오기() {
+  return 캐시된저장소 ??= 저장소만들기(blob);
 }
 
 function staticFile(res, pathname) {
@@ -124,15 +134,33 @@ async function handle(req, res) {
         today: localToday().toISOString().slice(0, 10),
         weeks: buildWeekOptions(),
         사용자: { 닉네임: req.사용자.닉네임 },
+        설정: await 인증가져오기().설정읽기(req.사용자.회원번호),
       });
       return;
     }
-    if (url.pathname === '/api/watchtower') {
-      json(res, 200, await prepareWatchtower(url.searchParams.get('date'), root));
+    if (url.pathname === '/api/my-profile' && req.method === 'POST') {
+      const 몸 = await 본문읽기(req);
+      try {
+        await 인증가져오기().설정쓰기(req.사용자.회원번호, 몸?.설정 ?? {});
+        json(res, 200, { 저장됨: true });
+      } catch {
+        json(res, 500, { error: '설정을 저장하지 못했습니다. 잠시 뒤 다시 시도해 주십시오.' });
+      }
       return;
     }
-    if (url.pathname === '/api/life-ministry') {
-      json(res, 200, await prepareLifeAndMinistry(url.searchParams.get('date'), root));
+    if (url.pathname === '/api/watchtower' || url.pathname === '/api/life-ministry') {
+      const 종류 = url.pathname === '/api/watchtower' ? 'watchtower' : 'life-ministry';
+      const 만들기 = 종류 === 'watchtower'
+        ? 주간 => prepareWatchtower(주간, root)
+        : 주간 => prepareLifeAndMinistry(주간, root);
+      const { 자료, 만든때, 새로만듦 } = await 주간자료가져오기({
+        종류,
+        날짜: url.searchParams.get('date'),
+        저장소: 저장소가져오기(),
+        만들기,
+        다시만들기: req.method === 'POST',
+      });
+      json(res, 200, { ...자료, 보관: { 만든때, 새로만듦 } });
       return;
     }
     if (url.pathname === '/api/talk-assignments') {
@@ -143,11 +171,55 @@ async function handle(req, res) {
       return;
     }
     if (url.pathname === '/api/talk-outline' && req.method === 'POST') {
-      json(res, 200, await 뼈대준비(await 본문읽기(req), 환경가져오기()));
+      const 몸 = await 본문읽기(req);
+      if (!저장가능한가({ 회원번호: req.사용자.회원번호, 주간: 몸.주간, 배정번호: 몸.배정번호 })) {
+        json(res, 400, { error: '연설을 저장할 자리를 정할 수 없습니다. 화면을 새로 고친 뒤 다시 시도해 주십시오.' });
+        return;
+      }
+      const 결과 = await 뼈대준비(몸, 환경가져오기());
+      await 연설쓰기({
+        저장소: 저장소가져오기(),
+        회원번호: req.사용자.회원번호,
+        주간: 몸.주간,
+        배정번호: 몸.배정번호,
+        배정제목: 몸.배정제목,
+        내용: { 뼈대: 결과.뼈대 },
+      });
+      json(res, 200, 결과);
       return;
     }
     if (url.pathname === '/api/talk-draft' && req.method === 'POST') {
-      json(res, 200, await 원고준비(await 본문읽기(req), 환경가져오기()));
+      const 몸 = await 본문읽기(req);
+      if (!저장가능한가({ 회원번호: req.사용자.회원번호, 주간: 몸.주간, 배정번호: 몸.배정번호 })) {
+        json(res, 400, { error: '연설을 저장할 자리를 정할 수 없습니다. 화면을 새로 고친 뒤 다시 시도해 주십시오.' });
+        return;
+      }
+      const 결과 = await 원고준비(몸, 환경가져오기());
+      await 연설쓰기({
+        저장소: 저장소가져오기(),
+        회원번호: req.사용자.회원번호,
+        주간: 몸.주간,
+        배정번호: 몸.배정번호,
+        배정제목: 몸.배정제목,
+        내용: { 뼈대: 몸.뼈대, 원고: 결과 },
+      });
+      json(res, 200, 결과);
+      return;
+    }
+    if (url.pathname === '/api/my-talk') {
+      try {
+        json(res, 200, {
+          자료: await 연설읽기({
+            저장소: 저장소가져오기(),
+            회원번호: req.사용자.회원번호,
+            주간: url.searchParams.get('주간'),
+            배정번호: Number(url.searchParams.get('배정번호')),
+            배정제목: url.searchParams.get('제목'),
+          }),
+        });
+      } catch {
+        json(res, 200, { 자료: null });
+      }
       return;
     }
     staticFile(res, url.pathname);
