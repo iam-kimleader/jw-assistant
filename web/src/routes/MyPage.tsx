@@ -1,5 +1,5 @@
 // 지난 자료를 다시 보고 내 설정을 고치는 마이페이지다.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   AlertDialog,
@@ -44,6 +44,15 @@ export default function MyPage() {
   const [지울것, set지울것] = useState<보관연설 | null>(null);
   const { 설정, 불러옴: 설정불러옴, 설정저장 } = use설정();
   const [설정오류, set설정오류] = useState('');
+  const 오류상자 = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 오류가 목록 한참 아래 있는 줄에서 나도 안내는 맨 위에 뜬다.
+    // 폰에서는 그 줄이 화면 밖이라 안내를 못 보고 다시 누르게 되니, 뜰 때 보이는 곳으로 옮긴다.
+    if (오류 && 오류상자.current) {
+      오류상자.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [오류]);
 
   useEffect(() => {
     let 살아있음 = true;
@@ -105,9 +114,11 @@ export default function MyPage() {
       <p className="mb-6 text-ink-muted">지난 자료를 다시 보고 설정을 고칩니다.</p>
 
       {오류 && (
-        <StatusBox 경고 역할="alert" className="mb-6">
-          {오류}
-        </StatusBox>
+        <div ref={오류상자} className="mb-6">
+          <StatusBox 경고 역할="alert">
+            {오류}
+          </StatusBox>
+        </div>
       )}
 
       <h2 className="mb-2 text-lg">연구 답변</h2>
