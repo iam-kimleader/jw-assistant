@@ -14,12 +14,22 @@ import { 성구읽기만들기 } from './talk-verses.mjs';
 import { weekDocuments } from './prep-service.mjs';
 import { articleUrl } from './wol-week.mjs';
 
+// 연설은 연구 답변과 모델을 따로 쓴다. OPENAI_MODEL·OPENAI_REASONING_EFFORT 는 연구 답변 몫이라
+// 그것을 따르면 연구 쪽 값을 바꿀 때 연설까지 바뀐다. TALK_MODEL 로 환경마다 맞춘다.
+// 원고 강도는 talk-draft.mjs 의 TALK_DRAFT_EFFORT 가 따로 정한다.
+export const 연설기본모델 = 'gpt-5.6-sol';
+const 연설뼈대강도 = 'high';
+
 export function 환경만들기(루트) {
   return {
     루트,
     매니페스트: 교본매니페스트,
     읽기: 성구읽기만들기(루트),
-    설정: { apiKey: process.env.OPENAI_API_KEY ?? '', model: process.env.OPENAI_MODEL || undefined },
+    설정: {
+      apiKey: process.env.OPENAI_API_KEY ?? '',
+      model: process.env.TALK_MODEL || 연설기본모델,
+      effort: 연설뼈대강도,
+    },
   };
 }
 

@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { 배정목록, 원고준비 } from './talk-service.mjs';
+import { 배정목록, 원고준비, 환경만들기 } from './talk-service.mjs';
 
 const 교재 = readFileSync('tests/fixtures/교재-배정.html', 'utf8');
 const 가짜조회 = async () => 교재;
@@ -59,4 +59,22 @@ test('원고 준비가 산출물 네 개와 시간을 함께 돌려준다', asyn
   assert.deepEqual(Object.keys(산출물).sort(), ['낭독대본', '점검표', '준비원고', '큐카드']);
   assert.equal(시간.배정초, 600);
   assert.equal(typeof 시간.총초, 'number');
+});
+
+test('연설은 연구 답변의 OPENAI_MODEL 을 따르지 않고 gpt-5.6-sol high 를 쓴다', () => {
+  const 이전 = { 모델: process.env.OPENAI_MODEL, 연설: process.env.TALK_MODEL, 강도: process.env.OPENAI_REASONING_EFFORT };
+  process.env.OPENAI_MODEL = 'gpt-5.6-terra';
+  process.env.OPENAI_REASONING_EFFORT = 'low';
+  delete process.env.TALK_MODEL;
+  try {
+    const { 설정 } = 환경만들기(process.cwd());
+    assert.equal(설정.model, 'gpt-5.6-sol');
+    assert.equal(설정.effort, 'high');
+    process.env.TALK_MODEL = 'gpt-다른모델';
+    assert.equal(환경만들기(process.cwd()).설정.model, 'gpt-다른모델');
+  } finally {
+    for (const [키, 값] of [['OPENAI_MODEL', 이전.모델], ['TALK_MODEL', 이전.연설], ['OPENAI_REASONING_EFFORT', 이전.강도]]) {
+      if (값 === undefined) delete process.env[키]; else process.env[키] = 값;
+    }
+  }
 });
