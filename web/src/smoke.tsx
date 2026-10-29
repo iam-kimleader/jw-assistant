@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router';
 import App, { 상단바 } from './App';
 import SavedNotice from './components/SavedNotice';
 import SpeakerProfileForm from './components/SpeakerProfileForm';
+import TalkMemoForm from './components/TalkMemoForm';
 import Home from './routes/Home';
 import StudyPrep from './routes/StudyPrep';
 import Talk from './routes/Talk';
@@ -37,6 +38,12 @@ const 화면들: { 이름: string; 경로: string; 화면: ReactElement }[] = [
     이름: '화자 설정 폼',
     경로: '/talk',
     화면: <SpeakerProfileForm 프로필={기본프로필() as 프로필형} 변경={() => {}} />,
+  },
+  {
+    // 연설 화면은 배정을 고른 뒤에야 이 폼을 그린다. SSR 에서는 고를 수 없으니 따로 그린다.
+    이름: '연설 목표·이야기 폼',
+    경로: '/talk',
+    화면: <TalkMemoForm 메모={{ 목표: '', 이야기: '' }} 변경={() => {}} />,
   },
   {
     이름: '저장 안내 띠',

@@ -7,6 +7,7 @@ import OutlineTable from '@/components/OutlineTable';
 import PublicTalkForm from '@/components/PublicTalkForm';
 import SpeakerProfileForm from '@/components/SpeakerProfileForm';
 import StatusBox, { 판넬 } from '@/components/StatusBox';
+import TalkMemoForm from '@/components/TalkMemoForm';
 import WeekPicker from '@/components/WeekPicker';
 import { 공개강연입력검증 } from '~server/talk-input-check.mjs';
 import {
@@ -20,6 +21,7 @@ import {
   type 시간정보,
   type 프로필 as 프로필형,
   type 뼈대 as 뼈대형,
+  type 준비메모 as 준비메모형,
 } from '@/lib/talk-api';
 import { useSearchParams } from 'react-router-dom';
 import { use주간목록, use설정, 주간목록에끼워넣기 } from '@/lib/use-weeks';
@@ -31,6 +33,8 @@ const 빈공개강연: 공개강연입력 = {
   배정시간: 30 * 60,
   소제목: [{ 문장: '' }, { 문장: '' }],
 };
+
+const 빈준비메모: 준비메모형 = { 목표: '', 이야기: '' };
 
 type 원고결과 = {
   산출물: Record<산출물키, string>;
@@ -59,6 +63,8 @@ export default function Talk() {
   const 최근배정선택 = useRef<배정 | null>(null);
 
   const [공개입력, set공개입력] = useState<공개강연입력>(빈공개강연);
+  // 연설 목표와 이야기는 배정마다 따로다. 배정을 고르면 비우고, 저장된 뼈대가 있으면 그 값으로 채운다.
+  const [준비메모, set준비메모] = useState<준비메모형>(빈준비메모);
 
   const [뼈대, set뼈대] = useState<뼈대형 | null>(null);
   const [뼈대경고, set뼈대경고] = useState('');
@@ -134,6 +140,7 @@ export default function Talk() {
     set선택배정(값);
     최근배정선택.current = 값;
     산출물초기화();
+    set준비메모(빈준비메모);
     const 번호 = 미리받은번호 ?? 배정들.indexOf(값);
     set선택배정번호(번호);
     if (번호 < 0 || !고른주) return;
@@ -144,6 +151,9 @@ export default function Talk() {
         // 방금 돈 들여 만든 것을 예전 저장분으로 덮어쓰면 안 되니 통째로 건너뛴다.
         if (최근배정선택.current !== 값 || !자료 || 뼈대준비됨.current) return;
         if (자료.뼈대) set뼈대(자료.뼈대);
+        // 응답이 오기 전에 이미 적기 시작했으면 그 글을 덮지 않는다. 예전 뼈대에는 메모가 없다.
+        const 저장메모 = 자료.뼈대?.준비메모 as 준비메모형 | undefined;
+        if (저장메모) set준비메모(지금 => (지금.목표 || 지금.이야기 ? 지금 : 저장메모));
         // 서버는 API 응답을 그대로 저장한다. 화면 상태는 모양이 달라 여기서 맞춘다.
         if (자료.원고) {
           set원고({
@@ -178,6 +188,7 @@ export default function Talk() {
         배정: 선택배정,
         프로필,
         ...(공개강연인가 ? { 공개강연입력: 공개입력 } : {}),
+        준비메모,
         주간: 고른주,
         배정번호: 선택배정번호,
         배정제목: 선택배정.제목,
@@ -198,7 +209,8 @@ export default function Talk() {
     set원고오류('');
     try {
       const 자료 = await 원고만들기({
-        뼈대,
+        // 뼈대를 만든 뒤 고친 메모도 원고에 들어가도록 화면의 최신 값을 실어 보낸다.
+        뼈대: { ...뼈대, 준비메모 },
         프로필,
         주간: 고른주,
         배정번호: 선택배정번호,
@@ -254,6 +266,8 @@ export default function Talk() {
       {공개강연인가 && (
         <PublicTalkForm 입력={공개입력} 변경={set공개입력} 위반={검증.통과 ? [] : 검증.위반} />
       )}
+
+      {선택배정 && <TalkMemoForm 메모={준비메모} 변경={set준비메모} />}
 
       <div className={cn(판넬, 'my-4 flex flex-wrap gap-3 p-3 shadow-none')}>
         <Button

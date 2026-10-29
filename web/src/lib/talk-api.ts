@@ -49,6 +49,9 @@ export type 공개강연입력 = {
   소제목: { 문장: string }[];
 };
 
+// 형제가 배정마다 적는 연설 목표와 들려줄 이야기다. 뼈대에 실려 원고 단계까지 간다.
+export type 준비메모 = { 목표: string; 이야기: string };
+
 async function 요청<T>(url: string, 설정?: RequestInit): Promise<T> {
   const response = await fetch(url, 설정);
   if (response.status === 401) throw new 로그인필요오류();
@@ -74,6 +77,7 @@ export function 뼈대만들기(본문: {
   배정: 배정;
   프로필: 프로필;
   공개강연입력?: 공개강연입력;
+  준비메모: 준비메모;
   주간: string;
   배정번호: number;
   배정제목: string;
