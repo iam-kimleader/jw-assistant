@@ -1,4 +1,4 @@
-// 원고 구조체의 성구를 로컬 본문으로만 채우고 모델의 성구 서술을 막는 모듈
+// 원고 구조체의 성구를 로컬 본문으로만 채우고 모델의 성구 서술과 근거 없는 인용을 가려내는 모듈
 import { join } from 'node:path';
 import { parseCitation } from './citation-parse.mjs';
 import { loadIndex } from './verse-address.mjs';
@@ -172,6 +172,36 @@ export function 모델성구검사(구조체, 읽기) {
   }
 
   return { 통과: 위반.length === 0, 위반, 단락위반: [...단락위반] };
+}
+
+// 인용부호 안의 말이 근거 원문 어딘가에 글자 그대로 있는지 대조한다. 근거는 출판물·교재·
+// 형제가 적은 글이고, 바꿔 넣은 성구 본문과 산문에서 주소로 든 성구의 본문도 원문으로 친다.
+// 띄어쓰기·문장 부호·따옴표 모양·굵은 글씨 표시(**)는 보지 않는다. 생략 부호로 끊은 인용은
+// 조각마다 본다. 여섯 자보다 짧은 구간은 낱말 강조라 보지 않는다. 막지는 않고 경고 문구만 돌려준다.
+const 비교에서뺄것 = /[\s.,!?·‘’'“”"*]/g;
+const 생략부호 = /…|⋯|\.{3}/;
+const 짧은인용 = 6;
+
+export function 인용대조(구조체, 근거들, 읽기) {
+  const 산문들 = 모델산문들(구조체).map(x => String(x ?? ''));
+  const 든성구 = 산문들.flatMap(주소후보들).map(주소 => {
+    try {
+      return 읽기?.(주소) ?? '';
+    } catch {
+      return '';
+    }
+  });
+  const 원문 = [...근거들, ...든성구, ...(구조체.성구 ?? []).map(x => x.본문)]
+    .map(x => String(x ?? '')).join('\n').replace(비교에서뺄것, '');
+
+  const 못찾음 = new Set();
+  for (const 문장 of 산문들) {
+    for (const m of 문장.matchAll(인용구간)) {
+      const 조각들 = m[1].split(생략부호).map(x => x.replace(비교에서뺄것, '')).filter(x => x.length >= 짧은인용);
+      if (조각들.some(x => !원문.includes(x))) 못찾음.add(`원문에서 찾지 못한 인용 — ${m[1].slice(0, 40)}`);
+    }
+  }
+  return [...못찾음];
 }
 
 // 교재가 주는 성구는 「렘 29:12, 13」처럼 약칭·범위·쉼표 목록이다. verse-address.mjs 의
