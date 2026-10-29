@@ -173,6 +173,40 @@ test('뼈대가 배정 설명과 교재 본문을 원고 단계로 넘긴다', a
   }
 });
 
+const 요청자료 = 본문 => JSON.parse(JSON.parse(본문).input[1].content[0].text);
+const 읽은참조 = [{
+  표시: '「웹성해」 기사 6', 제목: '가상의 기사 제목', 출판물: '가상의 출판물',
+  url: 'https://wol.jw.org/ko/wol/d/r8/lp-ko/9000001#h=1:0-3:0',
+  원문URL: 'https://wol.jw.org/ko/wol/pc/r8/lp-ko/202026248/8/0',
+  조회일: '2026-10-29', 본문: '가상의 기사 본문입니다.',
+}];
+
+test('서버가 읽은 출판물 본문은 모델에 넘기고 뼈대에는 싣지 않는다', async () => {
+  let 보낸 = '';
+  const 응답 = { 구간: [{ 이름: '서론', 시작초: 0, 끝초: 300, 목적: '연다' }], 설정: { 등장인물: [], 상황: '', 준비물: [] }, 성구주소: [], 요점배치: '서론' };
+  const { 뼈대 } = await 뼈대만들기({
+    배정: { ...시연배정, 종류: '학생연설' }, 프로필, 매니페스트, 참조: 읽은참조,
+    설정: { apiKey: 'k', fetchImpl: async (url, options) => {
+      보낸 = options.body;
+      return { ok: true, status: 200, json: async () => ({ output: [{ content: [{ type: 'output_text', text: JSON.stringify(응답) }] }] }) };
+    } },
+  });
+
+  assert.equal(요청자료(보낸).참조자료[0].본문, '가상의 기사 본문입니다.');
+  // 운영 원칙. 출판물 본문은 AI 근거로만 쓰고 브라우저로 가는 응답과 저장소에는 싣지 않는다.
+  assert.ok(!JSON.stringify(뼈대).includes('가상의 기사 본문입니다.'));
+  const { 본문, ...메타 } = 읽은참조[0];
+  assert.deepEqual(뼈대.참조, [메타]);
+  assert.ok(뼈대.출처.some(x => x.url === 메타.url && x.조회일 === '2026-10-29' && x.제목.includes('가상의 기사 제목')));
+});
+
+test('보물 연설도 서버가 읽은 출판물의 URL과 조회일을 출처에 남긴다', async () => {
+  const { 뼈대 } = await 뼈대만들기({ 배정: 보물배정, 프로필, 매니페스트, 참조: 읽은참조, 설정: 던지는가짜 });
+
+  assert.ok(뼈대.출처.some(x => x.url === 읽은참조[0].url && x.조회일 === '2026-10-29'));
+  assert.ok(!JSON.stringify(뼈대).includes('가상의 기사 본문입니다.'));
+});
+
 test('성경낭독은 키가 없으면 낭독범위를 성구로 담는다', async () => {
   const 성경낭독배정 = {
     번호: 3, 제목: '성경 낭독', 절: '보물', 종류: '성경낭독', 시간초: 240,

@@ -36,6 +36,13 @@ function 참조가르기(본문) {
   return { 성구, 출판물 };
 }
 
+// 「읽가」·「랑제」 과 링크는 지정 요점이다. 매니페스트가 이미 다루므로 읽을 출판물에서 뺀다.
+const 교본과 = /「(읽가|랑제)」\s*\d+과/;
+
+function 읽을출판물(본문) {
+  return 참조가르기(본문).출판물.filter(x => !교본과.test(x.표시));
+}
+
 function 괄호떼기(문장) {
   return 문장.replace(/\s*\([^()]*\)\s*$/, '').trim();
 }
@@ -76,7 +83,7 @@ export function parseTalkAssignments(html) {
       현재 = {
         번호: Number(m[1]), 제목: m[2].trim(), 절, 종류: '', 시간초: 0,
         봉사형태: '', 설명: '', 지정요점: null, 소제목: [], 묵상: '',
-        낭독범위: '', 교재원문: '',
+        낭독범위: '', 교재원문: '', 출판물: [],
       };
       항목들.push(현재);
       continue;
@@ -92,11 +99,13 @@ export function parseTalkAssignments(html) {
       const { 성구 } = 참조가르기(b.본문);
       현재.종류 = 종류판정(현재.절, 현재.제목, 현재.설명);
       if (현재.종류 === '성경낭독') 현재.낭독범위 = 성구[0] ?? '';
+      현재.출판물.push(...읽을출판물(b.본문));
       continue;
     }
 
     if (/^\s*묵상해 볼 점/.test(b.텍스트)) {
       현재.묵상 = b.텍스트.replace(/^\s*묵상해 볼 점\s*:?\s*/, '').trim();
+      현재.출판물.push(...읽을출판물(b.본문));
       continue;
     }
 
@@ -107,6 +116,7 @@ export function parseTalkAssignments(html) {
     }
 
     현재.교재원문 = `${현재.교재원문}${현재.교재원문 ? '\n' : ''}${b.텍스트}`;
+    현재.출판물.push(...읽을출판물(b.본문));
   }
 
   for (const 항목 of 항목들) if (!항목.종류) 항목.종류 = 종류판정(항목.절, 항목.제목, '');
