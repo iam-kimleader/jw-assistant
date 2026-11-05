@@ -1,0 +1,53 @@
+# 참고 링크 목록(src/wol-reference-map.json)을 매주 GitHub 서버에서 다시 만들고, 바뀌었으면 커밋해 운영 배포가 따라오게 한다
+name: 참고 링크 목록 갱신
+
+on:
+  schedule:
+    # 매주 월요일 05:00 (한국 시간) = 일요일 20:00 UTC
+    - cron: '0 20 * * 0'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/refresh-references.yml
+      - scripts/refresh-wol-references.mjs
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-references
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # 풀지 못한 링크가 있어도 푼 만큼은 저장하도록, 실패 알림은 마지막 단계로 미룬다
+      - id: refresh
+        run: npm run refresh:references
+        continue-on-error: true
+      - run: npm test
+      - name: 바뀌었으면 커밋하고 푸시한다
+        run: |
+          if git diff --quiet -- src/wol-reference-map.json; then
+            echo "참고 링크 목록이 그대로다."
+            exit 0
+          fi
+          # Vercel 이 저장소 주인의 커밋으로 알아보고 배포하도록 주인의 GitHub noreply 주소로 커밋한다
+          git config user.name "${{ github.repository_owner }}"
+          git config user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
+          git add src/wol-reference-map.json
+          git commit -m "참고 링크 목록을 지금 21주에 맞춰 갱신한다" -m "GitHub Actions 가 매주 만든 커밋이다."
+          git push
+      - name: 풀지 못한 참고 링크가 있으면 실패로 알린다
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo "::error::참고 링크를 다 풀지 못했다. 갱신 단계의 기록을 본다."
+          exit 1
